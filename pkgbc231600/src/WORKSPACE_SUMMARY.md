@@ -23,6 +23,17 @@ lost in large campus buildings. Demo building: **Grainger Hall**, UW-Madison bus
 End-to-end demo route that works today: West Entrance (L1) → room **3335**, ~3 min, 2 legs.
 Toggling step-free swaps West Stairs for Elevator C, which is the accessibility story in one click.
 
+## Git
+
+Pushed to `github.com/kushsarora/TardyAI`, branch **`main`** (the repo was empty before this).
+Local branch is `steeb`, tracking `origin/main`. Two commits: a baseline of the 157 source files,
+then the root `README.md`. `ui/content/` (Vite build output) is **not** tracked — the template's
+`ui/.gitignore` ignores `content`, so a fresh clone needs
+`cd pkgbc231600/ui/react && npm install && VITE_C3_PKG=pkgbc231600 npm run build`.
+
+The template's unreferenced `ui/react/src/data/sampleData.ts` was deleted — no mock data files
+remain anywhere in `ui/react/src/`.
+
 See `TEMPLATE_SUMMARY.md` for the template initial state (structure, the `c3Action` API, how to add
 a route + nav item, which examples to copy).
 
@@ -128,9 +139,14 @@ Node id convention: `n-f<level>-<slug>` (e.g. `n-f3-r3112`, `n-f1-stair-w`).
   UI must guard: never call `searchRooms` on an empty box or `findRoute` without a start pin.
 - **`.objs` supports native `arr[i]` and `.length` in Rhino** — verified by running the router.
   `.each()` / `.get(i)` are still preferred style, but the existing indexing is not a bug.
-- **Secrets:** root `.gitignore` already covers `.env*`, `node_modules/`, `**/gen/cache/**`,
-  `.vs-cache`, `*.c3pkg.lock.json`, `.claude/**` (with `!.claude/skills/`). Verified no secrets
-  among the untracked files. No change needed.
+- **Secrets:** root `.gitignore` covers `.env*` **at every directory level** (verified with
+  `git check-ignore` on nested paths), `node_modules/`, `**/gen/cache/**`, `.vs-cache`,
+  `*.c3pkg.lock.json`, `.claude/**` (with `!.claude/skills/`), `.attachments`, `.playwright`,
+  `.playwright-mcp/`. Added `/*.png|jpg|jpeg|webp` so Playwright screenshots dropped in the repo
+  root can never be committed (`ui/react/public/` is unaffected — the rules are root-anchored).
+  Pattern-scanned the whole committed set for token/key/JWT shapes: zero hits.
+  `VITE_C3_AUTH_TOKEN` appears in `vite.config.mts` / `package.json` / `ui/react/README.md` only as
+  a *variable name*, never with a value.
 - **2D is primary, 3D is a demo shot.** `three.js` / `@react-three/fiber` deliberately **not**
   installed yet; the overview can be extruded procedurally from the same graph JSON later.
 
