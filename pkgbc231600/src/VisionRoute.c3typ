@@ -32,9 +32,10 @@ type VisionRoute {
    *
    * - `ok` — a route was produced. Read {@link VisionRoute#steps}, and
    *   {@link VisionRoute#segments} if {@link VisionRoute#drawable} is true.
-   * - `clarify` — the model could not tell where the user is or where they are
-   *   going and asked a question instead; read {@link VisionRoute#question}. The
-   *   route arrays are empty. This is a success, not a failure — it is what
+   * - `clarify` — the server could not tell where the user is or where they are
+   *   going, or a room they named is not on the plans, and asks a question
+   *   instead; read {@link VisionRoute#question} and
+   *   {@link VisionRoute#suggestions}. The route arrays are empty. This is a success, not a failure — it is what
    *   prevents a confidently wrong route.
    * - `error` — no usable answer. Read {@link VisionRoute#message}.
    */
@@ -132,13 +133,39 @@ type VisionRoute {
   validationError: string
 
   /**
-   * Where this answer came from: `llm` for a live model call, `cache` for a
-   * replayed pinned answer from {@link RouteQuery}.
+   * Where this answer came from: `router` when the model only read the start and
+   * destination out of the sentence and {@link NavRouter#findRoute} chose the
+   * path (the normal case), `llm` when the vision model chose every label (only
+   * for a building with no nav graph), `cache` for a replayed pinned answer from
+   * {@link RouteQuery}.
    *
    * The UI must label a cached answer as such. Passing off a pre-recorded result
    * as a live one is the kind of thing a judge is entitled to ask about.
    */
   source: !string
+
+  /**
+   * Room numbers or place names the user probably meant, when
+   * {@link VisionRoute#status} is `clarify` because a start or destination is
+   * not on the plans — e.g. `["1270", "1280", "1250"]` for "1207". At most
+   * three, best first, and every one is a real room or place, so the UI may
+   * offer them as choices. Empty otherwise.
+   */
+  suggestions: [string]
+
+  /**
+   * Estimated walking time of the whole route in seconds, from
+   * {@link NavRoute#totalSeconds}. Set only when {@link VisionRoute#source} is
+   * `router` and the route was found.
+   */
+  totalSeconds: double
+
+  /**
+   * Walking distance of the whole route in metres, from
+   * {@link NavRoute#totalMeters}. Set only when {@link VisionRoute#source} is
+   * `router` and the route was found.
+   */
+  totalMeters: double
 
   /**
    * Wall-clock duration of the request in milliseconds, including any retry.

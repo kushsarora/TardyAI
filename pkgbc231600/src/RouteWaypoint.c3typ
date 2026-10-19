@@ -85,4 +85,12 @@ type RouteWaypoint {
    * that are generally *not* the journey's start and end.
    */
   role: !string
+
+  /**
+   * Id of the {@link MapNode} this point is, when the route came from
+   * {@link NavRouter} ({@link VisionRoute#source} `router`). Null on a route the
+   * vision model labelled. A door node has no {@link Waypoint}, so for it
+   * {@link RouteWaypoint#label} is this id too.
+   */
+  nodeId: string
 }
