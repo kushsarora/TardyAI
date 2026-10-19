@@ -10,18 +10,29 @@
 **TardyAI** — indoor wayfinding ("Google Maps for inside buildings") for students who are late or
 lost in large campus buildings. Demo building: **Grainger Hall**, UW-Madison business school.
 
-- **Backend (`src/`):** complete and smoke-tested. 11 `.c3typ` files + `NavRouter.js` (A* router).
-- **Data (`data/`):** real Grainger Hall graph — 1 building, 3 floors, 75 nodes, 156 edges, 24 rooms.
-  Loaded via `upsertSeedData`; all 5 router methods verified against it.
-- **UI:** the **Navigate** page is built and wired to the backend — floor plan map with pan/zoom,
-  draggable "I'm here" pin + GPS accuracy circle, floor selector, route polyline, room search,
-  turn-by-turn list, the class-timer card, and an Author mode for reading off pixel coordinates.
-  `npm run build` (lint + tsc + bundle) is green.
-- **Floor plan images:** real UW-Madison Space Management plans in
-  `ui/react/public/plans/floor_p1..p4.png`, all 1980×1530.
+**Two independent ways to get a route**, deliberately kept side by side rather than merged:
 
-End-to-end demo route that works today: West Entrance (L1) → room **3335**, ~3 min, 2 legs.
-Toggling step-free swaps West Stairs for Elevator C, which is the accessibility story in one click.
+| Feature | Route comes from | Page |
+| --- | --- | --- |
+| **Navigate** | A* over a hand-authored `MapNode`/`NavEdge` graph (deterministic) | `/` and `/navigate` |
+| **Room Finder** | A vision LLM reading annotated floor-plan images (plain-English ask) | `/room-finder` |
+
+- **Backend (`src/`):** complete and smoke-tested. 19 `.c3typ` files + `NavRouter.js` (A* router)
+  + `RoomFinder.py` (vision wayfinder).
+- **Data (`data/`):** real Grainger Hall graph — 1 building, 3 floors, 75 nodes, 156 edges, 24 rooms
+  — plus 75 `Waypoint`s, 3 `AnnotatedPlan`s and 1 `BuildingFacts`. Loaded via `upsertSeedData`; all
+  5 router methods and all 4 Room Finder methods verified against it.
+- **UI:** both pages are built and wired to the backend. `npm run build` (lint + tsc + bundle) green.
+- **Floor plan images:** real UW-Madison Space Management plans in
+  `ui/react/public/plans/floor_p1..p4.png`, all 1980×1530, plus model-facing annotated renders in
+  `ui/react/public/plans/annotated/1..3.png` (1500×1159).
+
+End-to-end demo routes that work today:
+
+- **Navigate:** West Entrance (L1) → room **3335**, ~3 min, 2 legs. Toggling step-free swaps West
+  Stairs for Elevator C — the accessibility story in one click.
+- **Room Finder:** "I'm at the west entrance and I need to get to the Learning Commons" →
+  `ENT-W → 1-W8 → 1-W2 → E1 → E1 → 3-W4 → 3210`, 2 floor segments, drawn as a polyline.
 
 ## Git
 
@@ -30,6 +41,22 @@ Local branch is `steeb`, tracking `origin/main`. Two commits: a baseline of the 
 then the root `README.md`. `ui/content/` (Vite build output) is **not** tracked — the template's
 `ui/.gitignore` ignores `content`, so a fresh clone needs
 `cd pkgbc231600/ui/react && npm install && VITE_C3_PKG=pkgbc231600 npm run build`.
+
+**Room Finder is being developed on `steeb` to be merged into the Navigate work by MR.** It is
+therefore **additive-only**: new files are strongly preferred over edits to existing ones, and no
+inverse collection field was added to `Building` or `Floor` (`Waypoint`/`AnnotatedPlan`/
+`BuildingFacts` reference them one-way). Total edits to pre-existing files: 2 one-line additions to
+`App.tsx`, 2 to `config/navigation.ts`, one appended block in `Interfaces.tsx`, and the
+`.gitignore` fix below. Nothing in `pages/Navigate/`, `lib/tardyApi.ts` or `lib/geoTransform.ts`
+was touched.
+
+> **`.gitignore` bug, fixed — read this before trusting any older clone.** The generic *Python*
+> section carries an unanchored `lib/` (meant for a setuptools build directory), which also matched
+> `pkgbc231600/ui/react/src/lib/` and silently excluded **`utils.ts` (the `cn` helper every
+> `components/ui/*` file imports), `tardyApi.ts` and `geoTransform.ts`**. A fresh clone could not
+> type-check the frontend at all, so the build instructions above were broken as written. Fixed by
+> appending `!pkgbc231600/ui/react/src/lib/` — a **folder**-level negation, because git cannot
+> un-ignore a file whose parent directory is excluded. Verified with `git check-ignore -v`.
 
 The template's unreferenced `ui/react/src/data/sampleData.ts` was deleted — no mock data files
 remain anywhere in `ui/react/src/`.
@@ -68,14 +95,53 @@ and is the form that currently validates clean and dispatches correctly (all 5 v
 | `searchRooms(buildingId, query, limit)` | `[MapNode]` | ranked; `limit` null → 10, capped at 50 |
 | `graphForBuilding(buildingId)` | `NavGraphSnapshot` | 75 nodes / 156 edges |
 
+### Room Finder (vision-LLM wayfinding)
+
+8 new `.c3typ` files, all additive. Entity types (persisted):
+
+- **`Waypoint`** — a labelled point a human placed in a corridor. `floor`, `label` (the short code
+  the model reads off the plan, e.g. `3-W4`, `E1`, `ENT-W`), `kind`, `name`, `roomNumber`,
+  `imageX/Y`, `connectorKey`, `aliases`. **The label is the contract with the model.**
+- **`AnnotatedPlan`** — one per floor. `floor`, `imageUrl` (model-facing annotated render),
+  `imageWidth/Height`, `labelsShown`.
+- **`BuildingFacts`** — `building`, `facts` (~2.8 KB of prose the model is given verbatim),
+  `demoRoutes` (the example questions the UI shows as chips).
+- **`RouteQuery`** — one row per ask, for provenance and pinning. `isPinned` marks an answer as the
+  pinned fallback for its question.
+
+Value types: `RouteWaypoint`, `RouteFloorSegment`, `VisionRoute`.
+
+**`RoomFinder`** (`@py(env='server')`, impl in `RoomFinder.py`, ~1080 lines) — 4 methods:
+
+| Method | Returns | Notes |
+| --- | --- | --- |
+| `findRoute(buildingId, message, allowFallback)` | `VisionRoute` | The whole feature. One retry on validation failure, then the pinned fallback if `allowFallback`. |
+| `syncPlanImages(buildingId, uiServiceBaseUrl)` | `int` | **One-time setup** — see gotchas. |
+| `pinRoute(queryId, pinned)` | `boolean` | Pins a good answer as that question's fallback. |
+| `diagnostics(buildingId)` | `json` | Readiness report; drives the UI's "not ready" banner. |
+
+**How `findRoute` works, and why it is built this way:** the annotated plans + `BuildingFacts#facts`
+go to the vision model as a cached prefix (user message last, so the images cache across asks). The
+model answers with **waypoint labels only — never coordinates.** The server resolves each label
+against the `Waypoint` table and builds the geometry itself, so every coordinate the UI draws came
+out of the database. A hallucinated *label* fails validation and degrades to written steps; a
+hallucinated *coordinate* would have drawn a confident line through a wall, which is exactly the
+failure mode this design removes. The model may also answer `clarify` with a question instead of
+guessing.
+
 ## UI pages / routes
 
 | Route | Component | Notes |
 | --- | --- | --- |
-| `/` and `/navigate` | `pages/Navigate/Navigate.tsx` | The whole app. Owns all routing state. |
+| `/` and `/navigate` | `pages/Navigate/Navigate.tsx` | Graph router. Owns all routing state. |
+| `/room-finder` | `pages/RoomFinder/RoomFinder.tsx` | Vision wayfinder. One ask, one answer held. |
 
-Nav: single "Navigate" item in `config/navigation.ts`. `TopNav` title is "TardyAI". The template's
-`Dashboard` page was deleted.
+Nav: "Navigate" + "Room Finder" in `config/navigation.ts`. `TopNav` title is "TardyAI". The
+template's `Dashboard` page was deleted.
+
+**`main.tsx` uses `HashRouter`,** so app routes live *after* a `#`. The preview URL is
+`http://localhost:9000/<env>/liveapp/uiservice/#/room-finder` — the path-based form silently falls
+through to `/` and renders Navigate, which looks exactly like a missing route registration.
 
 Supporting modules:
 
@@ -93,6 +159,27 @@ Supporting modules:
   points, closed-form similarity for exactly 2, null below that. Falls back to similarity if the
   affine normal equations come out singular (collinear points).
 
+Room Finder modules (all new files under `pages/RoomFinder/`):
+
+- **`lib/roomFinderApi.ts`** — the 3 `c3Action` calls plus `normalizeRoute`, which forces every
+  nested collection to an array and **downgrades `drawable` to false unless some segment really has
+  ≥2 points** — so a malformed `ok` answer degrades to steps-only instead of rendering an empty SVG.
+  `fetchBuildingFacts` deliberately omits the `facts` field (2.8 KB of model-facing prose the UI
+  never shows).
+- **`FloorMap.tsx`** — plan `<img>` + SVG overlay, `viewBox` in raster coordinates. White casing
+  polyline under a blue one, hollow start circle, filled end disc (orange + dashed ring when the
+  leg ends at a floor change). Latches image-load failure and resets the latch when the URL changes.
+- **`FloorTabs.tsx`** — **tab identity is the segment index, not the floor key**, because a route
+  can leave a floor and come back, producing two segments with the same key; keying by floor would
+  collapse them and silently drop half the journey. A single-segment route renders plain text
+  instead of a lone tab that looks broken.
+- **`StepList.tsx`** — renders from `steps` alone so it survives a non-drawable route. A row is a
+  real `<button>` only when its floor key is known, so no inert control promises an interaction it
+  cannot deliver.
+- **`ChatInput.tsx`** — textarea (not an input: the model does better with a sentence), Enter
+  submits / Shift+Enter newlines, guards blank input because `message` is `!string` server-side.
+  Example chips set the text *and* submit in one tap.
+
 Deliberately **not** built: the 3D stacked-floor view. 2D is the functional core; see Key decisions.
 
 ## Seed / data
@@ -105,6 +192,10 @@ Deliberately **not** built: the 3D stacked-floor view. 2D is the functional core
 - `data/MapNode/MapNode.json` — 75 nodes: 35 hallway, 24 room, 9 elevator (3 shafts × 3 floors),
   3 stairs (1 shaft × 3 floors), 3 restroom, 1 entrance (`n-f1-entrance-w`)
 - `data/NavEdge/NavEdge.json` — 156 directed same-floor edges
+- `data/Waypoint/Waypoint.json` — 75 labelled waypoints (same points as `MapNode`, re-labelled for
+  the model: `3-W4`, `E1`, `ENT-W`, room numbers)
+- `data/AnnotatedPlan/AnnotatedPlan.json` — 3 records, one per floor, 1500×1159
+- `data/BuildingFacts/facts-grainger.json` — 1 record, id `grainger`, with the 5 `demoRoutes`
 
 Room numbers are **real** — spot-checked against `floor_p1.png` and `floor_p3.png` (1100 Morgridge
 Auditorium, 1210 Huber Lab, 3111 Conf. Room, 3210 Learning Commons, 3335 Class Room, 3560 Seminar
@@ -150,6 +241,30 @@ Node id convention: `n-f<level>-<slug>` (e.g. `n-f3-r3112`, `n-f1-stair-w`).
 - **2D is primary, 3D is a demo shot.** `three.js` / `@react-three/fiber` deliberately **not**
   installed yet; the overview can be extruded procedurally from the same graph JSON later.
 
+Room Finder:
+
+- **The model returns labels, never coordinates.** This is the single load-bearing decision — see
+  `findRoute` above. It converts the dangerous failure (a confident line through a wall) into a
+  visible one (validation fails, written steps only).
+- **⚠️ DEVIATION FROM THE SPEC: `temperature` is omitted, not set to 0.** The spec says "set
+  temperature to 0"; the configured model rejects it outright —
+  `litellm.UnsupportedParamsError: global.anthropic.claude-sonnet-5 does not support temperature=0`.
+  Passing *any* explicit temperature fails, so the option is left out of `options` entirely and the
+  model's default (1) applies. Determinism is recovered the way that actually works here: a tightly
+  constrained label vocabulary, server-side validation, one retry, and pinned fallbacks for the
+  demo questions. **Do not "fix" this by re-adding `temperature`.**
+- **Two coordinate spaces, one `viewBox`.** Waypoints live in the original 1980×1530 raster (what
+  the UI draws on); the annotated 1500×1159 render is model-facing only. Same aspect ratio, so one
+  `viewBox` serves either image and the "show what the AI sees" toggle needs no re-projection.
+- **Prompt caching puts the images + facts first and the user message last**, so the expensive
+  prefix is reused across asks. `VisionRoute` reports `promptTokens`/`cachedTokens` and the UI shows
+  the hit rate.
+- **Provenance is a feature, not debug output.** The panel shows live-vs-pinned, whether the one
+  permitted retry fired, latency, cache hit rate, and the accepted label chain. An audience is
+  entitled to ask how an answer was produced without anyone opening a console.
+- **A clarifying question is a success path.** `status: 'clarify'` renders as the model talking, not
+  as an error, because it is what prevents a confidently wrong route.
+
 ## Open items / gotchas
 
 - **`floor_p4.png` is unmapped.** Four plan images exist but only three `Floor` records. Room
@@ -173,9 +288,38 @@ Node id convention: `n-f<level>-<slug>` (e.g. `n-f3-r3112`, `n-f1-stair-w`).
 - **Vision-model floor-plan extraction stub** lives in `tools/build_graph.py`
   (`extract_nodes_from_plan`), with the intended 6-step OCR + skeletonization pipeline documented.
   It raises `NotImplementedError` by design.
+- **The Room Finder data is generated, not hand-edited.** `tools/build_waypoints.py` derives
+  `data/Waypoint/`, `data/AnnotatedPlan/`, `data/BuildingFacts/` **and** the annotated PNGs from the
+  existing `data/MapNode` + `data/Floor` graph. Re-run it (`python3 tools/build_waypoints.py`) after
+  changing nodes or floors rather than editing the waypoint JSON by hand, then `upsertSeedData` and
+  `RoomFinder.syncPlanImages`. Because the labels are burned into the image, the annotated render
+  only has to be *legible* — its resolution is irrelevant to correctness, which is why it is
+  1500×1159 while the waypoints stay in the original 1980×1530 space.
 - **Playwright cannot verify the API end-to-end here.** A headless browser on `localhost:9000` has
   no Genesis session cookie, so the Vite proxy forwards an unauthenticated request and the app 302s
   to the OIDC provider. The page chrome renders and the `c3Action` calls do fire (visible in the
   network log), but they fail auth. Verification therefore uses the documented fallback: replaying
   each exact FetchSpec / method call through `runJsCode`. The user's own preview iframe carries the
   cookie and works.
+- **`RoomFinder.syncPlanImages` is a required one-time setup step** on a fresh environment. The
+  server cannot read `ui/react/public/` directly, so the annotated PNGs have to be copied into the
+  C3 filesystem before the model can be shown anything. Call it once per environment (it returns
+  the number of images synced); `diagnostics(buildingId)` reports `readablePlanCount` and will say
+  the building is not ready until it has run.
+- **A single-record data file must be named after the record id.** `data/BuildingFacts/facts-grainger.json`
+  holds the record whose `id` is `grainger`; a differently-named single-object file does not load.
+  Multi-record files (`Waypoint.json`, `MapNode.json`) are named after the type and are fine.
+- **The first call to a freshly-edited Python type times out.** The import/compile happens inside
+  the request, so the first `runPyCode` after editing `src/RoomFinder.py` reliably exceeds the
+  timeout. Just retry — the second call succeeds. This is not a code fault; do not start debugging
+  the method body over it.
+- **`runPyCode` turns the last line into a `return`.** End every snippet with a single-line
+  expression. A multi-line trailing expression (or a trailing statement) yields a syntax error or
+  silently returns nothing.
+- **`ref` does not work on `components/ui/*`.** React is 18.3.1 and only `Spinner` uses
+  `forwardRef`, so passing `ref` to the others type-checks but React drops it at runtime. Measure or
+  focus via a wrapper element instead.
+- **`npm run build` needs `VITE_C3_PKG` in an agent shell.** Lint and `tsc` pass without it, then
+  the bundle step dies with `Error: VITE_C3_PKG is not set`. There is no `.env` file (the UI
+  container supplies the variable); for a one-off validation run use
+  `VITE_C3_PKG=pkgbc231600 npm run build`. **Do not create a `.env` file.**
