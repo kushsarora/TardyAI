@@ -18,8 +18,23 @@ import { PixelPoint } from '@/lib/geoTransform';
 import { resolvePlanUrl } from '@/lib/tardyApi';
 import { Button } from '@/components/ui/button';
 
+// Absolute hard floor, only used as a fallback when the viewport hasn't been
+// measured yet. In practice the effective minimum zoom is dynamic — the
+// "fit the whole floor in the viewport" scale (see getFitZoom) — so the user
+// can never zoom out so far that the plan is smaller than the viewport.
 const MIN_ZOOM = 0.08;
 const MAX_ZOOM = 6;
+
+/** Fraction of the viewport the fitted plan occupies, leaving a small margin. */
+const FIT_MARGIN = 0.96;
+
+// Wheel/trackpad zoom tuning. The factor per wheel event is exp(-deltaY * S):
+// a smaller sensitivity means gentler zooming, and the MIN/MAX bounds cap how
+// far any single event can zoom so a trackpad swipe or big mouse notch can't
+// jump across the whole range at once.
+const WHEEL_ZOOM_SENSITIVITY = 0.0015;
+const MIN_WHEEL_FACTOR = 0.9;
+const MAX_WHEEL_FACTOR = 1.1;
 
 /** Pointer travel, in screen px, above which a press is a pan and not a click. */
 const CLICK_SLOP_PX = 4;
@@ -74,6 +89,21 @@ export default function FloorPlanMap({
 
   const planUrl = resolvePlanUrl(floor.planImageUrl);
 
+  /**
+   * The zoom level at which the whole floor just fits inside the viewport.
+   * This doubles as the minimum zoom: you cannot zoom out past the point where
+   * the entire plan is visible. Falls back to MIN_ZOOM until the viewport and
+   * image dimensions are known.
+   */
+  const getFitZoom = useCallback(() => {
+    const viewport = viewportRef.current;
+    if (!viewport || !floor.imageWidth || !floor.imageHeight) return MIN_ZOOM;
+    const { clientWidth, clientHeight } = viewport;
+    if (clientWidth === 0 || clientHeight === 0) return MIN_ZOOM;
+    const fit = Math.min(clientWidth / floor.imageWidth, clientHeight / floor.imageHeight) * FIT_MARGIN;
+    return Math.min(Math.max(fit, MIN_ZOOM), MAX_ZOOM);
+  }, [floor.imageWidth, floor.imageHeight]);
+
   /** Scale and centre the plan so the whole floor is visible. */
   const fitToView = useCallback(() => {
     const viewport = viewportRef.current;
@@ -81,14 +111,13 @@ export default function FloorPlanMap({
     const { clientWidth, clientHeight } = viewport;
     if (clientWidth === 0 || clientHeight === 0) return;
 
-    const next = Math.min(clientWidth / floor.imageWidth, clientHeight / floor.imageHeight) * 0.96;
-    const clamped = Math.min(Math.max(next, MIN_ZOOM), MAX_ZOOM);
+    const clamped = getFitZoom();
     setZoom(clamped);
     setOffset({
       x: (clientWidth - floor.imageWidth * clamped) / 2,
       y: (clientHeight - floor.imageHeight * clamped) / 2,
     });
-  }, [floor.imageWidth, floor.imageHeight]);
+  }, [floor.imageWidth, floor.imageHeight, getFitZoom]);
 
   useLayoutEffect(() => {
     fitToView();
@@ -132,8 +161,11 @@ export default function FloorPlanMap({
       const anchorX = (clientX ?? rect.left + rect.width / 2) - rect.left;
       const anchorY = (clientY ?? rect.top + rect.height / 2) - rect.top;
 
+      // Floor the zoom at the fit-to-view scale so the plan can never shrink
+      // smaller than the viewport, and cap it at MAX_ZOOM.
+      const minZoom = getFitZoom();
       setZoom((previous) => {
-        const next = Math.min(Math.max(previous * factor, MIN_ZOOM), MAX_ZOOM);
+        const next = Math.min(Math.max(previous * factor, minZoom), MAX_ZOOM);
         const ratio = next / previous;
         setOffset((current) => ({
           x: anchorX - (anchorX - current.x) * ratio,
@@ -142,13 +174,32 @@ export default function FloorPlanMap({
         return next;
       });
     },
-    [],
+    [getFitZoom],
+  );
+
+  /** Zoom about the centre of the viewport (used by the +/- buttons). */
+  const zoomAtCenter = useCallback(
+    (factor: number) => {
+      const viewport = viewportRef.current;
+      if (!viewport) return;
+      const rect = viewport.getBoundingClientRect();
+      zoomAbout(factor, rect.left + rect.width / 2, rect.top + rect.height / 2);
+    },
+    [zoomAbout],
   );
 
   const handleWheel = useCallback(
     (event: React.WheelEvent<HTMLDivElement>) => {
       event.preventDefault();
-      zoomAbout(event.deltaY < 0 ? 1.12 : 1 / 1.12, event.clientX, event.clientY);
+      // Derive the zoom factor from the scroll magnitude rather than a fixed
+      // step. Trackpads emit many small-delta events per gesture (and pinch via
+      // ctrl+wheel), so a fixed step would zoom far too fast; an exponential of
+      // the delta keeps the response smooth and proportional. The per-event
+      // factor is clamped so no single event — e.g. a big mouse-wheel notch or
+      // an aggressive swipe — can jump too far at once.
+      const factor = Math.exp(-event.deltaY * WHEEL_ZOOM_SENSITIVITY);
+      const clampedFactor = Math.min(Math.max(factor, MIN_WHEEL_FACTOR), MAX_WHEEL_FACTOR);
+      zoomAbout(clampedFactor, event.clientX, event.clientY);
     },
     [zoomAbout],
   );
@@ -374,7 +425,7 @@ export default function FloorPlanMap({
           variant="outline"
           appearance="secondary"
           aria-label="Zoom in"
-          onClick={() => zoomAbout(1.3)}
+          onClick={() => zoomAtCenter(1.3)}
         >
           <Plus className="size-4" aria-hidden />
         </Button>
@@ -383,7 +434,7 @@ export default function FloorPlanMap({
           variant="outline"
           appearance="secondary"
           aria-label="Zoom out"
-          onClick={() => zoomAbout(1 / 1.3)}
+          onClick={() => zoomAtCenter(1 / 1.3)}
         >
           <Minus className="size-4" aria-hidden />
         </Button>
