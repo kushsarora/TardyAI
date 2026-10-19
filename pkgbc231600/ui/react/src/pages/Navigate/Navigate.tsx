@@ -20,13 +20,21 @@
  * route.
  */
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {
   Accessibility,
   ArrowDownUp,
   ArrowRight,
   ArrowUpRight,
   Bookmark,
+  Box,
   Building2,
   Check,
   ChevronRight,
@@ -37,6 +45,7 @@ import {
   Loader2,
   LocateFixed,
   MapPin,
+  Map,
   Navigation,
   Search,
   ShieldCheck,
@@ -64,6 +73,10 @@ import ArrivalCard from './ArrivalCard';
 import RoomSearch from './RoomSearch';
 import RouteSteps from './RouteSteps';
 
+const Building3DMap = lazy(
+  () => import('@/components/Building3D/Building3DMap'),
+);
+
 /** Debounce before a moved pin is snapped to the graph, to avoid a call per frame. */
 const SNAP_DEBOUNCE_MS = 280;
 
@@ -77,6 +90,20 @@ export default function Navigate() {
   const [floors, setFloors] = useState<Floor[]>([]);
   const [nodes, setNodes] = useState<MapNode[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mapView, setMapView] = useState<'2d' | '3d'>(() => {
+    try {
+      return localStorage.getItem('tardy.map-view') === '3d' ? '3d' : '2d';
+    } catch {
+      return '2d';
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem('tardy.map-view', mapView);
+    } catch {
+      /* The view toggle also works without browser storage. */
+    }
+  }, [mapView]);
 
   const [activeFloorId, setActiveFloorId] = useState<string | null>(null);
   const [pin, setPin] = useState<PixelPoint | null>(null);
@@ -702,7 +729,11 @@ export default function Navigate() {
                     role="switch"
                     aria-label="Step-free route"
                     aria-checked={stepFree}
-                    onClick={() => setStepFree((value) => !value)}
+                    onClick={() => {
+                      setRoute(null);
+                      setRouting(true);
+                      setStepFree((value) => !value);
+                    }}
                   >
                     <span />
                   </button>
@@ -815,29 +846,95 @@ export default function Navigate() {
                     <span className="map-toolbar-divider" />{' '}
                     <span>{activeFloor.name}</span>
                   </div>
-                  <span className="map-view-label">
-                    <Layers size={14} /> Floor plan
-                  </span>
+                  <div
+                    className="map-view-toggle"
+                    role="group"
+                    aria-label="Map view"
+                  >
+                    <button
+                      aria-pressed={mapView === '2d'}
+                      className={mapView === '2d' ? 'selected' : ''}
+                      onClick={() => setMapView('2d')}
+                    >
+                      <Map size={14} />
+                      2D
+                    </button>
+                    <button
+                      aria-pressed={mapView === '3d'}
+                      className={mapView === '3d' ? 'selected' : ''}
+                      onClick={() => setMapView('3d')}
+                    >
+                      <Box size={14} />
+                      3D
+                    </button>
+                  </div>
                 </div>
                 <div className="map-canvas">
-                  <FloorPlanMap
-                    floor={activeFloor}
-                    nodes={nodesOnActiveFloor}
-                    routeLeg={activeLeg}
-                    pin={
-                      pinFloorId === activeFloor.id
-                        ? startNode && accuracyMeters === null
-                          ? { x: startNode.imageX, y: startNode.imageY }
-                          : pin
-                        : null
-                    }
-                    accuracyRadiusPx={accuracyRadiusPx}
-                    destNodeId={destNode?.id ?? null}
-                    authorMode={false}
-                    onPinChange={handlePinChange}
-                    onAuthorClick={() => {}}
-                    onDestinationSelect={chooseDestination}
-                  />
+                  {mapView === '3d' ? (
+                    <Suspense
+                      fallback={
+                        <div className="model-loading">
+                          <Loader2 className="animate-spin" size={24} />
+                          <strong>Building your new perspective…</strong>
+                          <span>Loading Grainger Hall in 3D.</span>
+                        </div>
+                      }
+                    >
+                      <Building3DMap
+                        floors={floors}
+                        nodes={nodes}
+                        activeFloorId={activeFloor.id}
+                        route={route}
+                        guiding={guiding}
+                        start={
+                          pin && pinFloorId
+                            ? {
+                                floorId: pinFloorId,
+                                point:
+                                  startNode && accuracyMeters === null
+                                    ? {
+                                        x: startNode.imageX,
+                                        y: startNode.imageY,
+                                      }
+                                    : pin,
+                              }
+                            : null
+                        }
+                        destination={destNode}
+                        accuracyRadiusPx={accuracyRadiusPx}
+                        onFocusFloor={setActiveFloorId}
+                        onPlaceStart={(floorId, point) => {
+                          setSelectedStartId(null);
+                          setPin(point);
+                          setPinFloorId(floorId);
+                          setActiveFloorId(floorId);
+                          setAccuracyMeters(null);
+                          setLocateMessage(null);
+                        }}
+                        onDestinationSelect={chooseDestination}
+                        onFallback={() => setMapView('2d')}
+                      />
+                    </Suspense>
+                  ) : (
+                    <FloorPlanMap
+                      floor={activeFloor}
+                      nodes={nodesOnActiveFloor}
+                      routeLeg={activeLeg}
+                      pin={
+                        pinFloorId === activeFloor.id
+                          ? startNode && accuracyMeters === null
+                            ? { x: startNode.imageX, y: startNode.imageY }
+                            : pin
+                          : null
+                      }
+                      accuracyRadiusPx={accuracyRadiusPx}
+                      destNodeId={destNode?.id ?? null}
+                      authorMode={false}
+                      onPinChange={handlePinChange}
+                      onAuthorClick={() => {}}
+                      onDestinationSelect={chooseDestination}
+                    />
+                  )}
                   <div className="floor-control">
                     <span>FLOOR</span>
                     {[...floors]
@@ -860,26 +957,32 @@ export default function Navigate() {
                         </button>
                       ))}
                   </div>
-                  <div className="map-instruction">
-                    <span className="instruction-icon">
-                      <LocateFixed size={17} />
+                  {mapView === '2d' && (
+                    <>
+                      <div className="map-instruction">
+                        <span className="instruction-icon">
+                          <LocateFixed size={17} />
+                        </span>
+                        <span>
+                          <strong>
+                            {pin
+                              ? 'Make yourself at home.'
+                              : 'Where are you right now?'}
+                          </strong>
+                          <small>
+                            {pin
+                              ? 'Routes use mapped access points. Tap a room to explore.'
+                              : 'Select your floor, then tap the map to set your location.'}
+                          </small>
+                        </span>
+                      </div>
+                    </>
+                  )}
+                  {mapView === '2d' && (
+                    <span className="map-compass">
+                      N<Navigation size={21} fill="currentColor" />
                     </span>
-                    <span>
-                      <strong>
-                        {pin
-                          ? 'Make yourself at home.'
-                          : 'Where are you right now?'}
-                      </strong>
-                      <small>
-                        {pin
-                          ? 'Routes use mapped access points. Tap a room to explore.'
-                          : 'Select your floor, then tap the map to set your location.'}
-                      </small>
-                    </span>
-                  </div>
-                  <span className="map-compass">
-                    N<Navigation size={21} fill="currentColor" />
-                  </span>
+                  )}
                 </div>
                 <div className="map-legend">
                   <div>
@@ -894,7 +997,9 @@ export default function Navigate() {
                     </span>
                   </div>
                   <span className="map-interaction-hint">
-                    Scroll to zoom · Drag to explore
+                    {mapView === '3d'
+                      ? 'Drag to orbit · Pinch to zoom · Click a room'
+                      : 'Scroll to zoom · Drag to explore'}
                   </span>
                 </div>
               </section>
