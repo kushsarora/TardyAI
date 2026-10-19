@@ -310,6 +310,16 @@ Room Finder:
   `RoomFinder.syncPlanImages`. Because the labels are burned into the image, the annotated render
   only has to be *legible* — its resolution is irrelevant to correctness, which is why it is
   1500×1159 while the waypoints stay in the original 1980×1530 space.
+- **The floor plan stage must stay out of layout flow** (`FloorPlanMap.tsx`), and every flex ancestor
+  of the map needs `min-w-0`. A CSS transform does not affect layout, so an in-flow stage contributes
+  its full intrinsic size (1980×1530) as the min-content width of the flex chain, and a flex item's
+  default `min-width: auto` floors it there: the map panel measured 1982px inside a 1280px window and
+  `fitToView` centred the plan into that inflated box, putting most of it past the right edge with no
+  scrollbar (the app shell clips overflow). Symptom to recognise: plan shifted right, dead space to
+  its left, clipped at the right. Related — **do not make `clampOffsetAxis` hard-centre the fitted
+  case**; returning a constant ignores the requested offset, which makes a pan an unconditional no-op
+  and leaves the fit button as the only recovery. Clamp to the slack interval instead (commit
+  `6931df8`, fixing `ed7c81c`).
 - **Playwright cannot verify the API end-to-end here.** A headless browser on `localhost:9000` has
   no Genesis session cookie, so the Vite proxy forwards an unauthenticated request and the app 302s
   to the OIDC provider. The page chrome renders and the `c3Action` calls do fire (visible in the
