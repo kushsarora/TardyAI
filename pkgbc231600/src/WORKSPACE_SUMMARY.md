@@ -147,7 +147,10 @@ Supporting modules:
 
 - **`components/FloorPlan/FloorPlanMap.tsx`** — pan/zoom viewport, plan `<img>` + SVG overlay,
   draggable pin, accuracy circle, route polyline, connector markers, author-mode click reporting.
-  Markers are scaled by `1/zoom` so they stay a constant size on screen.
+  Markers are scaled by `1/zoom` so they stay a constant size on screen. **Zoom and pan are a
+  single `ViewTransform` state** (`{ zoom, offset }`), because the legal range of `offset` is a
+  function of `zoom` — see the pan-clamp decision below. The Room Finder's `FloorMap.tsx` has no
+  pan/zoom at all (static fitted image), so viewport-bounds concerns apply only to this file.
 - **`pages/Navigate/RoomSearch.tsx`** — debounced (220 ms) search against `NavRouter.searchRooms`.
 - **`pages/Navigate/RouteSteps.tsx`** — one row per floor; clicking a row switches the map floor.
 - **`pages/Navigate/ArrivalCard.tsx`** — the TardyAI hook. Compares `now + route duration` against
@@ -240,6 +243,18 @@ Node id convention: `n-f<level>-<slug>` (e.g. `n-f3-r3112`, `n-f1-stair-w`).
   a *variable name*, never with a value.
 - **2D is primary, 3D is a demo shot.** `three.js` / `@react-three/fiber` deliberately **not**
   installed yet; the overview can be extruded procedurally from the same graph JSON later.
+- **Pan is clamped so the plan always covers the viewport.** Zoom was already floored at the
+  fit-to-view scale, but the drag handler wrote `startOffset + delta` straight to state with no
+  bound, so the plan could be slid completely off screen into an empty grey panel — with no way
+  back except the fit button. `clampOffsetAxis` now bounds each axis: when the scaled plan exceeds
+  the viewport the offset is held in `[viewportExtent - scaledExtent, 0]` (every part reachable,
+  viewport always covered, no dead space); when it does not — which is both axes at fit zoom, since
+  `FIT_MARGIN` leaves a border — it is centred, so a pan at fit zoom is a no-op instead of a slide
+  into nothing. The clamp is applied on **both** drag and zoom, because zooming out around a corner
+  shrinks the plan away from the opposite edge. Two details that are load-bearing: the pan handler
+  **re-anchors `drag.startOffset` to the clamped result** (otherwise dragging into a stop banks up
+  slack the user must drag back out before the map moves again), and `clampOffsetAxis` is
+  **idempotent**, which is what makes that re-anchoring sound.
 
 Room Finder:
 

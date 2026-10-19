@@ -39,6 +39,28 @@ const MAX_WHEEL_FACTOR = 1.1;
 /** Pointer travel, in screen px, above which a press is a pan and not a click. */
 const CLICK_SLOP_PX = 4;
 
+/**
+ * Constrain one axis of the stage translation so the plan can never be dragged
+ * out of the viewport.
+ *
+ * Two regimes, decided by whether the scaled plan is bigger than the viewport:
+ *
+ * - **Larger (zoomed in).** The offset is held in `[viewportExtent - scaledExtent, 0]`,
+ *   i.e. the plan's leading edge can't move past the viewport's leading edge and
+ *   its trailing edge can't move short of the trailing one. Every part of the
+ *   plan stays reachable, but the viewport is always covered edge to edge, so
+ *   there is never dead space beside the map.
+ * - **Smaller or equal (fitted).** Centred. This is every axis at fit zoom —
+ *   `getFitZoom` deliberately leaves a `FIT_MARGIN` border, so "cover the
+ *   viewport" is unsatisfiable there and clamping to a range would just park a
+ *   too-small plan against one edge. Centring also makes a pan at fit zoom a
+ *   no-op rather than a slide into emptiness.
+ */
+const clampOffsetAxis = (value: number, viewportExtent: number, scaledExtent: number): number => {
+  if (scaledExtent <= viewportExtent) return (viewportExtent - scaledExtent) / 2;
+  return Math.min(Math.max(value, viewportExtent - scaledExtent), 0);
+};
+
 interface FloorPlanMapProps {
   floor: Floor;
   /** Every node on this floor — used for connector and destination markers. */
@@ -59,6 +81,19 @@ interface FloorPlanMapProps {
 
 type DragMode = 'none' | 'pan' | 'pin';
 
+/**
+ * Zoom and pan are one value, not two pieces of state, because the legal range
+ * of `offset` depends on `zoom` (see clampOffsetAxis). Updating them separately
+ * would let a render observe a new zoom against an offset that is no longer
+ * valid for it, and would force the zoom updater to call the offset setter from
+ * inside its own updater — which double-applies under StrictMode.
+ */
+interface ViewTransform {
+  zoom: number;
+  /** Stage translation in screen px, pre-scale. */
+  offset: PixelPoint;
+}
+
 export default function FloorPlanMap({
   floor,
   nodes,
@@ -73,9 +108,9 @@ export default function FloorPlanMap({
   const viewportRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
 
-  const [zoom, setZoom] = useState(0.4);
-  const [offset, setOffset] = useState<PixelPoint>({ x: 0, y: 0 });
+  const [view, setView] = useState<ViewTransform>({ zoom: 0.4, offset: { x: 0, y: 0 } });
   const [imageFailed, setImageFailed] = useState(false);
+  const { zoom, offset } = view;
 
   // Drag bookkeeping lives in a ref: it changes on every pointermove and must
   // not trigger a re-render of its own.
@@ -104,6 +139,26 @@ export default function FloorPlanMap({
     return Math.min(Math.max(fit, MIN_ZOOM), MAX_ZOOM);
   }, [floor.imageWidth, floor.imageHeight]);
 
+  /**
+   * Clamp a candidate translation against the viewport at a given zoom, so the
+   * plan always stays on screen. Returns the offset unchanged only when the
+   * viewport has not been measured yet — there is nothing to clamp against, and
+   * the fit-to-view layout effect will overwrite it as soon as it has a size.
+   */
+  const clampOffset = useCallback(
+    (candidate: PixelPoint, atZoom: number): PixelPoint => {
+      const viewport = viewportRef.current;
+      if (!viewport) return candidate;
+      const { clientWidth, clientHeight } = viewport;
+      if (clientWidth === 0 || clientHeight === 0) return candidate;
+      return {
+        x: clampOffsetAxis(candidate.x, clientWidth, floor.imageWidth * atZoom),
+        y: clampOffsetAxis(candidate.y, clientHeight, floor.imageHeight * atZoom),
+      };
+    },
+    [floor.imageWidth, floor.imageHeight],
+  );
+
   /** Scale and centre the plan so the whole floor is visible. */
   const fitToView = useCallback(() => {
     const viewport = viewportRef.current;
@@ -112,10 +167,12 @@ export default function FloorPlanMap({
     if (clientWidth === 0 || clientHeight === 0) return;
 
     const clamped = getFitZoom();
-    setZoom(clamped);
-    setOffset({
-      x: (clientWidth - floor.imageWidth * clamped) / 2,
-      y: (clientHeight - floor.imageHeight * clamped) / 2,
+    setView({
+      zoom: clamped,
+      offset: {
+        x: (clientWidth - floor.imageWidth * clamped) / 2,
+        y: (clientHeight - floor.imageHeight * clamped) / 2,
+      },
     });
   }, [floor.imageWidth, floor.imageHeight, getFitZoom]);
 
@@ -164,17 +221,20 @@ export default function FloorPlanMap({
       // Floor the zoom at the fit-to-view scale so the plan can never shrink
       // smaller than the viewport, and cap it at MAX_ZOOM.
       const minZoom = getFitZoom();
-      setZoom((previous) => {
-        const next = Math.min(Math.max(previous * factor, minZoom), MAX_ZOOM);
-        const ratio = next / previous;
-        setOffset((current) => ({
-          x: anchorX - (anchorX - current.x) * ratio,
-          y: anchorY - (anchorY - current.y) * ratio,
-        }));
-        return next;
+      setView((previous) => {
+        const nextZoom = Math.min(Math.max(previous.zoom * factor, minZoom), MAX_ZOOM);
+        const ratio = nextZoom / previous.zoom;
+        // Hold the anchor point still, then clamp: zooming out around a corner
+        // shrinks the plan away from the opposite edge, which would otherwise
+        // leave the map parked in the margin it just vacated.
+        const anchored = {
+          x: anchorX - (anchorX - previous.offset.x) * ratio,
+          y: anchorY - (anchorY - previous.offset.y) * ratio,
+        };
+        return { zoom: nextZoom, offset: clampOffset(anchored, nextZoom) };
       });
     },
-    [getFitZoom],
+    [clampOffset, getFitZoom],
   );
 
   /** Zoom about the centre of the viewport (used by the +/- buttons). */
@@ -240,14 +300,20 @@ export default function FloorPlanMap({
       drag.travel = Math.max(drag.travel, Math.hypot(dx, dy));
 
       if (drag.mode === 'pan') {
-        setOffset({ x: drag.startOffset.x + dx, y: drag.startOffset.y + dy });
+        const clamped = clampOffset({ x: drag.startOffset.x + dx, y: drag.startOffset.y + dy }, zoom);
+        // Re-anchor the gesture to wherever the clamp actually landed. Without
+        // this, dragging hard into a stop banks up slack that the user has to
+        // drag back out before the plan moves again — the map would feel stuck
+        // to the pointer on the way out of every edge.
+        drag.startOffset = { x: clamped.x - dx, y: clamped.y - dy };
+        setView((previous) => ({ ...previous, offset: clamped }));
         return;
       }
 
       const point = toImageCoords(event.clientX, event.clientY);
       if (point) onPinChange(point);
     },
-    [onPinChange, toImageCoords],
+    [clampOffset, onPinChange, toImageCoords, zoom],
   );
 
   const handlePointerUp = useCallback(
