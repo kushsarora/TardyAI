@@ -71,6 +71,13 @@ VITE_C3_PKG=pkgbc231600 npm run build
 
 `npm run build` runs ESLint at error level, then `tsc`, then Vite. All three must pass.
 
+Room Finder's server logic (`src/RoomFinder.py`: the model reads the sentence, `NavRouter` picks the
+path) is tested offline against the real router and seed data. Needs `python3` and `node`:
+
+```bash
+python3 -I -m unittest discover -s pkgbc231600/test/py -t pkgbc231600/test/py
+```
+
 ## Secrets
 
 Nothing secret is committed, and nothing secret needs to be. Specifically:

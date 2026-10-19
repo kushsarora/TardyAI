@@ -1,7 +1,10 @@
+import enum
 import io
 import json
 import re
 import time
+from dataclasses import dataclass
+from typing import Optional
 
 _COMPLETION_CONFIG_KEY = "default-completions"
 # Generous, because the model spends output tokens reasoning about the images before it answers;
@@ -170,7 +173,7 @@ def _loadWaypoints(buildingId):
         {
             "filter": c3.Filter.eq("building.id", buildingId),
             "include": "label, floorKey, floorLevel, kind, imageX, imageY, connectorKey, "
-            "roomNumber, name",
+            "roomNumber, name, searchAliases, sourceNode",
             "order": "floorLevel, label",
             "limit": -1,
         }
@@ -187,6 +190,8 @@ def _loadWaypoints(buildingId):
             "connectorKey": w.connectorKey,
             "roomNumber": w.roomNumber,
             "name": w.name,
+            "searchAliases": [str(a) for a in (w.searchAliases or []) if a],
+            "sourceNode": w.sourceNode,
         }
     return byLabel
 
@@ -195,8 +200,9 @@ def _loadPlans(buildingId):
     res = c3.AnnotatedPlan.fetch(
         {
             "filter": c3.Filter.eq("building.id", buildingId),
-            "include": "floorKey, floorLevel, floorName, publicUrl, planImageUrl, c3FileUrl, "
-            "imageWidth, imageHeight, annotatedWidth, annotatedHeight, waypointCount, syncedAt",
+            "include": "floor.id, floorKey, floorLevel, floorName, publicUrl, planImageUrl, "
+            "c3FileUrl, imageWidth, imageHeight, annotatedWidth, annotatedHeight, waypointCount, "
+            "syncedAt",
             "order": "floorLevel",
             "limit": -1,
         }
@@ -206,6 +212,7 @@ def _loadPlans(buildingId):
         plans.append(
             {
                 "id": p.id,
+                "floorId": p.floor.id if p.floor is not None else None,
                 "floorKey": p.floorKey,
                 "floorLevel": int(p.floorLevel or 0),
                 "floorName": p.floorName,
@@ -603,6 +610,7 @@ def _routeWaypoint(point):
         "roomNumber": point.get("roomNumber"),
         "isFloorChange": bool(point.get("isFloorChange")),
         "role": point.get("role") or "via",
+        "nodeId": point.get("nodeId"),
     }
 
 
@@ -631,10 +639,14 @@ def _visionRoute(status, startedAt, **kwargs):
     return spec
 
 
-def _finish(status, startedAt, buildingId, userMessage, normalized, **kwargs):
-    """Build the result, log it, and stamp the log row's id onto the result."""
+def _finish(status, startedAt, buildingId, userMessage, normalized, replayLabels=None, **kwargs):
+    """Build the result, log it, and stamp the log row's id onto the result.
+
+    `replayLabels`, when given, is what the log row stores as its route labels instead of the
+    labels of every drawn point - see `_visionRouteFromNavRoute` for why a router answer needs it.
+    """
     spec = _visionRoute(status, startedAt, **kwargs)
-    spec["queryId"] = _logQuery(buildingId, userMessage, normalized, spec)
+    spec["queryId"] = _logQuery(buildingId, userMessage, normalized, spec, replayLabels)
     return c3.VisionRoute.make(spec)
 
 
@@ -648,8 +660,10 @@ def _stepFloorKeysFromSegments(segments, stepCount):
     return keys
 
 
-def _logQuery(buildingId, message, normalized, spec):
+def _logQuery(buildingId, message, normalized, spec, routeLabels=None):
     """Persist the request. A logging failure must never turn a good route into an error."""
+    if routeLabels is None:
+        routeLabels = [p["label"] for p in spec.get("route") or []]
     try:
         row = c3.RouteQuery.make(
             {
@@ -657,7 +671,7 @@ def _logQuery(buildingId, message, normalized, spec):
                 "userMessage": str(message),
                 "normalizedMessage": normalized,
                 "status": spec.get("status"),
-                "routeLabels": [p["label"] for p in spec.get("route") or []],
+                "routeLabels": list(routeLabels),
                 "steps": spec.get("steps") or [],
                 "question": spec.get("question"),
                 "drawable": bool(spec.get("drawable")),
@@ -722,11 +736,14 @@ def _pinnedAnswer(buildingId, normalized, byLabel, plansByFloor, startedAt, note
 
 
 # ---------------------------------------------------------------------------
-# RoomFinder.findRoute
+# the vision-model path, kept for buildings with no nav graph
 # ---------------------------------------------------------------------------
 
 
-def findRoute(cls, buildingId, message, allowFallback):
+def _findRouteByVision(cls, buildingId, message, allowFallback):
+    """The original vision-model route finder: the model reads the annotated plans and picks
+    every waypoint label. Used only for a building whose waypoints have no nav graph behind them
+    (no `Waypoint.sourceNode`), because there `NavRouter` has nothing to search."""
     startedAt = time.time()
     allowFallback = True if allowFallback is None else bool(allowFallback)
     normalized = _normalizedMessage(message)
@@ -938,6 +955,616 @@ def findRoute(cls, buildingId, message, allowFallback):
             modelName=modelName,
             **usage
         )
+
+
+# ---------------------------------------------------------------------------
+# routing through NavRouter - the model reads the sentence, the graph picks the path
+# ---------------------------------------------------------------------------
+
+# Small, text only: the extraction answer is a few dozen tokens of JSON.
+_EXTRACTION_MAX_TOKENS = 300
+_MAX_SUGGESTIONS = 3
+_ROUTER_SOURCE = "router"
+
+_EXTRACTION_PROMPT = """You read one message from a person inside a building and pull out where
+they are and where they want to go. You do not plan the route and you never name a path.
+
+Reply with a single JSON object and no prose or markdown fences:
+
+{
+  "start": {"text": "<their words for where they are>", "floor": "<floor digits>" or null} or null,
+  "destination": {"text": "<their words for where they are going>", "floor": "<floor digits>" or null} or null,
+  "stepFree": true | false
+}
+
+RULES
+1. "text" is the room number or place name as the person wrote it, e.g. "1270", "rm 3335",
+   "the west entrance", "elevator c". Never correct, complete or guess a room number.
+2. "floor" only when the person says it for that place: "floor one", "level 2" and "second floor"
+   become "1", "2", "2". Otherwise null. Never infer it from a room number.
+3. "start" is null when the message does not say where they are now.
+4. "destination" is null when the message does not say where they want to go.
+5. "stepFree" is true when they mention a wheelchair, crutches, a stroller, luggage, an injury, or
+   avoiding stairs. Otherwise false."""
+
+_EXTRACTION_RETRY = """Your previous answer could not be used.
+
+Reason: %s
+
+Reply again with only the JSON object described in the instructions."""
+
+_ASK_FOR_START = "Where are you starting from? Tell me a room number or an entrance."
+_ASK_FOR_DESTINATION = "Where do you want to go? Tell me a room number or a place."
+
+# Waypoint kinds a person can name as a place. Hallway junctions ("1-W5") are plan labels, not
+# places anyone types, so they never match a request.
+_NAMEABLE_KINDS = frozenset(["room", "entrance", "stairs", "elevator", "restroom"])
+# Offered, in this order, when a non-numeric place is not found.
+_LANDMARK_KINDS = ("entrance", "stairs", "elevator")
+# Kinds that move a route between floors, and so mark a `connector` point at a leg boundary.
+_CONNECTOR_KINDS = frozenset(["stairs", "elevator"])
+
+_ROOM_PREFIX = re.compile(r"^(?:ROOM|RM\.?|NO\.?|NUMBER|#)\s*")
+_LETTERED_ROOM = re.compile(r"^(\d{3,4})([A-Z])$")
+_LEADING_DIGITS = re.compile(r"^\d+")
+
+
+class _Role(enum.Enum):
+    """Which end of the journey an endpoint is; phrases the clarifying question."""
+
+    START = "start"
+    DESTINATION = "destination"
+
+
+@dataclass(frozen=True)
+class _Endpoint:
+    """One end of the request as the person described it. `text` is never blank."""
+
+    text: str
+    floorKey: Optional[str]
+
+
+@dataclass(frozen=True)
+class _Extraction:
+    """The model's validated reading of the message. A missing end is None, never a blank."""
+
+    start: Optional[_Endpoint]
+    destination: Optional[_Endpoint]
+    stepFree: bool
+
+
+@dataclass(frozen=True)
+class _Resolved:
+    """The endpoint is exactly one waypoint, and therefore exactly one MapNode."""
+
+    waypoint: dict
+
+
+@dataclass(frozen=True)
+class _NotFound:
+    """Nothing on the plans matches; `suggestions` are real names or room numbers, maybe none."""
+
+    text: str
+    isRoomNumber: bool
+    suggestions: tuple
+
+
+@dataclass(frozen=True)
+class _Ambiguous:
+    """A named place exists on several floors and nothing said which one."""
+
+    text: str
+    floorKeys: tuple
+
+
+@dataclass(frozen=True)
+class _ExtractionOutcome:
+    """Result of the one model call (plus its retry). Exactly one of `extraction` and `failure`
+    is set; `unreachable` says the failure was the transport, not the answer."""
+
+    extraction: Optional[_Extraction]
+    failure: Optional[str]
+    unreachable: bool
+    retried: bool
+    validationError: Optional[str]
+    modelName: Optional[str]
+    usage: dict
+
+
+class _RouteMappingError(Exception):
+    """The router's answer names a floor the plans do not cover, or has an empty leg."""
+
+
+def _field(obj, name):
+    """Read `name` off a plain dict or a C3 object alike. Missing reads as None."""
+    if isinstance(obj, dict):
+        return obj.get(name)
+    return getattr(obj, name, None)
+
+
+def _joinOr(items):
+    """"a", "a or b", "a, b or c"."""
+    items = list(items)
+    if len(items) <= 1:
+        return "".join(items)
+    return ", ".join(items[:-1]) + " or " + items[-1]
+
+
+def _normalizeRoomText(text):
+    """Canonical room-number spelling of what someone typed: upper case, no spaces, and no
+    "rm" / "room" / "#" / "no." prefix. "rm 1270" and " #1270 " both give "1270"; "1270 a" gives
+    "1270A". Never fails; text that is not a room number just will not match one."""
+    s = " ".join(str(text).upper().split())
+    previous = None
+    while previous != s:
+        previous = s
+        s = _ROOM_PREFIX.sub("", s).strip()
+    return re.sub(r"\s+", "", s)
+
+
+def _nameKey(text):
+    """Lower case, no leading "the", punctuation folded to spaces: "The West Entrance." gives
+    "west entrance"."""
+    s = re.sub(r"[^a-z0-9]+", " ", str(text).lower()).strip()
+    s = re.sub(r"^the\s+", "", s)
+    return " ".join(s.split())
+
+
+def _nameKeysFor(waypoint):
+    """Every spelling a person might use for this waypoint's name: its name, its name without a
+    parenthetical ("Elevator C (east)" -> "elevator c"), its aliases and its plan label."""
+    keys = set()
+    for raw in [waypoint.get("name"), waypoint.get("label")] + list(
+        waypoint.get("searchAliases") or []
+    ):
+        if not raw:
+            continue
+        keys.add(_nameKey(raw))
+        keys.add(_nameKey(re.sub(r"\([^)]*\)", " ", str(raw))))
+    keys.discard("")
+    return keys
+
+
+def _editDistance(a, b):
+    """Optimal string alignment distance: insert, delete, substitute or swap two neighbours,
+    each costing 1. So "1207" -> "1270" is 1, a single transposition."""
+    rows = [list(range(len(b) + 1))]
+    for i in range(1, len(a) + 1):
+        row = [i] + [0] * len(b)
+        for j in range(1, len(b) + 1):
+            cost = 0 if a[i - 1] == b[j - 1] else 1
+            row[j] = min(rows[i - 1][j] + 1, row[j - 1] + 1, rows[i - 1][j - 1] + cost)
+            if i > 1 and j > 1 and a[i - 1] == b[j - 2] and a[i - 2] == b[j - 1]:
+                row[j] = min(row[j], rows[i - 2][j - 2] + 1)
+        rows.append(row)
+    return rows[len(a)][len(b)]
+
+
+def _nearbyRooms(text, roomNumbers, limit=_MAX_SUGGESTIONS):
+    """Up to `limit` existing room numbers someone typing `text` most likely meant, best first.
+
+    Ranked by: a typo away (edit distance 1, e.g. a swapped pair of digits), then the same floor
+    (first digit), then numeric closeness, then the plain number before its lettered sub-rooms.
+    A lettered sub-room ("1210A") is offered only when its plain number does not exist. Returns
+    [] when `text` has no leading digits, so a place name never gets room numbers as suggestions.
+    Deterministic for a given input.
+    """
+    key = _normalizeRoomText(text)
+    digits = _LEADING_DIGITS.match(key)
+    if digits is None:
+        return []
+    wanted = int(digits.group(0))
+    plain = {r for r in roomNumbers if not _LETTERED_ROOM.match(r)}
+    candidates = []
+    for room in set(roomNumbers):
+        if room == key:
+            continue
+        lettered = _LETTERED_ROOM.match(room)
+        if lettered and lettered.group(1) in plain:
+            continue
+        roomDigits = _LEADING_DIGITS.match(room)
+        if roomDigits is None:
+            continue
+        candidates.append(
+            (
+                0 if _editDistance(key, room) <= 1 else 1,
+                0 if room[:1] == key[:1] else 1,
+                abs(int(roomDigits.group(0)) - wanted),
+                len(room),
+                room,
+            )
+        )
+    candidates.sort()
+    return [c[-1] for c in candidates[:limit]]
+
+
+def _landmarkNames(candidates, limit=_MAX_SUGGESTIONS):
+    """Distinct names of the building's entrances, stairs and elevators, in that order."""
+    names = []
+    for kind in _LANDMARK_KINDS:
+        for name in sorted({w["name"] for w in candidates if w["kind"] == kind and w.get("name")}):
+            if name not in names:
+                names.append(name)
+    return names[:limit]
+
+
+def _resolveEndpoint(endpoint, candidates, preferredFloorKey):
+    """Turn one described place into exactly one waypoint, or say why it cannot be.
+
+    `candidates` are waypoints that have a `sourceNode`. Order: exact room number (ignoring case,
+    spaces and an "rm"/"room"/"#" prefix), then the same number without a trailing letter
+    ("1270A" -> "1270"), then a name, alias or label of any nameable place. A room number is
+    unique in a building, so the floor is ignored for it. A named place on several floors (the
+    West Stairs) is narrowed by the endpoint's own floor, then by `preferredFloorKey` (the other
+    end's floor); still several is `_Ambiguous`. No match is `_NotFound` with suggestions.
+    Never raises.
+    """
+    rooms = [w for w in candidates if w["kind"] == "room" and w.get("roomNumber")]
+    key = _normalizeRoomText(endpoint.text)
+    byNumber = {}
+    for w in rooms:
+        byNumber.setdefault(str(w["roomNumber"]).upper(), []).append(w)
+    tries = [key]
+    lettered = _LETTERED_ROOM.match(key)
+    if lettered:
+        tries.append(lettered.group(1))
+    for number in tries:
+        if number in byNumber:
+            return _pickOne(endpoint, byNumber[number], preferredFloorKey)
+
+    nameKey = _nameKey(endpoint.text)
+    named = [
+        w for w in candidates if w["kind"] in _NAMEABLE_KINDS and nameKey in _nameKeysFor(w)
+    ]
+    if named:
+        return _pickOne(endpoint, named, preferredFloorKey)
+
+    if _LEADING_DIGITS.match(key):
+        return _NotFound(
+            key, True, tuple(_nearbyRooms(key, [str(w["roomNumber"]).upper() for w in rooms]))
+        )
+    return _NotFound(endpoint.text.strip(), False, tuple(_landmarkNames(candidates)))
+
+
+def _pickOne(endpoint, matches, preferredFloorKey):
+    if len(matches) == 1:
+        return _Resolved(matches[0])
+    for floorKey in (endpoint.floorKey, preferredFloorKey):
+        onFloor = [w for w in matches if floorKey is not None and w["floorKey"] == floorKey]
+        if len(onFloor) == 1:
+            return _Resolved(onFloor[0])
+    return _Ambiguous(
+        endpoint.text.strip(),
+        tuple(sorted({w["floorKey"] for w in matches}, key=lambda k: (len(k), k))),
+    )
+
+
+def _questionFor(resolution, role):
+    """The clarifying question for an endpoint that did not resolve to one place."""
+    if isinstance(resolution, _Ambiguous):
+        return "Which floor is the %s you mean: %s?" % (
+            resolution.text,
+            _joinOr(resolution.floorKeys),
+        )
+    where = ("room %s" % resolution.text) if resolution.isRoomNumber else ('"%s"' % resolution.text)
+    question = "I can't find %s on these plans." % where
+    if resolution.suggestions:
+        question += " Did you mean %s?" % _joinOr(resolution.suggestions)
+    elif role is _Role.START:
+        question += " Where are you starting from? Tell me a room number or an entrance."
+    else:
+        question += " Tell me a room number or a place."
+    return question
+
+
+def _parseEndpoint(raw, fieldName, knownFloorKeys):
+    if raw is None:
+        return None
+    if not isinstance(raw, dict):
+        raise ValueError('"%s" must be an object or null.' % fieldName)
+    text = raw.get("text")
+    if isinstance(text, bool) or not isinstance(text, (str, int, type(None))):
+        raise ValueError('"%s.text" must be a string or null.' % fieldName)
+    text = "" if text is None else str(text).strip()
+    if not text:
+        return None
+    floor = raw.get("floor")
+    if isinstance(floor, bool) or not isinstance(floor, (str, int, type(None))):
+        raise ValueError('"%s.floor" must be a string of digits or null.' % fieldName)
+    return _Endpoint(text, _normalizeFloorKey(floor, knownFloorKeys))
+
+
+def _parseExtraction(parsed, knownFloorKeys):
+    """Validate the model's extraction JSON into an `_Extraction`.
+
+    Raises ValueError, with a reason fit to send back to the model, when `parsed` is not an
+    object, lacks the "start" or "destination" key, or holds a field of the wrong type. A null
+    or blank end is a missing end (None), not an error. A floor the building does not have
+    becomes None. "stepFree" null or absent means False.
+    """
+    if not isinstance(parsed, dict):
+        raise ValueError("The answer was not a single JSON object.")
+    for key in ("start", "destination"):
+        if key not in parsed:
+            raise ValueError('The answer has no "%s" key; use null when it is not given.' % key)
+    stepFree = parsed.get("stepFree")
+    if stepFree is None:
+        stepFree = False
+    if not isinstance(stepFree, bool):
+        raise ValueError('"stepFree" must be true or false.')
+    return _Extraction(
+        _parseEndpoint(parsed["start"], "start", knownFloorKeys),
+        _parseEndpoint(parsed["destination"], "destination", knownFloorKeys),
+        stepFree,
+    )
+
+
+def _extractEndpoints(client, message, knownFloorKeys):
+    """Ask the model what the message's start and destination are. One retry on a bad answer.
+
+    Never raises: a client exception gives an outcome with `unreachable` True (no retry, since
+    the transport is down rather than the answer wrong); two unusable answers give `failure` set.
+    """
+    messages = [
+        {"role": "system", "content": _EXTRACTION_PROMPT},
+        {"role": "user", "content": str(message)},
+    ]
+    options = {"returnJson": True, "max_tokens": _EXTRACTION_MAX_TOKENS}
+    usage = {"promptTokens": 0, "cachedTokens": 0, "completionTokens": 0}
+    modelName = None
+    validationError = None
+    for attempt in (1, 2):
+        try:
+            response = client.completion(messages=messages, options=options)
+        except Exception as error:
+            return _ExtractionOutcome(
+                None, str(error), True, attempt > 1, validationError, modelName, usage
+            )
+        usage = _addUsage(usage, response)
+        modelName = _modelName(response, client) or modelName
+        rawContent = _responseContent(response)
+        try:
+            extraction = _parseExtraction(_parseJsonContent(rawContent), knownFloorKeys)
+            return _ExtractionOutcome(
+                extraction, None, False, attempt > 1, validationError, modelName, usage
+            )
+        except ValueError as error:
+            validationError = str(error)
+        messages = messages + [
+            {"role": "assistant", "content": str(rawContent or "")},
+            {"role": "user", "content": _EXTRACTION_RETRY % validationError},
+        ]
+    return _ExtractionOutcome(None, validationError, False, True, validationError, modelName, usage)
+
+
+def _waypointsByNode(byLabel):
+    """sourceNode -> waypoint, for every waypoint that has a MapNode behind it."""
+    out = {}
+    for floors in byLabel.values():
+        for point in floors.values():
+            if point.get("sourceNode"):
+                out[point["sourceNode"]] = point
+    return out
+
+
+def _visionRouteFromNavRoute(nav, waypointsByNode, plansByFloorId):
+    """Map a found `NavRoute` onto the `VisionRoute` fields the Room Finder UI draws.
+
+    `nav` is a NavRoute with `found` true, as a C3 object or a plain dict. One segment per leg.
+    Point coordinates are the router's floor-plan pixels, untouched; they are in the same
+    1980x1530 space as `imageWidth`/`imageHeight`, so no scaling. A point's label is its
+    Waypoint label when it has one, else its node id (door nodes have no Waypoint). Steps are
+    every leg's `steps[].text` in order (a leg with no steps contributes its `instruction`), and
+    each step's floor key is its leg's, exactly.
+
+    Returns a dict with route, segments, steps, stepFloorKeys, totalSeconds, totalMeters and
+    replayLabels: the labels of the points that have a Waypoint, which is what a pinned replay
+    can resolve through `_resolveRoute` later.
+
+    Raises _RouteMappingError if a leg is on a floor with no AnnotatedPlan or has no points.
+    """
+    legs = list(_field(nav, "legs") or [])
+    segments, steps, stepFloorKeys, route, replayLabels = [], [], [], [], []
+    for li, leg in enumerate(legs):
+        floorId = _field(leg, "floorId")
+        plan = plansByFloorId.get(floorId)
+        if plan is None:
+            raise _RouteMappingError("The route crosses floor %s, which has no floor plan." % floorId)
+        rawPoints = list(_field(leg, "points") or [])
+        if not rawPoints:
+            raise _RouteMappingError("The route has an empty leg on floor %s." % floorId)
+
+        legSteps = [str(_field(s, "text")) for s in list(_field(leg, "steps") or [])]
+        if not legSteps and _field(leg, "instruction"):
+            legSteps = [str(_field(leg, "instruction"))]
+        stepIndexes = list(range(len(steps), len(steps) + len(legSteps)))
+        steps.extend(legSteps)
+        stepFloorKeys.extend([plan["floorKey"]] * len(legSteps))
+
+        points = []
+        for pi, raw in enumerate(rawPoints):
+            nodeId = str(_field(raw, "nodeId"))
+            waypoint = waypointsByNode.get(nodeId)
+            kind = _field(raw, "kind") or (waypoint["kind"] if waypoint else "hallway")
+            atLegEdge = (pi == 0 and li > 0) or (pi == len(rawPoints) - 1 and li < len(legs) - 1)
+            point = {
+                "label": waypoint["label"] if waypoint else nodeId,
+                "floorKey": plan["floorKey"],
+                "floorLevel": int(_field(leg, "floorLevel") or plan["floorLevel"]),
+                "imageX": float(_field(raw, "x")),
+                "imageY": float(_field(raw, "y")),
+                "kind": kind,
+                "name": waypoint.get("name") if waypoint else None,
+                "roomNumber": waypoint.get("roomNumber") if waypoint else None,
+                "isFloorChange": pi == len(rawPoints) - 1 and li < len(legs) - 1,
+                "role": "connector" if atLegEdge and kind in _CONNECTOR_KINDS else "via",
+                "nodeId": nodeId,
+            }
+            points.append(point)
+            if waypoint:
+                replayLabels.append(waypoint["label"])
+        if li == 0:
+            points[0]["role"] = "start"
+        if li == len(legs) - 1:
+            points[-1]["role"] = "end"
+
+        drawn = [_routeWaypoint(p) for p in points]
+        route.extend(drawn)
+        segments.append(
+            {
+                "floorKey": plan["floorKey"],
+                "floorLevel": drawn[0]["floorLevel"],
+                "floorName": _field(leg, "floorName") or plan.get("floorName"),
+                "planImageUrl": plan.get("planImageUrl"),
+                "annotatedUrl": plan.get("publicUrl"),
+                "imageWidth": plan.get("imageWidth") or 0,
+                "imageHeight": plan.get("imageHeight") or 0,
+                "points": drawn,
+                "stepIndexes": stepIndexes,
+            }
+        )
+    return {
+        "route": route,
+        "segments": segments,
+        "steps": steps,
+        "stepFloorKeys": stepFloorKeys,
+        "totalSeconds": float(_field(nav, "totalSeconds") or 0.0),
+        "totalMeters": float(_field(nav, "totalMeters") or 0.0),
+        "replayLabels": replayLabels,
+    }
+
+
+# ---------------------------------------------------------------------------
+# RoomFinder.findRoute
+# ---------------------------------------------------------------------------
+
+
+def findRoute(cls, buildingId, message, allowFallback):
+    startedAt = time.time()
+    allowFallback = True if allowFallback is None else bool(allowFallback)
+    normalized = _normalizedMessage(message)
+
+    byLabel = _loadWaypoints(buildingId)
+    waypointsByNode = _waypointsByNode(byLabel)
+    if byLabel and not waypointsByNode:
+        return _findRouteByVision(cls, buildingId, message, allowFallback)
+
+    plans = _loadPlans(buildingId)
+    missing = []
+    if not byLabel:
+        missing.append("no waypoints are loaded")
+    if not plans:
+        missing.append("no annotated floor plans are loaded")
+    if missing:
+        # Setup problems are reported but not logged - they are not route attempts.
+        return c3.VisionRoute.make(
+            _visionRoute(
+                "error",
+                startedAt,
+                source=_ROUTER_SOURCE,
+                message="Building '%s' is not set up for the route finder: %s."
+                % (buildingId, ", ".join(missing)),
+            )
+        )
+    plansByFloor = {p["floorKey"]: p for p in plans}
+    plansByFloorId = {p["floorId"]: p for p in plans if p.get("floorId")}
+    candidates = list(waypointsByNode.values())
+
+    def finish(status, **kwargs):
+        return _finish(status, startedAt, buildingId, message, normalized, **kwargs)
+
+    def fallbackOr(reason, errorMessage, **kwargs):
+        if allowFallback:
+            cached = _pinnedAnswer(buildingId, normalized, byLabel, plansByFloor, startedAt, reason)
+            if cached is not None:
+                return cached
+        kwargs.setdefault("source", _ROUTER_SOURCE)
+        return finish("error", message=errorMessage, **kwargs)
+
+    try:
+        client = c3.GenaiCore.Llm.Completion.Client.forConfigKey(_COMPLETION_CONFIG_KEY)
+        clientError = None
+    except Exception as error:
+        client = None
+        clientError = str(error)
+    if client is None:
+        return fallbackOr(
+            "Showing a saved answer - the routing model is unavailable.",
+            "The routing model is not available: %s"
+            % (clientError or "no completion client is configured"),
+        )
+
+    outcome = _extractEndpoints(client, message, set(plansByFloor.keys()))
+    common = dict(
+        source=_ROUTER_SOURCE,
+        retried=outcome.retried,
+        validationError=outcome.validationError,
+        modelName=outcome.modelName,
+        **outcome.usage
+    )
+    if outcome.extraction is None:
+        if outcome.unreachable:
+            return fallbackOr(
+                "Showing a saved answer - the routing model could not be reached.",
+                "The routing model could not be reached. %s" % outcome.failure,
+                **common
+            )
+        return fallbackOr(
+            "Showing a saved answer - the live one did not check out.",
+            "I could not read where you are and where you are going from that. Try "
+            '"I\'m in 1310, how do I get to 1270".',
+            **common
+        )
+    extraction = outcome.extraction
+
+    if extraction.start is None:
+        return finish("clarify", question=_ASK_FOR_START, suggestions=[], **common)
+    start = _resolveEndpoint(extraction.start, candidates, None)
+    if not isinstance(start, _Resolved):
+        return finish(
+            "clarify",
+            question=_questionFor(start, _Role.START),
+            suggestions=list(getattr(start, "suggestions", ())),
+            **common
+        )
+    if extraction.destination is None:
+        return finish("clarify", question=_ASK_FOR_DESTINATION, suggestions=[], **common)
+    destination = _resolveEndpoint(
+        extraction.destination, candidates, start.waypoint["floorKey"]
+    )
+    if not isinstance(destination, _Resolved):
+        return finish(
+            "clarify",
+            question=_questionFor(destination, _Role.DESTINATION),
+            suggestions=list(getattr(destination, "suggestions", ())),
+            **common
+        )
+
+    startNode = start.waypoint["sourceNode"]
+    destNode = destination.waypoint["sourceNode"]
+    if startNode == destNode:
+        return finish(
+            "clarify",
+            question="You're already at %s. Where do you want to go?" % destination.waypoint["label"],
+            suggestions=[],
+            **common
+        )
+
+    nav = c3.NavRouter.findRoute(startNode, destNode, extraction.stepFree)
+    if not _field(nav, "found"):
+        return finish(
+            "error",
+            message=str(_field(nav, "message") or "No walkable route was found."),
+            **common
+        )
+    try:
+        mapped = _visionRouteFromNavRoute(nav, waypointsByNode, plansByFloorId)
+    except _RouteMappingError as error:
+        return finish("error", message=str(error), **common)
+    replayLabels = mapped.pop("replayLabels")
+    return finish(
+        "ok", drawable=True, suggestions=[], replayLabels=replayLabels, **dict(common, **mapped)
+    )
 
 
 # ---------------------------------------------------------------------------
