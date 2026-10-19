@@ -46,8 +46,11 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
+# Anchored to the repo root: these name setuptools build outputs, but unanchored
+# they also match any nested source folder of the same name — an unanchored `lib/`
+# silently dropped the React app's own `src/lib/`.
+/lib/
+/lib64/
 parts/
 sdist/
 var/
@@ -208,11 +211,3 @@ results/
 /*.jpg
 /*.jpeg
 /*.webp
-
-# The Python section above carries an unanchored `lib/` (meant for a setuptools build
-# directory), which also matches the React app's own source folder and silently drops
-# `src/lib/utils.ts` — the `cn` helper every `components/ui/*` file imports. A fresh
-# clone therefore could not type-check the frontend at all. Re-include the directory;
-# `git` cannot un-ignore a file whose parent directory is excluded, so the negation has
-# to name the folder, not a glob of its contents.
-!pkgbc231600/ui/react/src/lib/
