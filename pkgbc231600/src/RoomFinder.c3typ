@@ -9,6 +9,24 @@
  *
  * ### How a route is produced
  *
+ * The model reads the sentence; the graph picks the path:
+ *
+ * 1. One small text-only model call extracts the start and the destination
+ *    (each a room number or place name, plus a floor if the user said one) and
+ *    whether the user needs a step-free route, as validated JSON. One retry on
+ *    an unusable answer.
+ * 2. Each end is resolved to a {@link Waypoint}, and so to its {@link MapNode},
+ *    in plain code: exact room number first (ignoring case, spaces and a
+ *    "rm"/"room"/"#" prefix), then a place name. A room that is not on the plans
+ *    comes back as `clarify` with up to three
+ *    {@link VisionRoute#suggestions}; a missing start asks for one.
+ * 3. {@link NavRouter#findRoute} routes between the two nodes, so Room Finder
+ *    and Navigate always give the same path and steps. Its legs become
+ *    {@link RouteFloorSegment}s with the router's pixel coordinates as they are.
+ *
+ * The vision path below is what this type did before, and still does for a
+ * building whose waypoints have no {@link MapNode} behind them:
+ *
  * 1. Load the building's {@link AnnotatedPlan} set and {@link BuildingFacts}.
  * 2. Send the model one message: the facts, then every annotated floor image,
  *    then the user's sentence last. The facts and the images form a **cached
@@ -38,22 +56,24 @@
  * hand-authored {@link NavEdge} graph, and is exact wherever that graph exists.
  * `RoomFinder` needs no graph at all — only labelled images and a page of prose —
  * so it is what generalises to a building nobody has digitised. They share the
- * geometry (a {@link Waypoint} is derived from a {@link MapNode}) and are
- * otherwise independent; neither calls the other.
+ * geometry (a {@link Waypoint} is derived from a {@link MapNode}).
+ * {@link RoomFinder#findRoute} calls {@link NavRouter#findRoute} wherever the
+ * graph exists, and falls back to the vision model only where it does not.
  *
  * ### Setup order
  *
- * {@link RoomFinder#syncPlanImages} must have run once before
- * {@link RoomFinder#findRoute} will work, because the app server cannot read the
- * UI service's filesystem and the model is given images from the C3 Filesystem.
+ * The router path needs no images. The vision path does:
+ * {@link RoomFinder#syncPlanImages} must have run once before it will work,
+ * because the app server cannot read the UI service's filesystem and the model
+ * is given images from the C3 Filesystem.
  * {@link RoomFinder#diagnostics} reports whether that has happened.
  */
 @py(env='server')
 type RoomFinder {
 
   /**
-   * Answer one wayfinding request: ask the vision model to read the building's
-   * annotated floor plans and return a drawable route.
+   * Answer one wayfinding request: read the start and destination out of the
+   * sentence and route between them with {@link NavRouter#findRoute}.
    *
    * The whole pipeline — prompt assembly, the model call, validation, the single
    * retry, label resolution and logging — is described in the type-level notes.
