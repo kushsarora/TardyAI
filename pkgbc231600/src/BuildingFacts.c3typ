@@ -1,0 +1,53 @@
+/**
+ * The short plain-text briefing about one building that is sent to the vision
+ * model alongside the annotated floor plans on every route request.
+ *
+ * ### Why this exists
+ *
+ * A photographed floor plan shows what is *on* a floor but almost nothing about
+ * how floors relate. Nothing on the image says that the west stairwell stops at
+ * level 3, that `E3` is the only sensible shaft for the east wing, or that the
+ * second digit of a room number encodes the wing rather than the floor. Those
+ * facts are what cross-floor routes get wrong, and a dozen lines of prose here
+ * fix far more mistakes than a better prompt does.
+ *
+ * It is deliberately **prose, not structure**. The model reads it as context, so
+ * authoring it is a demo-tuning activity: walk a route that comes out wrong, work
+ * out which unstated fact would have prevented it, add that line. A normalized
+ * schema of shafts and wings would be more satisfying and much slower to iterate
+ * on, and the deterministic {@link NavRouter} already covers the case where
+ * structure is genuinely required.
+ *
+ * One row per {@link Building}; id convention `facts-<buildingId>`.
+ */
+entity type BuildingFacts {
+
+  /**
+   * The building these facts describe. One row per building.
+   */
+  building: !Building
+
+  /**
+   * The briefing itself — a dozen or so lines of plain text or light markdown,
+   * injected verbatim into the cached prefix of the model request.
+   *
+   * Should cover, for this building: which shafts reach which floors and which
+   * are step-free; what the room-numbering scheme encodes; how the wings are laid
+   * out; which entrances exist; and explicitly **which floors are not mapped**, so
+   * the model answers "I don't have that floor" instead of inventing waypoints
+   * for it.
+   *
+   * Keep it short. This text sits in front of every request, and vagueness here
+   * costs accuracy on exactly the cross-floor routes that are worth demoing.
+   */
+  facts: !string
+
+  /**
+   * The curated, verified example prompts offered to the user as tappable chips.
+   *
+   * These are the routes that have been walked in person and confirmed correct, so
+   * they are both the demo script and the regression suite. They are also the set
+   * eligible for the offline fallback — see {@link RouteQuery#isPinned}.
+   */
+  demoRoutes: [string]
+}

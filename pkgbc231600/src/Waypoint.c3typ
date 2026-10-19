@@ -1,0 +1,173 @@
+/**
+ * A navigable point whose short identifier is **physically printed onto the
+ * annotated floor plan image**, so that a vision LLM can read it and refer to it.
+ *
+ * `Waypoint` is the vocabulary shared between three parties that otherwise have
+ * no common coordinate system:
+ *
+ * 1. the **annotated plan image** ({@link AnnotatedPlan}), which carries the
+ *    {@link Waypoint#label} drawn next to a coloured dot;
+ * 2. the **vision model**, which reads those labels off the image and answers
+ *    with label strings and nothing else; and
+ * 3. the **frontend**, which looks each returned label back up here to get the
+ *    pixel position it needs to draw a line.
+ *
+ * ### Why labels and not coordinates
+ *
+ * Vision models are unreliable at emitting pixel coordinates but good at reading
+ * text printed on an image. So the model is never asked where something is — it
+ * is asked *which labelled point* to go to, and the authoritative geometry stays
+ * here in the database. A hallucinated label fails a cheap set-membership check
+ * (see {@link RoomFinder#findRoute}); a hallucinated coordinate would instead
+ * draw a plausible-looking line through a wall. This is the single design choice
+ * that makes the feature demo-safe.
+ *
+ * ### Geometry
+ *
+ * {@link Waypoint#imageX} / {@link Waypoint#imageY} are in the **original** plan
+ * raster space described by {@link Floor#imageWidth} / {@link Floor#imageHeight},
+ * *not* the downscaled annotated render. The annotated image exists only to be
+ * read by the model, so its resolution is deliberately irrelevant to correctness
+ * and can change without touching any geometry.
+ *
+ * ### Relationship to {@link MapNode}
+ *
+ * Waypoints are derived from the hand-authored {@link MapNode} graph by
+ * `tools/build_waypoints.py`, which also renders the annotated images, so the two
+ * can never drift apart in position. {@link Waypoint#sourceNode} records the
+ * provenance. The two types are deliberately not merged: `MapNode` carries
+ * routing topology (edges, traversal cost, step-free flags) for the deterministic
+ * A* router in {@link NavRouter}, whereas a `Waypoint` carries only a label and a
+ * position, because the vision model supplies the topology itself.
+ */
+entity type Waypoint {
+
+  /**
+   * The building this waypoint belongs to.
+   *
+   * Denormalized alongside {@link Waypoint#floor} so that
+   * {@link RoomFinder#findRoute} can load a whole building's label vocabulary in
+   * one fetch, without a join through {@link Floor}.
+   */
+  building: !Building
+
+  /**
+   * The floor whose plan this waypoint is drawn on.
+   *
+   * Also fixes the pixel space that {@link Waypoint#imageX} and
+   * {@link Waypoint#imageY} are measured in.
+   */
+  floor: !Floor
+
+  /**
+   * Short floor key as the model sees it on the image and in its answer — "1",
+   * "2", "3".
+   *
+   * Deliberately a string, not the numeric {@link Waypoint#floorLevel}: basements
+   * and mezzanines ("B", "M") are the normal way floors get named on a posted
+   * plan, and a string key means adding one is a data change rather than a schema
+   * change.
+   */
+  floorKey: !string
+
+  /**
+   * Numeric floor level, matching {@link Floor#level}.
+   *
+   * Kept beside {@link Waypoint#floorKey} because ordering floor tabs and
+   * deciding whether a shaft goes *up* or *down* both need arithmetic, which a
+   * string key cannot provide.
+   */
+  floorLevel: !int
+
+  /**
+   * The identifier printed on the annotated plan image, and the only token the
+   * vision model is permitted to emit.
+   *
+   * Four shapes, all chosen to be short enough to print legibly at plan scale and
+   * unambiguous when read back:
+   *
+   * - `<floorKey>-W<n>` — a hallway or corridor junction, e.g. "2-W14".
+   * - the bare room number — e.g. "2240". Room numbers already encode their floor
+   *   in Grainger Hall, so they need no prefix and are globally unique.
+   * - `S<n>` / `E<n>` — a stairwell or elevator shaft, e.g. "S1", "E3". **These
+   *   repeat across floors on purpose** — see {@link Waypoint#connectorKey}.
+   * - `ENT-<compass>` / `<floorKey>-WC` — an entrance, or the restrooms.
+   *
+   * Unique per floor, but *not* unique per building: that is exactly what lets the
+   * model change floors. Resolve a label to a row with
+   * {@link Waypoint#floorKey} + `label`.
+   */
+  label: !string
+
+  /**
+   * What sort of place this is: `hallway`, `room`, `stairs`, `elevator`,
+   * `entrance` or `restroom`.
+   *
+   * Drives the marker colour and radius both in the rendered annotated image and
+   * in the frontend SVG overlay, so the two always agree visually. Mirrors
+   * {@link MapNode#kind} and is a string for the same reason — a new kind should
+   * not require a schema migration.
+   */
+  kind: !string
+
+  /**
+   * X position in the owning floor's original pixel space, in pixels from the
+   * left edge; valid range 0 to {@link Floor#imageWidth}.
+   */
+  imageX: !double
+
+  /**
+   * Y position in the owning floor's original pixel space, in pixels from the
+   * **top** edge (+Y points down); valid range 0 to {@link Floor#imageHeight}.
+   */
+  imageY: !double
+
+  /**
+   * Shared identifier tying one physical vertical shaft together across every
+   * floor it serves, e.g. "stair-west" on levels 1, 2 and 3.
+   *
+   * Null for anything that is not a stair or an elevator. Every waypoint sharing a
+   * `connectorKey` also shares a single {@link Waypoint#label}, which is the
+   * mechanism by which the model changes floors: emitting "S1" once means "leave
+   * this floor by that shaft and arrive at the same shaft on the next floor".
+   * {@link RoomFinder#findRoute} relies on this to decide whether a floor change
+   * between two consecutive labels is legal or a hallucination.
+   */
+  connectorKey: string
+
+  /**
+   * Official room number as printed on the door and in the timetable, e.g.
+   * "2240".
+   *
+   * Equal to {@link Waypoint#label} for `room` waypoints and null for everything
+   * else; kept as its own field so the UI can tell "this is a real room you can
+   * walk into" from "this is corridor geometry" without parsing the label.
+   */
+  roomNumber: string
+
+  /**
+   * Human-readable name of the space, e.g. "Jack F Keller Lecture Hall".
+   *
+   * Shown in the step list and on the route pins so a student sees a place rather
+   * than a code. Null where the plan gives no name.
+   */
+  name: string
+
+  /**
+   * Additional search terms for this point, e.g. "Learning Commons" or
+   * "room 2210".
+   *
+   * Used for the frontend's local filtering of the waypoint catalogue. Not sent
+   * to the model, which must work from what it can read on the image.
+   */
+  searchAliases: [string]
+
+  /**
+   * Id of the {@link MapNode} this waypoint was generated from.
+   *
+   * Provenance only — it lets `tools/build_waypoints.py` be re-run idempotently
+   * and makes it possible to cross-check a vision route against the deterministic
+   * {@link NavRouter} result for the same trip.
+   */
+  sourceNode: string
+}

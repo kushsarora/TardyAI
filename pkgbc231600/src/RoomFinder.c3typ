@@ -1,0 +1,152 @@
+/**
+ * The vision-LLM wayfinding engine — the backend API the React client calls to
+ * turn a sentence like "I'm on floor 2 near 2240, need to get to 1641" into a
+ * route drawn on the building's floor plans.
+ *
+ * `RoomFinder` holds no state of its own; it is a home for static server-side
+ * methods, each callable from the frontend via `c3Action`, e.g.
+ * `c3Action('RoomFinder', 'findRoute', ['grainger', message, true])`.
+ *
+ * ### How a route is produced
+ *
+ * 1. Load the building's {@link AnnotatedPlan} set and {@link BuildingFacts}.
+ * 2. Send the model one message: the facts, then every annotated floor image,
+ *    then the user's sentence last. The facts and the images form a **cached
+ *    prefix** — byte identical on every request — so repeat calls re-read them
+ *    from the provider's prompt cache instead of paying for them again.
+ * 3. The model answers with JSON containing an ordered list of **waypoint
+ *    labels** it read off the images, plus one instruction per leg.
+ * 4. Validate: every label must exist in {@link Waypoint}, and consecutive labels
+ *    must be on the same floor unless they are the same shaft label on two floors.
+ * 5. On failure, retry **once** with the validation error appended. If it fails
+ *    again, return the written steps with {@link VisionRoute#drawable} false and
+ *    draw nothing.
+ * 6. Resolve each label to its stored pixel position, split the journey into one
+ *    {@link RouteFloorSegment} per floor, and log a {@link RouteQuery}.
+ *
+ * ### Why the model never emits coordinates
+ *
+ * It emits labels, which are checked against the database before anything is
+ * drawn. A hallucinated label fails step 4 and degrades to text; a hallucinated
+ * coordinate would instead draw a confident line through a wall. See
+ * {@link Waypoint} for the full rationale — it is the choice the whole feature
+ * rests on.
+ *
+ * ### Relationship to {@link NavRouter}
+ *
+ * {@link NavRouter} solves the same journey deterministically with A* over a
+ * hand-authored {@link NavEdge} graph, and is exact wherever that graph exists.
+ * `RoomFinder` needs no graph at all — only labelled images and a page of prose —
+ * so it is what generalises to a building nobody has digitised. They share the
+ * geometry (a {@link Waypoint} is derived from a {@link MapNode}) and are
+ * otherwise independent; neither calls the other.
+ *
+ * ### Setup order
+ *
+ * {@link RoomFinder#syncPlanImages} must have run once before
+ * {@link RoomFinder#findRoute} will work, because the app server cannot read the
+ * UI service's filesystem and the model is given images from the C3 Filesystem.
+ * {@link RoomFinder#diagnostics} reports whether that has happened.
+ */
+@py(env='server')
+type RoomFinder {
+
+  /**
+   * Answer one wayfinding request: ask the vision model to read the building's
+   * annotated floor plans and return a drawable route.
+   *
+   * The whole pipeline — prompt assembly, the model call, validation, the single
+   * retry, label resolution and logging — is described in the type-level notes.
+   *
+   * Takes a few seconds, dominated by output generation rather than by the images,
+   * which are cached. The caller is expected to show a loading state for the
+   * duration.
+   *
+   * Never throws for an expected failure. A model outage, an unparseable answer or
+   * a hallucinated label all come back as {@link VisionRoute#status} `error`, and
+   * an ambiguous request comes back as `clarify`. Note the separate channel for
+   * bad arguments: `buildingId` and `message` are `!string`, so the **platform**
+   * rejects null, `""` and whitespace-only values with `Err.InvalidCall` before
+   * this method runs. Guard the input box rather than relying on a returned error.
+   *
+   * @param buildingId
+   *          Id of the {@link Building} to route within, e.g. "grainger".
+   * @param message
+   *          The user's sentence, describing where they are and where they want to
+   *          go. Passed to the model verbatim, after the cached prefix.
+   * @param allowFallback
+   *          When true (the recommended default) and the model cannot be reached,
+   *          replay a pinned {@link RouteQuery} whose
+   *          {@link RouteQuery#normalizedMessage} matches this request, returning
+   *          it with {@link VisionRoute#source} `cache`. Null is treated as true.
+   *          Pass false to force a live call — which is what prompt tuning needs,
+   *          since a cached answer would mask the change being tested.
+   * @return the route, a clarifying question, or an error — always a value, never
+   *          an exception. See {@link VisionRoute}.
+   */
+  findRoute: function(buildingId: !string, message: !string, allowFallback: boolean): !VisionRoute py
+
+  /**
+   * Copy each annotated plan image from the UI service into the C3 Filesystem, so
+   * that server-side code can read it.
+   *
+   * Necessary because the app server and the UI service do not share a filesystem.
+   * The annotated PNGs are checked into the repository under
+   * `ui/react/public/plans/annotated/` and served to browsers from there; this
+   * method fetches each one over the pod-local network and writes it to
+   * {@link AnnotatedPlan#c3FileUrl}, stamping
+   * {@link AnnotatedPlan#syncedAt} on success.
+   *
+   * Idempotent — safe to re-run, and **must** be re-run after the images are
+   * re-rendered, or the model will keep reading the previous labels. Run it once
+   * after `upsertSeedData` on a fresh environment.
+   *
+   * @param buildingId
+   *          Id of the {@link Building} whose plans to sync.
+   * @param uiServiceBaseUrl
+   *          Base URL of the UI service, e.g.
+   *          `http://localhost:9000/<tenant>/<tag>/uiservice`. Null derives it
+   *          from the default file system mount, which is correct inside a C3 Code
+   *          workspace; pass it explicitly anywhere else.
+   * @return the number of plans successfully synced.
+   */
+  syncPlanImages: function(buildingId: !string, uiServiceBaseUrl: string): !int py
+
+  /**
+   * Mark a logged {@link RouteQuery} as a curated fallback answer, or un-mark it.
+   *
+   * A pinned row is replayed by {@link RoomFinder#findRoute} when the model cannot
+   * be reached, which is the mitigation for an API outage or rate limit during a
+   * demo. Only `ok`, drawable rows can be pinned: a cached answer that cannot be
+   * drawn, or that was itself an error, is worse than no fallback.
+   *
+   * Pinning asserts "a human has walked this route and this answer is correct", so
+   * it is deliberately a manual action rather than something inferred from a
+   * successful request.
+   *
+   * @param queryId
+   *          Id of the {@link RouteQuery} to pin, as returned in
+   *          {@link VisionRoute#queryId}.
+   * @param pinned
+   *          True to pin, false to un-pin. Null is treated as true.
+   * @return true if the row was updated; false if no such row exists, or if it was
+   *          not an `ok` drawable result and so is ineligible.
+   */
+  pinRoute: function(queryId: !string, pinned: boolean): !boolean py
+
+  /**
+   * Report whether this building is ready to answer route requests.
+   *
+   * Checks the things that silently produce a useless route rather than an error:
+   * waypoints loaded, plans loaded, every plan actually synced into the C3
+   * Filesystem, facts present, and a reachable completion client. Intended as the
+   * first call after a fresh deployment or a merge, and as a cheap smoke test.
+   *
+   * @param buildingId
+   *          Id of the {@link Building} to check.
+   * @return a json object with `ready` (boolean) plus per-check counts and a
+   *          `problems` list naming anything missing, in the order it should be
+   *          fixed.
+   */
+  diagnostics: function(buildingId: !string): !json py
+}

@@ -1,0 +1,88 @@
+/**
+ * One point on a resolved route: a label the model returned, joined to the
+ * authoritative pixel position held by the matching {@link Waypoint}.
+ *
+ * This is the bridge between the model's answer and something drawable. The model
+ * emits only `"S1"`; the server resolves that to a floor and a coordinate and
+ * hands the frontend this flattened value, which carries everything needed to
+ * place a dot and a label without a further lookup.
+ *
+ * Plain value type with no identity — routes are computed per request and the
+ * durable record is {@link RouteQuery}.
+ */
+type RouteWaypoint {
+
+  /**
+   * The label as it appears on the plan and in the model's answer, e.g. "2-W14",
+   * "S1" or "2240".
+   *
+   * Already normalized: trimmed, upper-cased for shaft and entrance labels, and
+   * stripped of any parenthetical the model added — it has a habit of answering
+   * `"S1 (Floor 2)"`, which must not reach the client as a label.
+   */
+  label: !string
+
+  /**
+   * Short key of the floor this point is on — "1", "2", "3".
+   *
+   * Groups points into {@link RouteFloorSegment}s. For a shaft label that appears
+   * on several floors, this is the *resolved* floor for this position in the
+   * route, so the same label legitimately appears twice in one route with two
+   * different floor keys.
+   */
+  floorKey: !string
+
+  /**
+   * Numeric level of {@link RouteWaypoint#floorKey}; used to order floor tabs and
+   * to tell up from down at a floor change.
+   */
+  floorLevel: !int
+
+  /**
+   * X position in the original plan raster space — the `viewBox` space of the
+   * frontend's SVG overlay, matching {@link AnnotatedPlan#imageWidth}.
+   */
+  imageX: !double
+
+  /**
+   * Y position in the original plan raster space, measured from the top edge.
+   */
+  imageY: !double
+
+  /**
+   * The underlying {@link Waypoint#kind}: `hallway`, `room`, `stairs`,
+   * `elevator`, `entrance` or `restroom`. Drives marker styling in the overlay.
+   */
+  kind: !string
+
+  /**
+   * Human-readable name of the space when there is one, e.g. "West Stairs";
+   * otherwise null. Shown on start and end pins.
+   */
+  name: string
+
+  /**
+   * Room number when this point is a room, otherwise null.
+   */
+  roomNumber: string
+
+  /**
+   * True when the route leaves this floor at this point.
+   *
+   * Set on the **last** point of a segment, i.e. the shaft the route enters, and
+   * not on the matching arrival point on the next floor. The UI draws a stair or
+   * elevator badge here and auto-advances the floor tab.
+   */
+  isFloorChange: !boolean
+
+  /**
+   * Where this point sits in the journey: `start`, `end`, `connector` for a shaft
+   * used to change floors, or `via` for an intermediate corridor point.
+   *
+   * Lets the overlay distinguish the start pin, the destination pin and the plain
+   * geometry in between without re-deriving it from array indices — which would
+   * be wrong anyway, since each floor segment has its own first and last point
+   * that are generally *not* the journey's start and end.
+   */
+  role: !string
+}

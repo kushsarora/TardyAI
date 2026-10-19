@@ -1,0 +1,151 @@
+/**
+ * A persisted record of one route request and what the model answered.
+ *
+ * Serves three purposes, in increasing order of how much they matter on demo day:
+ *
+ * 1. **Prompt tuning.** {@link RouteQuery#routeLabels} next to
+ *    {@link RouteQuery#validationError} and {@link RouteQuery#retried} shows
+ *    exactly which trips the model gets wrong and how, which is the only reliable
+ *    way to decide what to add to {@link BuildingFacts#facts}.
+ * 2. **Cost and latency accounting.** {@link RouteQuery#cachedTokens} against
+ *    {@link RouteQuery#promptTokens} proves the prompt cache is actually being
+ *    hit — a cache that silently stopped working looks identical to one that
+ *    works, apart from the bill.
+ * 3. **An offline fallback.** A row with {@link RouteQuery#isPinned} true is a
+ *    known-good answer for a verified demo route, replayed by
+ *    {@link RoomFinder#findRoute} when the model is unavailable. This is the
+ *    mitigation for an API outage or rate limit during the pitch.
+ *
+ * Every request is logged, successes and failures alike, because a failed request
+ * is the more interesting record. Writing the row never blocks the response: a
+ * logging failure must not turn a good route into an error.
+ */
+entity type RouteQuery {
+
+  /**
+   * The building the request was made against.
+   */
+  building: !Building
+
+  /**
+   * The user's message, exactly as typed, e.g.
+   * "I'm on floor 2 near 2240, need to get to 1641".
+   *
+   * Kept verbatim for prompt tuning — the phrasing *is* the test case.
+   */
+  userMessage: !string
+
+  /**
+   * Lower-cased, whitespace-collapsed form of {@link RouteQuery#userMessage},
+   * used as the lookup key for the fallback cache.
+   *
+   * Normalizing means a demo chip tapped twice, or re-typed with different
+   * spacing or casing, still finds its pinned answer. It is intentionally a crude
+   * exact-match key rather than a semantic one: a fallback that silently answers a
+   * *similar* question with the wrong route is worse at a demo than no fallback.
+   */
+  normalizedMessage: !string
+
+  /**
+   * Outcome of the request: `ok` when a route came back, `clarify` when the model
+   * asked a question instead, `error` when no usable answer could be produced.
+   *
+   * Mirrors {@link VisionRoute#status}; see that field for the full contract.
+   */
+  status: !string
+
+  /**
+   * The ordered waypoint labels the model returned, after normalization and after
+   * validation passed, e.g. `["2240","2-W14","S1","1-W3","1641"]`.
+   *
+   * Empty for a `clarify` or `error` outcome. These are labels rather than
+   * {@link Waypoint} ids so that a pinned row stays replayable after waypoints are
+   * re-generated and their ids change.
+   */
+  routeLabels: [string]
+
+  /**
+   * The human-readable instructions the model wrote, one per leg.
+   */
+  steps: [string]
+
+  /**
+   * The model's question when {@link RouteQuery#status} is `clarify` — e.g. which
+   * of two similarly numbered rooms was meant. Null otherwise.
+   */
+  question: string
+
+  /**
+   * Whether every returned label resolved to a {@link Waypoint}, so the frontend
+   * could draw the line.
+   *
+   * False with {@link RouteQuery#status} `ok` is the specific degraded case worth
+   * watching: the model produced sensible instructions but at least one label
+   * could not be placed, so the user got text steps and no drawn route.
+   */
+  drawable: boolean
+
+  /**
+   * Whether the one permitted retry was used — i.e. the first answer failed
+   * validation and was sent back to the model with the error.
+   *
+   * A rising rate here is the earliest signal that the labels on the plans have
+   * become hard to read, or that {@link BuildingFacts#facts} is missing something.
+   */
+  retried: boolean
+
+  /**
+   * Why validation rejected the model's answer, e.g. an unknown label or an
+   * illegal floor change. Null when validation passed.
+   *
+   * Populated even when the retry subsequently succeeded, so the failure mode is
+   * not lost.
+   */
+  validationError: string
+
+  /**
+   * Wall-clock duration of the whole request in milliseconds, including any retry.
+   *
+   * The number the loading-state copy has to cover; typically a few seconds.
+   */
+  latencyMs: int
+
+  /**
+   * Identifier of the model that answered, e.g. the configured completion client's
+   * model name.
+   *
+   * Recorded because accuracy on these routes is strongly model-dependent, so a
+   * logged route is only meaningful next to the model that produced it.
+   */
+  modelName: string
+
+  /**
+   * Total input tokens billed for the request, images included.
+   */
+  promptTokens: int
+
+  /**
+   * How many of {@link RouteQuery#promptTokens} were served from the prompt cache.
+   *
+   * Should be close to the full prompt size on every request after the first,
+   * because the cached prefix — the facts and all the floor images — is identical
+   * each time. A sustained zero here means caching has broken and every request is
+   * paying full price for the same images.
+   */
+  cachedTokens: int
+
+  /**
+   * Output tokens generated. Dominates latency, since the input is cached.
+   */
+  completionTokens: int
+
+  /**
+   * Whether this row is a curated fallback answer.
+   *
+   * Pinned rows are the verified demo routes, and are the only rows
+   * {@link RoomFinder#findRoute} will replay when the model cannot be reached.
+   * Pinning is a manual, deliberate act: it asserts "a human has walked this route
+   * and this answer is correct", which no automatic heuristic can establish.
+   */
+  isPinned: boolean
+}

@@ -1,0 +1,1422 @@
+[
+  {
+    "id": "wp-grainger-f1-E1",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "E1",
+    "kind": "elevator",
+    "imageX": 400.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f1-elev-wa",
+    "connectorKey": "elev-west-a",
+    "name": "Elevator A (west)",
+    "searchAliases": [
+      "Elevator A (west)"
+    ]
+  },
+  {
+    "id": "wp-grainger-f1-E2",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "E2",
+    "kind": "elevator",
+    "imageX": 615.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f1-elev-wb",
+    "connectorKey": "elev-west-b",
+    "name": "Elevator B (west)",
+    "searchAliases": [
+      "Elevator B (west)"
+    ]
+  },
+  {
+    "id": "wp-grainger-f1-E3",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "E3",
+    "kind": "elevator",
+    "imageX": 1410.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f1-elev-e",
+    "connectorKey": "elev-east",
+    "name": "Elevator C (east)",
+    "searchAliases": [
+      "Elevator C (east)"
+    ]
+  },
+  {
+    "id": "wp-grainger-f1-ENT-W",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "ENT-W",
+    "kind": "entrance",
+    "imageX": 250.0,
+    "imageY": 1300.0,
+    "sourceNode": "n-f1-entrance-w",
+    "name": "West Entrance",
+    "searchAliases": [
+      "West Entrance"
+    ]
+  },
+  {
+    "id": "wp-grainger-f1-1-W2",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1-W2",
+    "kind": "hallway",
+    "imageX": 300.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f1-hall-w"
+  },
+  {
+    "id": "wp-grainger-f1-1-W1",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1-W1",
+    "kind": "hallway",
+    "imageX": 330.0,
+    "imageY": 300.0,
+    "sourceNode": "n-f1-nw1"
+  },
+  {
+    "id": "wp-grainger-f1-1-W3",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1-W3",
+    "kind": "hallway",
+    "imageX": 520.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f1-hall-wmid"
+  },
+  {
+    "id": "wp-grainger-f1-1-W8",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1-W8",
+    "kind": "hallway",
+    "imageX": 520.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f1-hall-s1"
+  },
+  {
+    "id": "wp-grainger-f1-1-W4",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1-W4",
+    "kind": "hallway",
+    "imageX": 760.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f1-hall-c1"
+  },
+  {
+    "id": "wp-grainger-f1-1-W9",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1-W9",
+    "kind": "hallway",
+    "imageX": 760.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f1-hall-s2"
+  },
+  {
+    "id": "wp-grainger-f1-1-W5",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1-W5",
+    "kind": "hallway",
+    "imageX": 1000.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f1-hall-c2"
+  },
+  {
+    "id": "wp-grainger-f1-1-W10",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1-W10",
+    "kind": "hallway",
+    "imageX": 1000.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f1-hall-s3"
+  },
+  {
+    "id": "wp-grainger-f1-1-W6",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1-W6",
+    "kind": "hallway",
+    "imageX": 1200.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f1-hall-c3"
+  },
+  {
+    "id": "wp-grainger-f1-1-W11",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1-W11",
+    "kind": "hallway",
+    "imageX": 1200.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f1-hall-s4"
+  },
+  {
+    "id": "wp-grainger-f1-1-W7",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1-W7",
+    "kind": "hallway",
+    "imageX": 1330.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f1-hall-e"
+  },
+  {
+    "id": "wp-grainger-f1-1-WC",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1-WC",
+    "kind": "restroom",
+    "imageX": 760.0,
+    "imageY": 735.0,
+    "sourceNode": "n-f1-wc1",
+    "name": "Restrooms",
+    "searchAliases": [
+      "Restrooms"
+    ]
+  },
+  {
+    "id": "wp-grainger-f1-1170",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1170",
+    "kind": "room",
+    "imageX": 215.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f1-r1170",
+    "roomNumber": "1170",
+    "name": "Class Room 1170",
+    "searchAliases": [
+      "Class Room 1170",
+      "room 1170"
+    ]
+  },
+  {
+    "id": "wp-grainger-f1-1180",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1180",
+    "kind": "room",
+    "imageX": 215.0,
+    "imageY": 1000.0,
+    "sourceNode": "n-f1-r1180",
+    "roomNumber": "1180",
+    "name": "Class Room 1180",
+    "searchAliases": [
+      "Class Room 1180",
+      "room 1180"
+    ]
+  },
+  {
+    "id": "wp-grainger-f1-1140",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1140",
+    "kind": "room",
+    "imageX": 250.0,
+    "imageY": 560.0,
+    "sourceNode": "n-f1-r1140",
+    "roomNumber": "1140",
+    "name": "Class Room 1140",
+    "searchAliases": [
+      "Class Room 1140",
+      "room 1140"
+    ]
+  },
+  {
+    "id": "wp-grainger-f1-1100",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1100",
+    "kind": "room",
+    "imageX": 285.0,
+    "imageY": 215.0,
+    "sourceNode": "n-f1-r1100",
+    "roomNumber": "1100",
+    "name": "Morgridge Auditorium",
+    "searchAliases": [
+      "Morgridge Auditorium",
+      "room 1100"
+    ]
+  },
+  {
+    "id": "wp-grainger-f1-1210",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1210",
+    "kind": "room",
+    "imageX": 775.0,
+    "imageY": 310.0,
+    "sourceNode": "n-f1-r1210",
+    "roomNumber": "1210",
+    "name": "Huber Undergrad Computer Lab",
+    "searchAliases": [
+      "Huber Undergrad Computer Lab",
+      "room 1210"
+    ]
+  },
+  {
+    "id": "wp-grainger-f1-1250",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1250",
+    "kind": "room",
+    "imageX": 850.0,
+    "imageY": 940.0,
+    "sourceNode": "n-f1-r1250",
+    "roomNumber": "1250",
+    "name": "Undergraduate Lounge",
+    "searchAliases": [
+      "Undergraduate Lounge",
+      "room 1250"
+    ]
+  },
+  {
+    "id": "wp-grainger-f1-1310",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "1310",
+    "kind": "room",
+    "imageX": 1365.0,
+    "imageY": 285.0,
+    "sourceNode": "n-f1-r1310",
+    "roomNumber": "1310",
+    "name": "Plenary Room",
+    "searchAliases": [
+      "Plenary Room",
+      "room 1310"
+    ]
+  },
+  {
+    "id": "wp-grainger-f1-S1",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "label": "S1",
+    "kind": "stairs",
+    "imageX": 520.0,
+    "imageY": 772.0,
+    "sourceNode": "n-f1-stair-w",
+    "connectorKey": "stair-west",
+    "name": "West Stairs",
+    "searchAliases": [
+      "West Stairs"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-E1",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "E1",
+    "kind": "elevator",
+    "imageX": 400.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f2-elev-wa",
+    "connectorKey": "elev-west-a",
+    "name": "Elevator A (west)",
+    "searchAliases": [
+      "Elevator A (west)"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-E2",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "E2",
+    "kind": "elevator",
+    "imageX": 615.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f2-elev-wb",
+    "connectorKey": "elev-west-b",
+    "name": "Elevator B (west)",
+    "searchAliases": [
+      "Elevator B (west)"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-E3",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "E3",
+    "kind": "elevator",
+    "imageX": 1410.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f2-elev-e",
+    "connectorKey": "elev-east",
+    "name": "Elevator C (east)",
+    "searchAliases": [
+      "Elevator C (east)"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-2-W2",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2-W2",
+    "kind": "hallway",
+    "imageX": 300.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f2-hall-w"
+  },
+  {
+    "id": "wp-grainger-f2-2-W1",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2-W1",
+    "kind": "hallway",
+    "imageX": 330.0,
+    "imageY": 300.0,
+    "sourceNode": "n-f2-nw1"
+  },
+  {
+    "id": "wp-grainger-f2-2-W3",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2-W3",
+    "kind": "hallway",
+    "imageX": 520.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f2-hall-wmid"
+  },
+  {
+    "id": "wp-grainger-f2-2-W8",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2-W8",
+    "kind": "hallway",
+    "imageX": 520.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f2-hall-s1"
+  },
+  {
+    "id": "wp-grainger-f2-2-W4",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2-W4",
+    "kind": "hallway",
+    "imageX": 760.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f2-hall-c1"
+  },
+  {
+    "id": "wp-grainger-f2-2-W9",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2-W9",
+    "kind": "hallway",
+    "imageX": 760.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f2-hall-s2"
+  },
+  {
+    "id": "wp-grainger-f2-2-W5",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2-W5",
+    "kind": "hallway",
+    "imageX": 1000.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f2-hall-c2"
+  },
+  {
+    "id": "wp-grainger-f2-2-W10",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2-W10",
+    "kind": "hallway",
+    "imageX": 1000.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f2-hall-s3"
+  },
+  {
+    "id": "wp-grainger-f2-2-W6",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2-W6",
+    "kind": "hallway",
+    "imageX": 1200.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f2-hall-c3"
+  },
+  {
+    "id": "wp-grainger-f2-2-W11",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2-W11",
+    "kind": "hallway",
+    "imageX": 1200.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f2-hall-s4"
+  },
+  {
+    "id": "wp-grainger-f2-2-W7",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2-W7",
+    "kind": "hallway",
+    "imageX": 1330.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f2-hall-e"
+  },
+  {
+    "id": "wp-grainger-f2-2-WC",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2-WC",
+    "kind": "restroom",
+    "imageX": 760.0,
+    "imageY": 735.0,
+    "sourceNode": "n-f2-wc2",
+    "name": "Restrooms",
+    "searchAliases": [
+      "Restrooms"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-2170",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2170",
+    "kind": "room",
+    "imageX": 225.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f2-r2170",
+    "roomNumber": "2170",
+    "name": "Class Room 2170",
+    "searchAliases": [
+      "Class Room 2170",
+      "room 2170"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-2180",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2180",
+    "kind": "room",
+    "imageX": 225.0,
+    "imageY": 1000.0,
+    "sourceNode": "n-f2-r2180",
+    "roomNumber": "2180",
+    "name": "Class Room 2180",
+    "searchAliases": [
+      "Class Room 2180",
+      "room 2180"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-2120",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2120",
+    "kind": "room",
+    "imageX": 305.0,
+    "imageY": 370.0,
+    "sourceNode": "n-f2-r2120",
+    "roomNumber": "2120",
+    "name": "Jack F Keller Lecture Hall",
+    "searchAliases": [
+      "Jack F Keller Lecture Hall",
+      "room 2120"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-2080",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2080",
+    "kind": "room",
+    "imageX": 510.0,
+    "imageY": 1090.0,
+    "sourceNode": "n-f2-r2080",
+    "roomNumber": "2080",
+    "name": "Nicholas Lecture Hall",
+    "searchAliases": [
+      "Nicholas Lecture Hall",
+      "room 2080"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-2290",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2290",
+    "kind": "room",
+    "imageX": 745.0,
+    "imageY": 1130.0,
+    "sourceNode": "n-f2-r2290",
+    "roomNumber": "2290",
+    "name": "Computer Classroom 2290",
+    "searchAliases": [
+      "Computer Classroom 2290",
+      "room 2290"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-2210",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2210",
+    "kind": "room",
+    "imageX": 820.0,
+    "imageY": 385.0,
+    "sourceNode": "n-f2-r2210",
+    "roomNumber": "2210",
+    "name": "Learning Commons",
+    "searchAliases": [
+      "Learning Commons",
+      "room 2210"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-2310",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2310",
+    "kind": "room",
+    "imageX": 1245.0,
+    "imageY": 400.0,
+    "sourceNode": "n-f2-r2310",
+    "roomNumber": "2310",
+    "name": "Eve/Exec/Prof MBA Suite",
+    "searchAliases": [
+      "Eve/Exec/Prof MBA Suite",
+      "room 2310"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-2335",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "2335",
+    "kind": "room",
+    "imageX": 1478.0,
+    "imageY": 180.0,
+    "sourceNode": "n-f2-r2335",
+    "roomNumber": "2335",
+    "name": "Class Room 2335",
+    "searchAliases": [
+      "Class Room 2335",
+      "room 2335"
+    ]
+  },
+  {
+    "id": "wp-grainger-f2-S1",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "label": "S1",
+    "kind": "stairs",
+    "imageX": 520.0,
+    "imageY": 772.0,
+    "sourceNode": "n-f2-stair-w",
+    "connectorKey": "stair-west",
+    "name": "West Stairs",
+    "searchAliases": [
+      "West Stairs"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-E1",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "E1",
+    "kind": "elevator",
+    "imageX": 400.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f3-elev-wa",
+    "connectorKey": "elev-west-a",
+    "name": "Elevator A (west)",
+    "searchAliases": [
+      "Elevator A (west)"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-E2",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "E2",
+    "kind": "elevator",
+    "imageX": 615.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f3-elev-wb",
+    "connectorKey": "elev-west-b",
+    "name": "Elevator B (west)",
+    "searchAliases": [
+      "Elevator B (west)"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-E3",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "E3",
+    "kind": "elevator",
+    "imageX": 1410.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f3-elev-e",
+    "connectorKey": "elev-east",
+    "name": "Elevator C (east)",
+    "searchAliases": [
+      "Elevator C (east)"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-3-W4",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W4",
+    "kind": "hallway",
+    "imageX": 300.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f3-hall-w"
+  },
+  {
+    "id": "wp-grainger-f3-3-W1",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W1",
+    "kind": "hallway",
+    "imageX": 330.0,
+    "imageY": 300.0,
+    "sourceNode": "n-f3-nw1"
+  },
+  {
+    "id": "wp-grainger-f3-3-W3",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W3",
+    "kind": "hallway",
+    "imageX": 330.0,
+    "imageY": 620.0,
+    "sourceNode": "n-f3-nw3"
+  },
+  {
+    "id": "wp-grainger-f3-3-W2",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W2",
+    "kind": "hallway",
+    "imageX": 350.0,
+    "imageY": 480.0,
+    "sourceNode": "n-f3-nw2"
+  },
+  {
+    "id": "wp-grainger-f3-3-W5",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W5",
+    "kind": "hallway",
+    "imageX": 520.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f3-hall-wmid"
+  },
+  {
+    "id": "wp-grainger-f3-3-W10",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W10",
+    "kind": "hallway",
+    "imageX": 520.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f3-hall-s1"
+  },
+  {
+    "id": "wp-grainger-f3-3-W6",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W6",
+    "kind": "hallway",
+    "imageX": 760.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f3-hall-c1"
+  },
+  {
+    "id": "wp-grainger-f3-3-W11",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W11",
+    "kind": "hallway",
+    "imageX": 760.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f3-hall-s2"
+  },
+  {
+    "id": "wp-grainger-f3-3-W7",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W7",
+    "kind": "hallway",
+    "imageX": 1000.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f3-hall-c2"
+  },
+  {
+    "id": "wp-grainger-f3-3-W12",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W12",
+    "kind": "hallway",
+    "imageX": 1000.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f3-hall-s3"
+  },
+  {
+    "id": "wp-grainger-f3-3-W8",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W8",
+    "kind": "hallway",
+    "imageX": 1200.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f3-hall-c3"
+  },
+  {
+    "id": "wp-grainger-f3-3-W13",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W13",
+    "kind": "hallway",
+    "imageX": 1200.0,
+    "imageY": 862.0,
+    "sourceNode": "n-f3-hall-s4"
+  },
+  {
+    "id": "wp-grainger-f3-3-W9",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-W9",
+    "kind": "hallway",
+    "imageX": 1330.0,
+    "imageY": 712.0,
+    "sourceNode": "n-f3-hall-e"
+  },
+  {
+    "id": "wp-grainger-f3-3-WC",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3-WC",
+    "kind": "restroom",
+    "imageX": 760.0,
+    "imageY": 735.0,
+    "sourceNode": "n-f3-wc3",
+    "name": "Restrooms",
+    "searchAliases": [
+      "Restrooms"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-3111",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3111",
+    "kind": "room",
+    "imageX": 240.0,
+    "imageY": 205.0,
+    "sourceNode": "n-f3-r3111",
+    "roomNumber": "3111",
+    "name": "Conference Room 3111",
+    "searchAliases": [
+      "Conference Room 3111",
+      "room 3111"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-3115",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3115",
+    "kind": "room",
+    "imageX": 245.0,
+    "imageY": 365.0,
+    "sourceNode": "n-f3-r3115",
+    "roomNumber": "3115",
+    "name": "Office Suite 3115",
+    "searchAliases": [
+      "Office Suite 3115",
+      "room 3115"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-3150",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3150",
+    "kind": "room",
+    "imageX": 258.0,
+    "imageY": 740.0,
+    "sourceNode": "n-f3-r3150",
+    "roomNumber": "3150",
+    "name": "Undergraduate Program Office",
+    "searchAliases": [
+      "Undergraduate Program Office",
+      "room 3150"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-3112",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3112",
+    "kind": "room",
+    "imageX": 390.0,
+    "imageY": 237.0,
+    "sourceNode": "n-f3-r3112",
+    "roomNumber": "3112",
+    "name": "Office 3112",
+    "searchAliases": [
+      "Office 3112",
+      "room 3112"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-3210",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3210",
+    "kind": "room",
+    "imageX": 755.0,
+    "imageY": 385.0,
+    "sourceNode": "n-f3-r3210",
+    "roomNumber": "3210",
+    "name": "Learning Commons",
+    "searchAliases": [
+      "Learning Commons",
+      "room 3210"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-3290",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3290",
+    "kind": "room",
+    "imageX": 760.0,
+    "imageY": 990.0,
+    "sourceNode": "n-f3-r3290",
+    "roomNumber": "3290",
+    "name": "Undergraduate Program Office",
+    "searchAliases": [
+      "Undergraduate Program Office",
+      "room 3290"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-3340",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3340",
+    "kind": "room",
+    "imageX": 1450.0,
+    "imageY": 390.0,
+    "sourceNode": "n-f3-r3340",
+    "roomNumber": "3340",
+    "name": "Bolz Center for Arts Admin",
+    "searchAliases": [
+      "Bolz Center for Arts Admin",
+      "room 3340"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-3560",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3560",
+    "kind": "room",
+    "imageX": 1455.0,
+    "imageY": 1420.0,
+    "sourceNode": "n-f3-r3560",
+    "roomNumber": "3560",
+    "name": "Seminar Room 3560",
+    "searchAliases": [
+      "Seminar Room 3560",
+      "room 3560"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-3335",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "3335",
+    "kind": "room",
+    "imageX": 1478.0,
+    "imageY": 180.0,
+    "sourceNode": "n-f3-r3335",
+    "roomNumber": "3335",
+    "name": "Class Room 3335",
+    "searchAliases": [
+      "Class Room 3335",
+      "room 3335"
+    ]
+  },
+  {
+    "id": "wp-grainger-f3-S1",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "label": "S1",
+    "kind": "stairs",
+    "imageX": 520.0,
+    "imageY": 772.0,
+    "sourceNode": "n-f3-stair-w",
+    "connectorKey": "stair-west",
+    "name": "West Stairs",
+    "searchAliases": [
+      "West Stairs"
+    ]
+  }
+]

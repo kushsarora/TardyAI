@@ -1,0 +1,62 @@
+[
+  {
+    "id": "plan-grainger-f1",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "floorKey": "1",
+    "floorLevel": 1,
+    "floorName": "Level 1",
+    "publicUrl": "/plans/annotated/1.png",
+    "planImageUrl": "/plans/floor_p1.png",
+    "c3FileUrl": "roomfinder/plans/annotated/1.png",
+    "annotatedWidth": 1500,
+    "annotatedHeight": 1159,
+    "imageWidth": 1980,
+    "imageHeight": 1530,
+    "waypointCount": 24
+  },
+  {
+    "id": "plan-grainger-f2",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "floorKey": "2",
+    "floorLevel": 2,
+    "floorName": "Level 2",
+    "publicUrl": "/plans/annotated/2.png",
+    "planImageUrl": "/plans/floor_p2.png",
+    "c3FileUrl": "roomfinder/plans/annotated/2.png",
+    "annotatedWidth": 1500,
+    "annotatedHeight": 1159,
+    "imageWidth": 1980,
+    "imageHeight": 1530,
+    "waypointCount": 24
+  },
+  {
+    "id": "plan-grainger-f3",
+    "building": {
+      "id": "grainger"
+    },
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "floorKey": "3",
+    "floorLevel": 3,
+    "floorName": "Level 3",
+    "publicUrl": "/plans/annotated/3.png",
+    "planImageUrl": "/plans/floor_p3.png",
+    "c3FileUrl": "roomfinder/plans/annotated/3.png",
+    "annotatedWidth": 1500,
+    "annotatedHeight": 1159,
+    "imageWidth": 1980,
+    "imageHeight": 1530,
+    "waypointCount": 27
+  }
+]

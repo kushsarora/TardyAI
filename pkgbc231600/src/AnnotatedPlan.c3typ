@@ -1,0 +1,143 @@
+/**
+ * One floor's plan image with every {@link Waypoint} label drawn onto it — the
+ * image the vision model actually reads.
+ *
+ * Rendered by `tools/build_waypoints.py` from the un-annotated plan plus the
+ * waypoint set, so the dots on the image and the rows in {@link Waypoint} are
+ * generated together and cannot disagree.
+ *
+ * ### Two URLs, two consumers
+ *
+ * The same picture has to reach two places that cannot read from each other:
+ *
+ * - {@link AnnotatedPlan#publicUrl} is served to the **browser** by the UI
+ *   service out of `ui/react/public/`, and backs the "what the AI sees" toggle.
+ * - {@link AnnotatedPlan#c3FileUrl} points into the **C3 Filesystem**, which is
+ *   what server-side code can reach. The app server does not share a filesystem
+ *   with the UI service, so the bytes are copied across once by
+ *   {@link RoomFinder#syncPlanImages} and read from there on every request by
+ *   `GenaiCore.ImageUtil.encodedImageFromPath`.
+ *
+ * ### Two coordinate spaces
+ *
+ * {@link AnnotatedPlan#annotatedWidth} / {@link AnnotatedPlan#annotatedHeight}
+ * describe the **downscaled render sent to the model**;
+ * {@link AnnotatedPlan#imageWidth} / {@link AnnotatedPlan#imageHeight} describe
+ * the **original raster that {@link Waypoint} coordinates live in**. They differ
+ * because the model-facing copy is deliberately shrunk to keep request size and
+ * latency down, and nothing about correctness depends on its scale — the model
+ * returns labels, never coordinates. Never use the annotated dimensions to place
+ * an overlay; the frontend draws on the original plan.
+ */
+entity type AnnotatedPlan {
+
+  /**
+   * The building this plan belongs to; lets {@link RoomFinder#findRoute} collect
+   * every floor of one building in a single fetch.
+   */
+  building: !Building
+
+  /**
+   * The floor this plan depicts.
+   */
+  floor: !Floor
+
+  /**
+   * Short floor key printed on the image and used by the model — "1", "2", "3".
+   *
+   * Matches {@link Waypoint#floorKey}; see that field for why it is a string.
+   */
+  floorKey: !string
+
+  /**
+   * Numeric floor level, matching {@link Floor#level}. Used to order the floor
+   * tabs and to describe a floor change as up or down.
+   */
+  floorLevel: !int
+
+  /**
+   * Display name of the floor, e.g. "Level 2", shown on the floor tab.
+   */
+  floorName: string
+
+  /**
+   * Browser-facing path of the **annotated** image, e.g.
+   * `/plans/annotated/2.png`.
+   *
+   * Relative to the UI service's base path, so the frontend must join it onto
+   * `import.meta.env.BASE_URL` rather than requesting it from the server root —
+   * the app is served from `/<env>/<app>/uiservice/` and a root-relative path
+   * would 404.
+   */
+  publicUrl: !string
+
+  /**
+   * Browser-facing path of the **un-annotated** original plan, e.g.
+   * `/plans/floor_p2.png`, copied from {@link Floor#planImageUrl}.
+   *
+   * This is what the route is drawn on top of: the labels and legend that help
+   * the model are visual noise for a student following a line, so the clean plan
+   * is the default and the annotated one is opt-in.
+   */
+  planImageUrl: string
+
+  /**
+   * Path of this image inside the **C3 Filesystem**, e.g.
+   * `roomfinder/plans/annotated/2.png`.
+   *
+   * The only one of the three paths that server-side code can read. Populated as
+   * a relative path in seed data and resolved against the default mount;
+   * {@link RoomFinder#syncPlanImages} must have run at least once before
+   * {@link RoomFinder#findRoute} can send this floor to the model.
+   */
+  c3FileUrl: !string
+
+  /**
+   * Width in pixels of the downscaled, model-facing annotated render.
+   *
+   * Informational — do **not** use it to position an overlay. See the type-level
+   * note on the two coordinate spaces.
+   */
+  annotatedWidth: !int
+
+  /**
+   * Height in pixels of the downscaled, model-facing annotated render.
+   *
+   * Informational; see {@link AnnotatedPlan#annotatedWidth}.
+   */
+  annotatedHeight: !int
+
+  /**
+   * Width of the original plan raster, mirroring {@link Floor#imageWidth}.
+   *
+   * This is the space {@link Waypoint#imageX} is measured in and therefore the
+   * `viewBox` width the frontend SVG overlay must use.
+   */
+  imageWidth: !int
+
+  /**
+   * Height of the original plan raster, mirroring {@link Floor#imageHeight}.
+   *
+   * The `viewBox` height for the overlay; see {@link AnnotatedPlan#imageWidth}.
+   */
+  imageHeight: !int
+
+  /**
+   * How many {@link Waypoint} labels were drawn onto this image.
+   *
+   * A cheap data-quality signal: the hackathon target is 20-40 labels per floor,
+   * and a floor that renders far fewer usually means waypoints were authored
+   * against the wrong {@link Floor}.
+   */
+  waypointCount: int
+
+  /**
+   * When the image was last copied into the C3 Filesystem by
+   * {@link RoomFinder#syncPlanImages}.
+   *
+   * Null means it has never been synced, in which case
+   * {@link RoomFinder#findRoute} cannot send this floor to the model and will
+   * report the floor as unavailable rather than silently routing without it.
+   */
+  syncedAt: datetime
+}

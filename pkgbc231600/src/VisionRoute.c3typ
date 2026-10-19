@@ -1,0 +1,180 @@
+/**
+ * The complete answer to one wayfinding request — everything
+ * {@link RoomFinder#findRoute} hands the frontend.
+ *
+ * Plain value type with no identity; the durable record of the same request is
+ * {@link RouteQuery}.
+ *
+ * ### Three outcomes, and the degraded fourth
+ *
+ * {@link VisionRoute#status} is `ok`, `clarify` or `error`, and the client must
+ * branch on it before reading anything else. Beyond those there is a deliberate
+ * degraded case: **`ok` with {@link VisionRoute#drawable} false**, meaning the
+ * model produced usable written instructions but at least one label could not be
+ * resolved to a position, so {@link VisionRoute#segments} is empty. The honest
+ * response is to show the steps and no line. Pretending to draw a route from
+ * labels that did not validate is the one failure that would put a line through a
+ * wall in front of an audience.
+ *
+ * ### Failure is a value, not an exception
+ *
+ * A model outage, an unparseable answer or a hallucinated label all come back as
+ * `status` `error` with a user-facing {@link VisionRoute#message}, not as a
+ * rejected promise. Note that blank *arguments* are a different channel: the
+ * platform rejects a null or empty `!string` parameter before the method body
+ * runs, so the client must guard its inputs rather than rely on getting an
+ * `error` status back.
+ */
+type VisionRoute {
+
+  /**
+   * Outcome of the request:
+   *
+   * - `ok` — a route was produced. Read {@link VisionRoute#steps}, and
+   *   {@link VisionRoute#segments} if {@link VisionRoute#drawable} is true.
+   * - `clarify` — the model could not tell where the user is or where they are
+   *   going and asked a question instead; read {@link VisionRoute#question}. The
+   *   route arrays are empty. This is a success, not a failure — it is what
+   *   prevents a confidently wrong route.
+   * - `error` — no usable answer. Read {@link VisionRoute#message}.
+   */
+  status: !string
+
+  /**
+   * User-facing explanation when {@link VisionRoute#status} is `error`, or a note
+   * about a degraded result — e.g. that the route could not be drawn. Null on a
+   * clean success.
+   */
+  message: string
+
+  /**
+   * The model's question when {@link VisionRoute#status} is `clarify`, to be shown
+   * as a chat bubble. Null otherwise.
+   */
+  question: string
+
+  /**
+   * Whether every label resolved, so {@link VisionRoute#segments} is populated and
+   * the route can be drawn.
+   *
+   * False means text-steps-only. There is no partial draw: a route is drawn in
+   * full or not at all.
+   */
+  drawable: !boolean
+
+  /**
+   * Every point of the journey in travel order, across all floors.
+   *
+   * A flat view of the same points that {@link VisionRoute#segments} groups by
+   * floor; convenient for a summary line or a point count. Empty unless
+   * {@link VisionRoute#drawable} is true.
+   */
+  route: ![RouteWaypoint]
+
+  /**
+   * The journey split into one drawable polyline per floor visited, in travel
+   * order.
+   *
+   * This is what the map renders, and what the floor tabs are built from. Empty
+   * unless {@link VisionRoute#drawable} is true. See {@link RouteFloorSegment} for
+   * why shaft points are duplicated across adjacent segments.
+   */
+  segments: ![RouteFloorSegment]
+
+  /**
+   * Human-readable instructions, one per leg, in order — e.g. "Take stairs S1
+   * down to floor 1".
+   *
+   * Populated whenever {@link VisionRoute#status} is `ok`, **including** when the
+   * route is not drawable, because the steps are the part that still works when
+   * label resolution fails.
+   */
+  steps: ![string]
+
+  /**
+   * The floor key each entry of {@link VisionRoute#steps} applies to, as a
+   * parallel array, so the step list can highlight the current floor's
+   * instructions.
+   *
+   * A parallel array rather than a field on a step object, because the model
+   * returns steps as plain strings and the floor attribution is server-derived and
+   * sometimes a guess. Keeping it separate makes clear that the text is the
+   * model's and the attribution is ours. Same length as
+   * {@link VisionRoute#steps}; an entry may be null where no floor could be
+   * attributed.
+   */
+  stepFloorKeys: [string]
+
+  /**
+   * The labels exactly as the model returned them, before normalization and
+   * resolution.
+   *
+   * Kept for the demo and for debugging: it is what makes a wrong answer legible
+   * ("it said `S4`, which isn't on any plan") instead of just a failure.
+   */
+  rawLabels: [string]
+
+  /**
+   * Whether the one permitted retry was used because the first answer failed
+   * validation.
+   *
+   * Surfaced so the UI can be honest about a slower response, and so the demo can
+   * show the self-correction rather than hide it.
+   */
+  retried: !boolean
+
+  /**
+   * Why the model's answer was rejected, when it was — an unknown label or an
+   * illegal floor change. Null when the first answer validated.
+   *
+   * Set even if the retry then succeeded, so the recovery is visible.
+   */
+  validationError: string
+
+  /**
+   * Where this answer came from: `llm` for a live model call, `cache` for a
+   * replayed pinned answer from {@link RouteQuery}.
+   *
+   * The UI must label a cached answer as such. Passing off a pre-recorded result
+   * as a live one is the kind of thing a judge is entitled to ask about.
+   */
+  source: !string
+
+  /**
+   * Wall-clock duration of the request in milliseconds, including any retry.
+   */
+  latencyMs: int
+
+  /**
+   * Identifier of the model that answered.
+   */
+  modelName: string
+
+  /**
+   * Total input tokens billed, images included.
+   */
+  promptTokens: int
+
+  /**
+   * How many input tokens were served from the prompt cache.
+   *
+   * Near-equal to {@link VisionRoute#promptTokens} on every request after the
+   * first, since the cached prefix — facts plus all floor images — is byte
+   * identical each time.
+   */
+  cachedTokens: int
+
+  /**
+   * Output tokens generated; the dominant component of latency.
+   */
+  completionTokens: int
+
+  /**
+   * Id of the {@link RouteQuery} row logged for this request, or null if logging
+   * failed.
+   *
+   * Lets an operator pin a good answer as a fallback straight from the UI, and
+   * lets a bad one be found again during prompt tuning.
+   */
+  queryId: string
+}

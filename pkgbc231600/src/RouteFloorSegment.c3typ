@@ -1,0 +1,81 @@
+/**
+ * The portion of a route that happens on one floor — a single polyline the
+ * frontend can draw over that floor's plan, plus the image metadata needed to
+ * draw it.
+ *
+ * A route that crosses floors is split here rather than on the client, because
+ * the split is not a simple `group by floor`: the shaft where the route changes
+ * floors has to appear **in both** adjacent segments, once as the point the user
+ * walks to and again as the point they arrive at. Grouping would place it in one
+ * segment only and leave the other polyline starting from nowhere.
+ *
+ * One segment per floor *visit*, in travel order. A route that returns to a floor
+ * it has already left therefore produces two segments for that floor, which is
+ * correct — they are different walks.
+ */
+type RouteFloorSegment {
+
+  /**
+   * Short key of the floor this segment is walked on — "1", "2", "3".
+   */
+  floorKey: !string
+
+  /**
+   * Numeric level of the floor; orders the floor tabs.
+   */
+  floorLevel: !int
+
+  /**
+   * Display name of the floor, e.g. "Level 2", for the tab label.
+   */
+  floorName: string
+
+  /**
+   * Browser-facing path of the clean, un-annotated plan this segment is drawn on.
+   *
+   * Relative to the UI service base path — join it onto
+   * `import.meta.env.BASE_URL`, never request it from the server root.
+   */
+  planImageUrl: string
+
+  /**
+   * Browser-facing path of the annotated plan, with every waypoint label printed
+   * on it.
+   *
+   * Backs the "show what the AI sees" toggle: the same picture the model was
+   * given, so a viewer can check that the labels in the route really are on the
+   * plan.
+   */
+  annotatedUrl: string
+
+  /**
+   * Width of the plan raster, and therefore the `viewBox` width the overlay must
+   * use for {@link RouteWaypoint#imageX} to land correctly.
+   */
+  imageWidth: !int
+
+  /**
+   * Height of the plan raster — the `viewBox` height for the overlay.
+   */
+  imageHeight: !int
+
+  /**
+   * The points walked on this floor, in order; at least two for a real walk.
+   *
+   * Consecutive points are joined by a straight line. The line is intentionally
+   * *not* wall-aware: it connects points a human placed in corridors, so it reads
+   * as a route without any claim to being a geometrically validated path.
+   */
+  points: ![RouteWaypoint]
+
+  /**
+   * Indices into {@link VisionRoute#steps} of the instructions that belong to this
+   * floor, so the step list can highlight the right rows as the user switches
+   * tabs.
+   *
+   * Derived from the floor the model tagged each step with, falling back to
+   * distributing steps across segments in order when the model omits the tag.
+   * Empty when no step could be attributed to this floor.
+   */
+  stepIndexes: [int]
+}
