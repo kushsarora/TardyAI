@@ -10,6 +10,7 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import * as path from "path";
+import { readFileSync } from "node:fs";
 import eslint from "vite-plugin-eslint2";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -56,14 +57,12 @@ function createProxyConfig(target: string, fallbackToken?: string) {
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), "VITE_");
   const port = parseInt(env.VITE_DEV_SERVER_PORT || '9000', 10);
-  const pkgName = env.VITE_C3_PKG;
+  const pkgName = env.VITE_C3_PKG || 'pkgbc231600';
   const authAuth = env.VITE_C3_AUTH_TOKEN;
   const appUrl = `${env.VITE_C3_BASE_URL}/${env.VITE_C3_ENV}/${env.VITE_C3_APP}/`;
-  const base = command === 'serve' ? `/${env.VITE_C3_ENV}/${env.VITE_C3_APP}/uiservice/` : './';
+  const base = command === 'serve' && env.VITE_C3_ENV && env.VITE_C3_APP ? `/${env.VITE_C3_ENV}/${env.VITE_C3_APP}/uiservice/` : './';
 
-  if (!pkgName) {
-    throw new Error('VITE_C3_PKG is not set');
-  }
+
 
   if (command === 'build' && mode === 'production' && env.VITE_C3_AUTH_TOKEN) {
     throw new Error('❌ BUILD FAILED: VITE_C3_AUTH_TOKEN must not be set in production builds.');
@@ -71,6 +70,36 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     plugins: [
+      {
+        name: 'tardy-demo-router',
+        resolveId(id) { if (id === 'virtual:tardy-demo') return '\0virtual:tardy-demo'; },
+        load(id) {
+          if (id !== '\0virtual:tardy-demo') return;
+          const packageRoot = path.resolve(__dirname, '../..');
+          const read = (file: string) => JSON.parse(readFileSync(path.join(packageRoot, 'data', file), 'utf8'));
+          const floors = read('Floor/Floor.json');
+          const nodes = read('MapNode/MapNode.json').map((n: any) => ({ ...n, floor: floors.find((f: any) => f.id === n.floor.id) }));
+          return `
+            const floors = ${JSON.stringify(floors)};
+            const nodes = ${JSON.stringify(nodes)};
+            const edges = ${JSON.stringify(read('NavEdge/NavEdge.json'))};
+            const buildings = ${JSON.stringify(read('Building/grainger.json'))};
+            const getPath = (row, key) => key.split('.').reduce((v, k) => v?.[k], row);
+            const Filter = { eq: (key, value) => ({ key, value }) };
+            const fetchRows = (rows, spec) => ({ objs: rows.filter(row => getPath(row, spec.filter.key) === spec.filter.value).slice(0, spec.limit > 0 ? spec.limit : undefined) });
+            const MapNode = { fetch: spec => fetchRows(nodes, spec) };
+            const NavEdge = { fetch: spec => fetchRows(edges.map(e => ({ ...e, fromNode: nodes.find(n => n.id === e.fromNode.id) })), spec) };
+            ${readFileSync(path.join(packageRoot, 'src/NavRouter.js'), 'utf8')}
+            export async function demoAction(type, action, args) {
+              if (type === 'Building') return { objs: buildings };
+              if (type === 'Floor') return { objs: floors };
+              const actions = { findRoute, nearestNode, searchRooms, graphForBuilding };
+              if (!actions[action]) throw new Error('This feature requires a connected C3 backend.');
+              return actions[action](...args);
+            }
+          `;
+        },
+      },
       tailwindcss(),
       react(),
       // Single eslint2 instance with valid options

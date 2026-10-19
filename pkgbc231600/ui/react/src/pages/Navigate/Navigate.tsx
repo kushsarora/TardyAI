@@ -21,13 +21,44 @@
  */
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Accessibility, Copy, LocateFixed, MapPin, Pencil, X } from 'lucide-react';
+import {
+  Accessibility,
+  ArrowDownUp,
+  ArrowRight,
+  ArrowUpRight,
+  Bookmark,
+  Building2,
+  Check,
+  ChevronRight,
+  DoorOpen,
+  GraduationCap,
+  Info,
+  Layers,
+  Loader2,
+  LocateFixed,
+  MapPin,
+  Navigation,
+  Search,
+  ShieldCheck,
+  X,
+} from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Building, Floor, MapNode, NavRoute } from '@/Interfaces';
-import { PixelPoint, accuracyRadiusInPixels, fitGeoTransform } from '@/lib/geoTransform';
-import { DEMO_BUILDING_ID, fetchBuilding, fetchFloors, fetchGraph, findRoute, nearestNode } from '@/lib/tardyApi';
+import {
+  PixelPoint,
+  accuracyRadiusInPixels,
+  fitGeoTransform,
+} from '@/lib/geoTransform';
+import {
+  DEMO_BUILDING_ID,
+  fetchBuilding,
+  fetchFloors,
+  fetchGraph,
+  findRoute,
+  nearestNode,
+} from '@/lib/tardyApi';
 import { useErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary';
-import { Button } from '@/components/ui/button';
 import FloorPlanMap from '@/components/FloorPlan/FloorPlanMap';
 import ArrivalCard from './ArrivalCard';
 import RoomSearch from './RoomSearch';
@@ -60,16 +91,54 @@ export default function Navigate() {
   const [locating, setLocating] = useState(false);
   const [locateMessage, setLocateMessage] = useState<string | null>(null);
 
-  const [authorMode, setAuthorMode] = useState(false);
-  const [authorPoint, setAuthorPoint] = useState<PixelPoint | null>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [loadError, setLoadError] = useState('');
+  const [routeError, setRouteError] = useState('');
+  const [retry, setRetry] = useState(0);
+  const [category, setCategory] = useState('all');
+  const [directoryQuery, setDirectoryQuery] = useState('');
+  const [saved, setSaved] = useState<string[]>(() => {
+    try {
+      const value = JSON.parse(localStorage.getItem('tardy.saved') || '[]');
+      return Array.isArray(value)
+        ? value.filter((id) => typeof id === 'string')
+        : [];
+    } catch {
+      return [];
+    }
+  });
+  const [storageMessage, setStorageMessage] = useState('');
+  const [guiding, setGuiding] = useState(false);
+  const [guideIndex, setGuideIndex] = useState(0);
+  const toggleSaved = (id: string) =>
+    setSaved((previous) => {
+      const next = previous.includes(id)
+        ? previous.filter((item) => item !== id)
+        : [...previous, id];
+      try {
+        localStorage.setItem('tardy.saved', JSON.stringify(next));
+      } catch {
+        setStorageMessage(
+          'Saved for this session. Your browser has disabled storage.',
+        );
+      }
+      return next;
+    });
 
   /* --------------------------------------------------------------------- *
    * Initial load: building, floors, and the whole navigation graph.
    * --------------------------------------------------------------------- */
   useEffect(() => {
     let cancelled = false;
+    setLoading(true);
+    setLoadError('');
 
-    Promise.all([fetchBuilding(DEMO_BUILDING_ID), fetchFloors(DEMO_BUILDING_ID), fetchGraph(DEMO_BUILDING_ID)])
+    Promise.all([
+      fetchBuilding(DEMO_BUILDING_ID),
+      fetchFloors(DEMO_BUILDING_ID),
+      fetchGraph(DEMO_BUILDING_ID),
+    ])
       .then(([loadedBuilding, loadedFloors, graph]) => {
         if (cancelled) return;
         setBuilding(loadedBuilding);
@@ -78,11 +147,18 @@ export default function Navigate() {
 
         const defaultLevel = loadedBuilding?.defaultFloorLevel;
         const preferred =
-          loadedFloors.find((floor) => floor.level === defaultLevel) ?? loadedFloors[0] ?? null;
+          loadedFloors.find((floor) => floor.level === defaultLevel) ??
+          loadedFloors[0] ??
+          null;
         setActiveFloorId(preferred ? preferred.id : null);
       })
       .catch((error) => {
-        if (!cancelled) reportError(error);
+        if (!cancelled)
+          setLoadError(
+            error instanceof Error
+              ? error.message
+              : 'Could not load the building. Check your connection and try again.',
+          );
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -91,7 +167,7 @@ export default function Navigate() {
     return () => {
       cancelled = true;
     };
-  }, [reportError]);
+  }, [reportError, retry]);
 
   const activeFloor = useMemo(
     () => floors.find((floor) => floor.id === activeFloorId) ?? null,
@@ -113,14 +189,20 @@ export default function Navigate() {
       return;
     }
 
+    setStartNode(null);
+    setRoute(null);
+    setRouteError('');
     let cancelled = false;
     const timer = window.setTimeout(() => {
       nearestNode(pinFloorId, pin.x, pin.y)
         .then((node) => {
           if (!cancelled) setStartNode(node);
         })
-        .catch((error) => {
-          if (!cancelled) reportError(error);
+        .catch(() => {
+          if (!cancelled)
+            setRouteError(
+              'Could not set your starting point. Try selecting a nearby room.',
+            );
         });
     }, SNAP_DEBOUNCE_MS);
 
@@ -136,20 +218,31 @@ export default function Navigate() {
   useEffect(() => {
     if (!startNode || !destNode) {
       setRoute(null);
+      setRouting(false);
       return;
     }
 
     let cancelled = false;
     setRouting(true);
+    setRoute(null);
+    setRouteError('');
+    setGuiding(false);
+    setGuideIndex(0);
     findRoute(startNode.id, destNode.id, stepFree)
       .then((result) => {
         if (cancelled) return;
         setRoute(result);
         // Jump the map to where the walk begins, so the drawn line is on screen.
-        if (result.found && result.legs.length > 0) setActiveFloorId(result.legs[0].floorId);
+        if (result.found && result.legs.length > 0)
+          setActiveFloorId(result.legs[0].floorId);
       })
-      .catch((error) => {
-        if (!cancelled) reportError(error);
+      .catch(() => {
+        if (!cancelled) {
+          setRoute(null);
+          setRouteError(
+            'Could not calculate your route. Move your pin or choose your destination again.',
+          );
+        }
       })
       .finally(() => {
         if (!cancelled) setRouting(false);
@@ -192,13 +285,17 @@ export default function Navigate() {
   const handleLocate = useCallback(() => {
     if (!activeFloor) return;
     if (typeof navigator === 'undefined' || !navigator.geolocation) {
-      setLocateMessage('This browser does not support location. Tap the map instead.');
+      setLocateMessage(
+        'This browser does not support location. Tap the map instead.',
+      );
       return;
     }
 
     const fit = fitGeoTransform(activeFloor.calibration?.points);
     if (!fit) {
-      setLocateMessage('This floor has no GPS calibration yet. Tap the map to place your pin.');
+      setLocateMessage(
+        'This floor has no GPS calibration yet. Tap the map to place your pin.',
+      );
       return;
     }
 
@@ -207,7 +304,10 @@ export default function Navigate() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setLocating(false);
-        const projected = fit.project(position.coords.latitude, position.coords.longitude);
+        const projected = fit.project(
+          position.coords.latitude,
+          position.coords.longitude,
+        );
         const inside =
           projected.x >= 0 &&
           projected.y >= 0 &&
@@ -215,27 +315,27 @@ export default function Navigate() {
           projected.y <= activeFloor.imageHeight;
 
         if (!inside) {
-          setLocateMessage('You look like you are outside the building. Tap the map where you are.');
+          setLocateMessage(
+            'You look like you are outside the building. Tap the map where you are.',
+          );
           return;
         }
         setPin(projected);
         setPinFloorId(activeFloor.id);
         setAccuracyMeters(position.coords.accuracy || ASSUMED_ACCURACY_M);
-        setLocateMessage(`Suggested from GPS — drag the pin if it is off. You are on ${activeFloor.name}?`);
+        setLocateMessage(
+          `Suggested from GPS — drag the pin if it is off. You are on ${activeFloor.name}?`,
+        );
       },
       () => {
         setLocating(false);
-        setLocateMessage('Could not get a location fix. Tap the map to place your pin.');
+        setLocateMessage(
+          'Could not get a location fix. Tap the map to place your pin.',
+        );
       },
       { enableHighAccuracy: true, timeout: 8000, maximumAge: 30000 },
     );
   }, [activeFloor]);
-
-  const handleCopyAuthorPoint = useCallback(() => {
-    if (!authorPoint) return;
-    const text = `${Math.round(authorPoint.x)}, ${Math.round(authorPoint.y)}`;
-    navigator.clipboard?.writeText(text).catch((error) => reportError(error));
-  }, [authorPoint, reportError]);
 
   const activeLeg = useMemo(() => {
     if (!route?.found) return null;
@@ -252,190 +352,590 @@ export default function Navigate() {
     [accuracyMeters, activeFloor],
   );
 
-  const destinationLabel = destNode ? destNode.roomNumber ?? destNode.name ?? destNode.id : null;
-
-  /* --------------------------------------------------------------------- *
-   * Render
-   * --------------------------------------------------------------------- */
-
-  if (loading) {
+  const chooseDestination = (node: MapNode) => {
+    setDestNode(node);
+    setActiveFloorId(node.floor.id);
+    setGuiding(false);
+  };
+  const chooseStart = (node: MapNode) => {
+    setPin({ x: node.imageX, y: node.imageY });
+    setPinFloorId(node.floor.id);
+    setActiveFloorId(node.floor.id);
+    setAccuracyMeters(null);
+    setLocateMessage(null);
+  };
+  const swapEndpoints = () => {
+    if (!startNode || !destNode) return;
+    chooseStart(destNode);
+    chooseDestination(startNode);
+  };
+  const rooms = nodes.filter((node) =>
+    ['room', 'restroom', 'entrance'].includes(node.kind),
+  );
+  const popular = rooms
+    .filter((node) => node.name && !/^(Class\s+)?Room \d/i.test(node.name))
+    .slice(0, 4);
+  const directory = rooms.filter((node) => {
+    const matchesQuery =
+      `${node.roomNumber || ''} ${node.name || ''} ${node.searchAliases || ''}`
+        .toLowerCase()
+        .includes(directoryQuery.toLowerCase());
     return (
-      <div className="flex h-full items-center justify-center p-8">
-        <p className="text-c3-regular-body-p2 text-[var(--c3-style-basic-fg-secondary)]">Loading floor plans…</p>
+      matchesQuery &&
+      (location.pathname !== '/saved' || saved.includes(node.id)) &&
+      (category === 'all' ||
+        (category === 'rooms' ? node.kind === 'room' : node.kind === category))
+    );
+  });
+  const isDirectory = ['/directory', '/saved'].includes(location.pathname);
+  const guideLeg = route?.found ? route.legs[guideIndex] : null;
+
+  if (loading)
+    return (
+      <div className="loading-page">
+        <span className="loading-symbol">
+          <Navigation size={28} />
+        </span>
+        <h2>Getting your bearings.</h2>
+        <p>Loading Grainger Hall’s maps and rooms…</p>
+        <Loader2 className="animate-spin" size={20} />
       </div>
     );
-  }
-
-  if (!activeFloor) {
+  if (loadError || !activeFloor)
     return (
-      <div className="flex h-full items-center justify-center p-8 text-center">
-        <p className="max-w-md text-c3-regular-body-p2 text-[var(--c3-style-basic-fg-secondary)]">
-          No floors are loaded for this building yet. Seed the Building, Floor, MapNode and NavEdge data, then reload.
-        </p>
+      <div className="loading-page">
+        <Building2 size={36} />
+        <h2>We couldn’t load this building.</h2>
+        <p>{loadError || 'No floor plans are available yet.'}</p>
+        <button
+          className="primary-button"
+          onClick={() => setRetry((value) => value + 1)}
+        >
+          Try again
+        </button>
       </div>
     );
-  }
 
   return (
-    <div className="flex h-full min-h-0 flex-col gap-3 p-3 lg:flex-row">
-      {/* ---------------- Control panel ---------------- */}
-      <aside className="flex w-full shrink-0 flex-col gap-3 overflow-y-auto lg:w-[360px]">
+    <div className="navigation-page">
+      <div className="page-heading">
         <div>
-          <h1 className="text-c3-bold-heading-h5 text-[var(--c3-style-basic-fg-primary)]">
-            {building?.name ?? 'Indoor navigation'}
+          <div className="eyebrow">
+            <span /> FIND YOUR WAY, INSIDE.
+          </div>
+          <h1>
+            {isDirectory
+              ? location.pathname === '/saved'
+                ? 'Your go-to places.'
+                : 'A place for every class.'
+              : 'Less searching. More arriving.'}
           </h1>
-          <p className="text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-secondary)]">
-            {building?.address ?? 'Pick a destination and we will get you there.'}
+          <p>
+            {isDirectory
+              ? 'Every mapped room and useful spot in Grainger Hall, in one place.'
+              : 'Find your classroom. Take the right turn. Get there on time.'}
           </p>
         </div>
-
-        <RoomSearch buildingId={DEMO_BUILDING_ID} onSelect={setDestNode} selectedLabel={destinationLabel} />
-
-        {/* Start point */}
-        <div className="rounded-[var(--c3-style-border-radius-8)] border border-[var(--c3-style-basic-border-weak)] bg-[var(--c3-style-basic-bg-primary)] p-3">
-          <p className="mb-1 flex items-center gap-1.5 text-c3-bold-label-l3 text-[var(--c3-style-basic-fg-secondary)]">
-            <MapPin className="size-4" aria-hidden />
-            Where you are
-          </p>
-          <p className="text-c3-regular-body-p2 text-[var(--c3-style-basic-fg-primary)]">
-            {startNode
-              ? `Near ${startNode.roomNumber ?? startNode.name ?? startNode.kind}`
-              : 'Tap the floor plan to drop your pin.'}
-          </p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            <Button
-              size="sm"
-              variant="outline"
-              appearance="secondary"
-              loading={locating}
-              onClick={handleLocate}
-            >
-              <LocateFixed className="size-3" aria-hidden />
-              Use my location
-            </Button>
-            <Button
-              size="sm"
-              variant={stepFree ? 'solid' : 'outline'}
-              appearance={stepFree ? 'accent' : 'secondary'}
-              aria-pressed={stepFree}
-              onClick={() => setStepFree((previous) => !previous)}
-            >
-              <Accessibility className="size-3" aria-hidden />
-              Step-free
-            </Button>
-          </div>
-          {locateMessage && (
-            <p className="mt-2 text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-neutral)]">{locateMessage}</p>
-          )}
+        <div className="building-selector">
+          <span className="building-icon">
+            <Building2 size={22} />
+          </span>
+          <span>
+            <small>YOU’RE EXPLORING</small>
+            <strong>{building?.name || 'Grainger Hall'}</strong>
+            <em>UW–Madison · {floors.length} mapped floors</em>
+          </span>
         </div>
+      </div>
 
-        <ArrivalCard routeSeconds={route?.found ? route.totalSeconds : null} />
-
-        {routing && (
-          <p className="text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-neutral)]">Finding the fastest way…</p>
-        )}
-        {route && !routing && (
-          <RouteSteps route={route} activeFloorId={activeFloorId} onFocusFloor={setActiveFloorId} />
-        )}
-
-        {/* Author mode — the tool for correcting node coordinates in
-            tools/build_graph.py without guessing. Not part of the student
-            experience, but it is what makes the hand-authored graph fixable. */}
-        <div className="rounded-[var(--c3-style-border-radius-8)] border border-dashed border-[var(--c3-style-basic-border-weak)] p-3">
-          <div className="flex items-center justify-between gap-2">
-            <span className="flex items-center gap-1.5 text-c3-bold-label-l3 text-[var(--c3-style-basic-fg-secondary)]">
-              <Pencil className="size-4" aria-hidden />
-              Author mode
-            </span>
-            <Button
-              size="sm"
-              variant={authorMode ? 'solid' : 'ghost'}
-              appearance={authorMode ? 'warning' : 'secondary'}
-              aria-pressed={authorMode}
-              onClick={() => {
-                setAuthorMode((previous) => !previous);
-                setAuthorPoint(null);
-              }}
-            >
-              {authorMode ? 'On' : 'Off'}
-            </Button>
+      {location.pathname === '/help' && (
+        <section className="help-panel">
+          <div>
+            <span className="eyebrow">A LITTLE DIRECTION</span>
+            <h2>Your next class, without the guesswork.</h2>
           </div>
-          {authorMode && (
-            <div className="mt-2">
-              <p className="text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-neutral)]">
-                Click the plan to read off a pixel coordinate to paste into tools/build_graph.py.
+          <ol>
+            <li>
+              <strong>1. Choose your starting point</strong>
+              <p>
+                Search for a nearby room or entrance, or tap your position on
+                the floor plan. Select your floor first.
               </p>
-              {authorPoint && (
-                <div className="mt-1 flex items-center gap-2">
-                  <code className="rounded bg-[var(--c3-style-basic-bg-secondary)] px-2 py-1 text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-primary)]">
-                    {Math.round(authorPoint.x)}, {Math.round(authorPoint.y)}
-                  </code>
-                  <Button
-                    size="icon-sm"
-                    variant="ghost"
-                    appearance="secondary"
-                    aria-label="Copy coordinate"
-                    onClick={handleCopyAuthorPoint}
+            </li>
+            <li>
+              <strong>2. Find your destination</strong>
+              <p>
+                Search by room number, name, or a term like “restroom”. Switch
+                on step-free routing to use elevators.
+              </p>
+            </li>
+            <li>
+              <strong>3. Follow your route</strong>
+              <p>
+                Start directions and use the floor controls as you walk. Add
+                today’s class time to check your estimated arrival.
+              </p>
+            </li>
+          </ol>
+          <p className="data-note">
+            <Info size={16} /> Routes use an approximate, hand-authored building
+            graph. GPS cannot identify your floor. Follow posted signs and
+            building access restrictions.
+          </p>
+          <button className="primary-button" onClick={() => navigate('/')}>
+            Explore the map <ArrowRight size={17} />
+          </button>
+        </section>
+      )}
+
+      {isDirectory ? (
+        <section className="directory-panel">
+          <div className="directory-toolbar">
+            <div className="search-field">
+              <Search size={18} />
+              <input
+                aria-label="Search directory"
+                placeholder="Search rooms, names, or places…"
+                value={directoryQuery}
+                onChange={(event) => setDirectoryQuery(event.target.value)}
+              />
+            </div>
+            <span>{directory.length} places</span>
+          </div>
+          <div className="filter-chips">
+            {[
+              ['all', 'All places'],
+              ['rooms', 'Rooms'],
+              ['restroom', 'Restrooms'],
+              ['entrance', 'Entrances'],
+            ].map(([value, label]) => (
+              <button
+                key={value}
+                className={category === value ? 'selected' : ''}
+                onClick={() => setCategory(value)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <div className="room-grid">
+            {directory.map((node) => (
+              <article className="directory-card" key={node.id}>
+                <div className="directory-card-top">
+                  <span className="place-icon">
+                    {node.kind === 'room' ? (
+                      <GraduationCap size={22} />
+                    ) : (
+                      <DoorOpen size={22} />
+                    )}
+                  </span>
+                  <button
+                    className={`icon-button ${saved.includes(node.id) ? 'is-saved' : ''}`}
+                    aria-label={`${saved.includes(node.id) ? 'Unsave' : 'Save'} ${node.roomNumber || node.name}`}
+                    aria-pressed={saved.includes(node.id)}
+                    onClick={() => toggleSaved(node.id)}
                   >
-                    <Copy className="size-3" aria-hidden />
-                  </Button>
+                    <Bookmark
+                      size={18}
+                      fill={saved.includes(node.id) ? 'currentColor' : 'none'}
+                    />
+                  </button>
                 </div>
-              )}
+                <h3>
+                  {node.roomNumber ? `Room ${node.roomNumber}` : node.name}
+                </h3>
+                <p>{node.roomNumber ? node.name : node.kind}</p>
+                <div className="directory-card-bottom">
+                  <span>
+                    <Layers size={13} /> {node.floor?.name}
+                  </span>
+                  <button
+                    onClick={() => {
+                      chooseDestination(node);
+                      navigate('/');
+                    }}
+                  >
+                    Get directions <ArrowUpRight size={15} />
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+          {!directory.length && (
+            <div className="directory-empty">
+              <Bookmark size={28} />
+              <h3>
+                {location.pathname === '/saved'
+                  ? 'Keep your favorite places close.'
+                  : 'No places found.'}
+              </h3>
+              <p>
+                {location.pathname === '/saved'
+                  ? 'Save rooms from the directory to find them here.'
+                  : 'Try another room number or clear your filters.'}
+              </p>
+              <button
+                className="secondary-button"
+                onClick={() => {
+                  navigate('/directory');
+                  setDirectoryQuery('');
+                  setCategory('all');
+                }}
+              >
+                Browse all rooms
+              </button>
             </div>
           )}
-        </div>
-      </aside>
-
-      {/* ---------------- Map ---------------- */}
-      <section className="relative flex min-h-[420px] flex-1 flex-col gap-2">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-c3-bold-label-l3 text-[var(--c3-style-basic-fg-secondary)]">Floor</span>
-          {/* Descending so the stack reads like a building elevation. */}
-          {[...floors]
-            .sort((a, b) => b.level - a.level)
-            .map((floor) => {
-              const onRoute = route?.found && route.legs.some((leg) => leg.floorId === floor.id);
-              return (
-                <Button
-                  key={floor.id}
-                  size="sm"
-                  variant={floor.id === activeFloorId ? 'solid' : 'outline'}
-                  appearance={floor.id === activeFloorId ? 'accent' : 'secondary'}
-                  onClick={() => setActiveFloorId(floor.id)}
-                >
-                  {floor.name}
-                  {onRoute && floor.id !== activeFloorId ? ' •' : ''}
-                </Button>
-              );
-            })}
-          {destNode && (
-            <Button
-              size="sm"
-              variant="ghost"
-              appearance="secondary"
-              className="ml-auto"
-              onClick={() => setDestNode(null)}
-            >
-              <X className="size-3" aria-hidden />
-              Clear destination
-            </Button>
-          )}
-        </div>
-
-        <div className="min-h-0 flex-1">
-          <FloorPlanMap
-            floor={activeFloor}
-            nodes={nodesOnActiveFloor}
-            routeLeg={activeLeg}
-            pin={pinFloorId === activeFloor.id ? pin : null}
-            accuracyRadiusPx={accuracyRadiusPx}
-            destNodeId={destNode?.id ?? null}
-            authorMode={authorMode}
-            onPinChange={handlePinChange}
-            onAuthorClick={setAuthorPoint}
-          />
-        </div>
-      </section>
+          {storageMessage && <p role="status">{storageMessage}</p>}
+        </section>
+      ) : (
+        location.pathname !== '/help' && (
+          <>
+            <div className="map-workspace">
+              <aside className="journey-panel">
+                <div className="panel-title">
+                  <span className="section-icon">
+                    <Navigation size={19} />
+                  </span>
+                  <div>
+                    <h2>Let’s get you there</h2>
+                    <p>A little direction goes a long way.</p>
+                  </div>
+                </div>
+                <div className="journey-fields">
+                  <span className="endpoint-line" />
+                  <div className="endpoint-row">
+                    <span className="endpoint-dot start-dot" />
+                    <RoomSearch
+                      buildingId={DEMO_BUILDING_ID}
+                      onSelect={chooseStart}
+                      label="STARTING POINT"
+                      selectedLabel={
+                        startNode
+                          ? startNode.roomNumber
+                            ? `Room ${startNode.roomNumber}`
+                            : startNode.name || 'Your map pin'
+                          : pin
+                            ? 'Locating your map pin…'
+                            : null
+                      }
+                      placeholder="Choose a room or tap the map"
+                    />
+                  </div>
+                  <button
+                    className="swap-button"
+                    aria-label="Swap start and destination"
+                    disabled={!startNode || !destNode}
+                    onClick={swapEndpoints}
+                  >
+                    <ArrowDownUp size={14} />
+                  </button>
+                  <div className="endpoint-row">
+                    <span className="endpoint-dot destination-dot" />
+                    <RoomSearch
+                      buildingId={DEMO_BUILDING_ID}
+                      onSelect={chooseDestination}
+                      label="DESTINATION"
+                      selectedLabel={
+                        destNode
+                          ? destNode.roomNumber
+                            ? `Room ${destNode.roomNumber}`
+                            : destNode.name
+                          : null
+                      }
+                      placeholder="Where’s your next class?"
+                    />
+                  </div>
+                </div>
+                <div className="location-actions">
+                  <button onClick={handleLocate} disabled={locating}>
+                    {locating ? (
+                      <Loader2 className="animate-spin" size={14} />
+                    ) : (
+                      <LocateFixed size={14} />
+                    )}
+                    {locating ? 'Finding location…' : 'Use my location'}
+                  </button>
+                  {(pin || destNode) && (
+                    <button
+                      onClick={() => {
+                        setPin(null);
+                        setPinFloorId(null);
+                        setDestNode(null);
+                        setRoute(null);
+                        setRouteError('');
+                        setLocateMessage(null);
+                        setGuiding(false);
+                      }}
+                    >
+                      Reset <X size={12} />
+                    </button>
+                  )}
+                </div>
+                {locateMessage && (
+                  <p className="inline-message" role="status">
+                    {locateMessage}
+                  </p>
+                )}
+                <div className="accessibility-row">
+                  <span className="accessibility-icon">
+                    <Accessibility size={19} />
+                  </span>
+                  <div>
+                    <strong>Step-free route</strong>
+                    <small>Elevators, no stairs</small>
+                  </div>
+                  <button
+                    className={`toggle ${stepFree ? 'on' : ''}`}
+                    role="switch"
+                    aria-label="Step-free route"
+                    aria-checked={stepFree}
+                    onClick={() => setStepFree((value) => !value)}
+                  >
+                    <span />
+                  </button>
+                </div>
+                <ArrivalCard
+                  routeSeconds={
+                    route?.found && !routing ? route.totalSeconds : null
+                  }
+                />
+                {routeError && (
+                  <p className="route-error" role="alert">
+                    {routeError}
+                  </p>
+                )}
+                {routing && (
+                  <p className="inline-message" role="status">
+                    <Loader2 className="animate-spin" size={15} /> Finding your
+                    best route…
+                  </p>
+                )}
+                {route && !routing ? (
+                  <div className="route-content">
+                    <RouteSteps
+                      route={route}
+                      activeFloorId={activeFloorId}
+                      onFocusFloor={setActiveFloorId}
+                    />
+                    {route.found && (
+                      <>
+                        <button
+                          className="primary-button directions-button"
+                          onClick={() => {
+                            setGuiding((value) => !value);
+                            setGuideIndex(0);
+                            setActiveFloorId(
+                              route.legs[0]?.floorId || activeFloorId,
+                            );
+                          }}
+                        >
+                          {guiding ? <X size={17} /> : <Navigation size={17} />}
+                          {guiding ? 'End directions' : 'Start directions'}
+                          <ArrowRight size={17} />
+                        </button>
+                        {guiding && guideLeg && (
+                          <div className="guidance-card" role="status">
+                            <small>
+                              FLOOR {guideIndex + 1} OF {route.legs.length}
+                            </small>
+                            <strong>{guideLeg.instruction}</strong>
+                            <p>
+                              You control your progress. Your position is not
+                              tracked indoors.
+                            </p>
+                            <button
+                              className="secondary-button"
+                              onClick={() => {
+                                if (guideIndex < route.legs.length - 1) {
+                                  setGuideIndex(guideIndex + 1);
+                                  setActiveFloorId(
+                                    route.legs[guideIndex + 1].floorId,
+                                  );
+                                } else {
+                                  setGuiding(false);
+                                  setLocateMessage(
+                                    'You’ve finished the directions. Check the room sign to confirm you’ve arrived.',
+                                  );
+                                }
+                              }}
+                            >
+                              {guideIndex < route.legs.length - 1
+                                ? 'Next floor'
+                                : 'Finish directions'}{' '}
+                              <Check size={15} />
+                            </button>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                ) : (
+                  !routing && (
+                    <div className="journey-empty">
+                      <span>
+                        <MapPin size={22} />
+                      </span>
+                      <h3>Your next stop starts here.</h3>
+                      <p>
+                        {destNode
+                          ? 'Choose where you’re starting to see your route.'
+                          : startNode
+                            ? 'Choose a destination to see your route.'
+                            : 'Add a starting point and destination to see your route and walking time.'}
+                      </p>
+                    </div>
+                  )
+                )}
+                <div className="panel-footer">
+                  <ShieldCheck size={14} />
+                  <span>Indoor routes. A little peace of mind.</span>
+                </div>
+              </aside>
+              <section
+                className="map-panel"
+                aria-label="Interactive building map"
+              >
+                <div className="map-toolbar">
+                  <div>
+                    <span className="map-status-dot" />
+                    <strong>{building?.name}</strong>
+                    <span className="map-toolbar-divider" />{' '}
+                    <span>{activeFloor.name}</span>
+                  </div>
+                  <span className="map-view-label">
+                    <Layers size={14} /> Floor plan
+                  </span>
+                </div>
+                <div className="map-canvas">
+                  <FloorPlanMap
+                    floor={activeFloor}
+                    nodes={nodesOnActiveFloor}
+                    routeLeg={activeLeg}
+                    pin={pinFloorId === activeFloor.id ? pin : null}
+                    accuracyRadiusPx={accuracyRadiusPx}
+                    destNodeId={destNode?.id ?? null}
+                    authorMode={false}
+                    onPinChange={handlePinChange}
+                    onAuthorClick={() => {}}
+                    onDestinationSelect={chooseDestination}
+                  />
+                  <div className="floor-control">
+                    <span>FLOOR</span>
+                    {[...floors]
+                      .sort((a, b) => b.level - a.level)
+                      .map((floor) => (
+                        <button
+                          key={floor.id}
+                          className={
+                            activeFloorId === floor.id ? 'selected' : ''
+                          }
+                          aria-label={`Show ${floor.name}`}
+                          aria-pressed={activeFloorId === floor.id}
+                          onClick={() => setActiveFloorId(floor.id)}
+                        >
+                          {floor.level}
+                          {route?.found &&
+                            route.legs.some(
+                              (leg) => leg.floorId === floor.id,
+                            ) && <i />}
+                        </button>
+                      ))}
+                  </div>
+                  <div className="map-instruction">
+                    <span className="instruction-icon">
+                      <LocateFixed size={17} />
+                    </span>
+                    <span>
+                      <strong>
+                        {pin
+                          ? 'Make yourself at home.'
+                          : 'Where are you right now?'}
+                      </strong>
+                      <small>
+                        {pin
+                          ? 'Drag your pin to adjust. Tap a room to explore.'
+                          : 'Select your floor, then tap the map to set your location.'}
+                      </small>
+                    </span>
+                  </div>
+                  <span className="map-compass">
+                    N<Navigation size={21} fill="currentColor" />
+                  </span>
+                </div>
+                <div className="map-legend">
+                  <div>
+                    <span>
+                      <i className="legend-you" /> You are here
+                    </span>
+                    <span>
+                      <i className="legend-destination" /> Destination
+                    </span>
+                    <span>
+                      <i className="legend-route" /> Your route
+                    </span>
+                  </div>
+                  <span className="map-interaction-hint">
+                    Scroll to zoom · Drag to explore
+                  </span>
+                </div>
+              </section>
+            </div>
+            <section className="discover-section">
+              <div className="discover-heading">
+                <div>
+                  <h2>
+                    Around Grainger Hall <span>A good place to start</span>
+                  </h2>
+                </div>
+                <button onClick={() => navigate('/directory')}>
+                  View directory <ArrowUpRight size={15} />
+                </button>
+              </div>
+              <div className="quick-places">
+                {popular.map((node, index) => (
+                  <button
+                    key={node.id}
+                    className="quick-place"
+                    onClick={() => chooseDestination(node)}
+                  >
+                    <span className={`quick-place-icon place-tone-${index}`}>
+                      {node.kind === 'entrance' ? (
+                        <DoorOpen size={20} />
+                      ) : node.kind === 'restroom' ? (
+                        <Accessibility size={20} />
+                      ) : (
+                        <GraduationCap size={20} />
+                      )}
+                    </span>
+                    <span>
+                      <strong>{node.name}</strong>
+                      <small>
+                        {node.floor?.name}
+                        {node.roomNumber
+                          ? ` · Room ${node.roomNumber}`
+                          : ` · ${node.kind}`}
+                      </small>
+                    </span>
+                    <ChevronRight size={17} />
+                  </button>
+                ))}
+              </div>
+            </section>
+            <footer className="page-footer">
+              <span>
+                <span className="small-green-dot" /> A clearer way through
+                campus.
+              </span>
+              <span>
+                {rooms.filter((node) => node.kind === 'room').length} rooms ·{' '}
+                {floors.length} floors · One less thing to worry about
+              </span>
+              <span>Made for the moments between classes.</span>
+            </footer>
+          </>
+        )
+      )}
     </div>
   );
 }

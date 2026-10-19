@@ -1,157 +1,168 @@
-/**
- * Room search box: type a room number ("3112"), a room name ("Learning
- * Commons") or an alias ("bathroom") and pick a destination.
- *
- * Matching and ranking happen server-side in `NavRouter.searchRooms` so the
- * client never needs a copy of the room list to filter.
- */
-
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Loader2, Search } from 'lucide-react';
-
+import React, { useEffect, useId, useRef, useState } from 'react';
+import { ArrowUpRight, Loader2, Search, X } from 'lucide-react';
 import { MapNode } from '@/Interfaces';
 import { searchRooms } from '@/lib/tardyApi';
-import { useErrorBoundary } from '@/components/ErrorBoundary/ErrorBoundary';
 
-/**
- * Delay before a keystroke turns into a request. 220 ms is below the threshold
- * where typing feels laggy but still collapses a burst of keystrokes into one
- * round trip.
- */
-const DEBOUNCE_MS = 220;
-
-interface RoomSearchProps {
+interface Props {
   buildingId: string;
   onSelect: (node: MapNode) => void;
-  /** Label of the currently chosen destination, shown when the box is empty. */
   selectedLabel?: string | null;
+  label?: string;
+  placeholder?: string;
 }
-
-export default function RoomSearch({ buildingId, onSelect, selectedLabel }: RoomSearchProps) {
-  const { reportError } = useErrorBoundary();
+export default function RoomSearch({
+  buildingId,
+  onSelect,
+  selectedLabel,
+  label = 'Where are you headed?',
+  placeholder = 'Search a room or place…',
+}: Props) {
+  const id = useId();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<MapNode[]>([]);
   const [searching, setSearching] = useState(false);
   const [open, setOpen] = useState(false);
-  const blurTimer = useRef<number | null>(null);
-
+  const [highlight, setHighlight] = useState(0);
+  const [error, setError] = useState('');
+  const blur = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => () => clearTimeout(blur.current), []);
   useEffect(() => {
-    const trimmed = query.trim();
-    if (trimmed.length === 0) {
-      setResults([]);
+    let cancelled = false;
+    setResults([]);
+    setHighlight(0);
+    setError('');
+    if (!query.trim()) {
       setSearching(false);
       return;
     }
-
-    let cancelled = false;
     setSearching(true);
-    const timer = window.setTimeout(() => {
-      searchRooms(trimmed, buildingId, 8)
-        .then((found) => {
-          if (cancelled) return;
-          setResults(found);
-          setOpen(true);
-        })
-        .catch((error) => {
-          if (!cancelled) reportError(error);
-        })
-        .finally(() => {
-          if (!cancelled) setSearching(false);
-        });
-    }, DEBOUNCE_MS);
-
+    const timer = setTimeout(
+      () =>
+        searchRooms(query.trim(), buildingId, 10)
+          .then((found) => {
+            if (!cancelled) setResults(found);
+          })
+          .catch(() => {
+            if (!cancelled) setError('Search unavailable. Please try again.');
+          })
+          .finally(() => {
+            if (!cancelled) setSearching(false);
+          }),
+      180,
+    );
     return () => {
       cancelled = true;
-      window.clearTimeout(timer);
+      clearTimeout(timer);
     };
-  }, [query, buildingId, reportError]);
-
-  useEffect(
-    () => () => {
-      if (blurTimer.current !== null) window.clearTimeout(blurTimer.current);
-    },
-    [],
-  );
-
-  const handleSelect = useCallback(
-    (node: MapNode) => {
-      try {
-        onSelect(node);
-        setQuery('');
-        setResults([]);
-        setOpen(false);
-      } catch (error) {
-        reportError(error);
-      }
-    },
-    [onSelect, reportError],
-  );
-
+  }, [query, buildingId]);
+  const choose = (node: MapNode) => {
+    onSelect(node);
+    setQuery('');
+    setOpen(false);
+  };
   return (
-    <div className="relative">
-      <label
-        htmlFor="tardy-room-search"
-        className="mb-1 block text-c3-bold-label-l3 text-[var(--c3-style-basic-fg-secondary)]"
-      >
-        Where are you headed?
-      </label>
-      <div className="relative">
-        <Search
-          className="pointer-events-none absolute left-2 top-1/2 size-4 -translate-y-1/2 text-[var(--c3-style-basic-fg-neutral)]"
-          aria-hidden
-        />
+    <div className="room-search">
+      <label htmlFor={id}>{label}</label>
+      <div className="search-field">
+        <Search size={18} />
         <input
-          id="tardy-room-search"
-          type="text"
-          autoComplete="off"
+          id={id}
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded={open && !!query.trim()}
+          aria-controls={`${id}-results`}
+          aria-activedescendant={
+            open && results[highlight] ? `${id}-${highlight}` : undefined
+          }
           value={query}
-          placeholder={selectedLabel ? `Going to ${selectedLabel}` : 'Room number, name, or "bathroom"'}
-          onChange={(event) => setQuery(event.target.value)}
-          onFocus={() => setOpen(results.length > 0)}
-          // Deferred so a click on a result lands before the list unmounts.
-          onBlur={() => {
-            blurTimer.current = window.setTimeout(() => setOpen(false), 150);
+          autoComplete="off"
+          placeholder={selectedLabel || placeholder}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setOpen(true);
           }}
-          className="h-[var(--c3-style-height-h-36)] w-full rounded-[var(--c3-style-border-radius-4)] border border-[var(--c3-style-basic-border-weak)] bg-[var(--c3-style-basic-bg-primary)] pl-8 pr-8 text-c3-regular-body-p2 text-[var(--c3-style-basic-fg-primary)] outline-none focus-visible:border-[var(--c3-style-accent-border-strong)]"
+          onFocus={() => {
+            clearTimeout(blur.current);
+            setOpen(true);
+          }}
+          onBlur={() => {
+            blur.current = setTimeout(() => setOpen(false), 150);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') setOpen(false);
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+              e.preventDefault();
+              setOpen(true);
+              setHighlight((i) =>
+                Math.max(
+                  0,
+                  Math.min(
+                    results.length - 1,
+                    i + (e.key === 'ArrowDown' ? 1 : -1),
+                  ),
+                ),
+              );
+            }
+            if (e.key === 'Enter' && open && results[highlight]) {
+              e.preventDefault();
+              choose(results[highlight]);
+            }
+          }}
         />
-        {searching && (
-          <Loader2
-            className="absolute right-2 top-1/2 size-4 -translate-y-1/2 animate-spin text-[var(--c3-style-basic-fg-neutral)]"
-            aria-hidden
-          />
+        {searching ? (
+          <Loader2 className="animate-spin" size={17} />
+        ) : query ? (
+          <button aria-label="Clear search" onClick={() => setQuery('')}>
+            <X size={16} />
+          </button>
+        ) : (
+          <kbd>↵</kbd>
         )}
       </div>
-
-      {open && results.length > 0 && (
-        <ul className="absolute z-20 mt-1 max-h-72 w-full overflow-auto rounded-[var(--c3-style-border-radius-4)] border border-[var(--c3-style-basic-border-weak)] bg-[var(--c3-style-basic-bg-primary)] shadow-lg">
-          {results.map((node) => (
-            <li key={node.id}>
+      {open && query.trim() && (
+        <ul
+          id={`${id}-results`}
+          role="listbox"
+          className="search-results"
+          aria-label={label}
+        >
+          {results.map((node, i) => (
+            <li
+              key={node.id}
+              id={`${id}-${i}`}
+              role="option"
+              aria-selected={i === highlight}
+              onMouseEnter={() => setHighlight(i)}
+            >
               <button
-                type="button"
-                onClick={() => handleSelect(node)}
-                className="flex w-full items-baseline gap-2 px-3 py-2 text-left hover:bg-[var(--c3-style-basic-bg-hover)]"
+                className={i === highlight ? 'highlighted' : ''}
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => choose(node)}
               >
-                <span className="text-c3-bold-body-p2 text-[var(--c3-style-basic-fg-primary)]">
-                  {node.roomNumber ?? node.name ?? node.id}
+                <span className="search-result-icon">
+                  <ArrowUpRight size={17} />
                 </span>
-                {node.roomNumber && node.name && (
-                  <span className="truncate text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-secondary)]">
-                    {node.name}
-                  </span>
-                )}
-                <span className="ml-auto shrink-0 text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-neutral)]">
-                  {node.floor?.name ?? ''}
+                <span>
+                  <strong>
+                    {node.roomNumber ? `Room ${node.roomNumber}` : node.name}
+                  </strong>
+                  <small>
+                    {node.roomNumber ? node.name : node.kind} ·{' '}
+                    {node.floor?.name}
+                  </small>
                 </span>
               </button>
             </li>
           ))}
+          {!results.length && (
+            <li className="search-message" role="status">
+              {searching
+                ? 'Searching the building…'
+                : error ||
+                  `No rooms match “${query.trim()}”. Try a room number or name.`}
+            </li>
+          )}
         </ul>
-      )}
-
-      {open && !searching && query.trim().length > 0 && results.length === 0 && (
-        <p className="absolute z-20 mt-1 w-full rounded-[var(--c3-style-border-radius-4)] border border-[var(--c3-style-basic-border-weak)] bg-[var(--c3-style-basic-bg-primary)] px-3 py-2 text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-secondary)]">
-          Nothing matches {`"${query.trim()}"`} in this building.
-        </p>
       )}
     </div>
   );

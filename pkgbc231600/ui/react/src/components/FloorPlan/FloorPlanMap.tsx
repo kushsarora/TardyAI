@@ -10,7 +10,13 @@
  * away regardless of the current zoom.
  */
 
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Crosshair, Minus, Plus } from 'lucide-react';
 
 import { Floor, MapNode, RouteLeg } from '@/Interfaces';
@@ -56,8 +62,13 @@ const CLICK_SLOP_PX = 4;
  *   too-small plan against one edge. Centring also makes a pan at fit zoom a
  *   no-op rather than a slide into emptiness.
  */
-const clampOffsetAxis = (value: number, viewportExtent: number, scaledExtent: number): number => {
-  if (scaledExtent <= viewportExtent) return (viewportExtent - scaledExtent) / 2;
+const clampOffsetAxis = (
+  value: number,
+  viewportExtent: number,
+  scaledExtent: number,
+): number => {
+  if (scaledExtent <= viewportExtent)
+    return (viewportExtent - scaledExtent) / 2;
   return Math.min(Math.max(value, viewportExtent - scaledExtent), 0);
 };
 
@@ -75,6 +86,7 @@ interface FloorPlanMapProps {
   destNodeId?: string | null;
   /** When true, a plain click reports its pixel coordinate instead of moving the pin. */
   authorMode: boolean;
+  onDestinationSelect?: (node: MapNode) => void;
   onPinChange: (point: PixelPoint) => void;
   onAuthorClick: (point: PixelPoint) => void;
 }
@@ -103,12 +115,18 @@ export default function FloorPlanMap({
   destNodeId,
   authorMode,
   onPinChange,
+  onDestinationSelect,
   onAuthorClick,
 }: FloorPlanMapProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const pointers = useRef(new Map<number, PixelPoint>());
+  const pinchDistance = useRef<number | null>(null);
 
-  const [view, setView] = useState<ViewTransform>({ zoom: 0.4, offset: { x: 0, y: 0 } });
+  const [view, setView] = useState<ViewTransform>({
+    zoom: 0.4,
+    offset: { x: 0, y: 0 },
+  });
   const [imageFailed, setImageFailed] = useState(false);
   const { zoom, offset } = view;
 
@@ -135,7 +153,11 @@ export default function FloorPlanMap({
     if (!viewport || !floor.imageWidth || !floor.imageHeight) return MIN_ZOOM;
     const { clientWidth, clientHeight } = viewport;
     if (clientWidth === 0 || clientHeight === 0) return MIN_ZOOM;
-    const fit = Math.min(clientWidth / floor.imageWidth, clientHeight / floor.imageHeight) * FIT_MARGIN;
+    const fit =
+      Math.min(
+        clientWidth / floor.imageWidth,
+        clientHeight / floor.imageHeight,
+      ) * FIT_MARGIN;
     return Math.min(Math.max(fit, MIN_ZOOM), MAX_ZOOM);
   }, [floor.imageWidth, floor.imageHeight]);
 
@@ -153,7 +175,11 @@ export default function FloorPlanMap({
       if (clientWidth === 0 || clientHeight === 0) return candidate;
       return {
         x: clampOffsetAxis(candidate.x, clientWidth, floor.imageWidth * atZoom),
-        y: clampOffsetAxis(candidate.y, clientHeight, floor.imageHeight * atZoom),
+        y: clampOffsetAxis(
+          candidate.y,
+          clientHeight,
+          floor.imageHeight * atZoom,
+        ),
       };
     },
     [floor.imageWidth, floor.imageHeight],
@@ -222,7 +248,10 @@ export default function FloorPlanMap({
       // smaller than the viewport, and cap it at MAX_ZOOM.
       const minZoom = getFitZoom();
       setView((previous) => {
-        const nextZoom = Math.min(Math.max(previous.zoom * factor, minZoom), MAX_ZOOM);
+        const nextZoom = Math.min(
+          Math.max(previous.zoom * factor, minZoom),
+          MAX_ZOOM,
+        );
         const ratio = nextZoom / previous.zoom;
         // Hold the anchor point still, then clamp: zooming out around a corner
         // shrinks the plan away from the opposite edge, which would otherwise
@@ -249,7 +278,7 @@ export default function FloorPlanMap({
   );
 
   const handleWheel = useCallback(
-    (event: React.WheelEvent<HTMLDivElement>) => {
+    (event: WheelEvent) => {
       event.preventDefault();
       // Derive the zoom factor from the scroll magnitude rather than a fixed
       // step. Trackpads emit many small-delta events per gesture (and pinch via
@@ -258,15 +287,35 @@ export default function FloorPlanMap({
       // factor is clamped so no single event — e.g. a big mouse-wheel notch or
       // an aggressive swipe — can jump too far at once.
       const factor = Math.exp(-event.deltaY * WHEEL_ZOOM_SENSITIVITY);
-      const clampedFactor = Math.min(Math.max(factor, MIN_WHEEL_FACTOR), MAX_WHEEL_FACTOR);
+      const clampedFactor = Math.min(
+        Math.max(factor, MIN_WHEEL_FACTOR),
+        MAX_WHEEL_FACTOR,
+      );
       zoomAbout(clampedFactor, event.clientX, event.clientY);
     },
     [zoomAbout],
   );
 
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    viewport?.addEventListener('wheel', handleWheel, { passive: false });
+    return () => viewport?.removeEventListener('wheel', handleWheel);
+  }, [handleWheel]);
+
   const beginPan = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
       if (event.button !== 0) return;
+      pointers.current.set(event.pointerId, {
+        x: event.clientX,
+        y: event.clientY,
+      });
+      event.currentTarget.setPointerCapture(event.pointerId);
+      if (pointers.current.size === 2) {
+        const [a, b] = [...pointers.current.values()];
+        pinchDistance.current = Math.hypot(a.x - b.x, a.y - b.y);
+        dragRef.current.mode = 'none';
+        return;
+      }
       dragRef.current = {
         mode: 'pan',
         startClientX: event.clientX,
@@ -281,6 +330,7 @@ export default function FloorPlanMap({
 
   const beginPinDrag = useCallback((event: React.PointerEvent<SVGGElement>) => {
     event.stopPropagation();
+    viewportRef.current?.setPointerCapture(event.pointerId);
     dragRef.current = {
       mode: 'pin',
       startClientX: event.clientX,
@@ -292,6 +342,23 @@ export default function FloorPlanMap({
 
   const handlePointerMove = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
+      if (pointers.current.has(event.pointerId))
+        pointers.current.set(event.pointerId, {
+          x: event.clientX,
+          y: event.clientY,
+        });
+      if (pointers.current.size >= 2) {
+        const [a, b] = [...pointers.current.values()];
+        const distance = Math.hypot(a.x - b.x, a.y - b.y);
+        if (pinchDistance.current && distance > 0)
+          zoomAbout(
+            distance / pinchDistance.current,
+            (a.x + b.x) / 2,
+            (a.y + b.y) / 2,
+          );
+        pinchDistance.current = distance;
+        return;
+      }
       const drag = dragRef.current;
       if (drag.mode === 'none') return;
 
@@ -300,7 +367,10 @@ export default function FloorPlanMap({
       drag.travel = Math.max(drag.travel, Math.hypot(dx, dy));
 
       if (drag.mode === 'pan') {
-        const clamped = clampOffset({ x: drag.startOffset.x + dx, y: drag.startOffset.y + dy }, zoom);
+        const clamped = clampOffset(
+          { x: drag.startOffset.x + dx, y: drag.startOffset.y + dy },
+          zoom,
+        );
         // Re-anchor the gesture to wherever the clamp actually landed. Without
         // this, dragging hard into a stop banks up slack that the user has to
         // drag back out before the plan moves again — the map would feel stuck
@@ -313,11 +383,17 @@ export default function FloorPlanMap({
       const point = toImageCoords(event.clientX, event.clientY);
       if (point) onPinChange(point);
     },
-    [clampOffset, onPinChange, toImageCoords, zoom],
+    [clampOffset, onPinChange, toImageCoords, zoom, zoomAbout],
   );
 
   const handlePointerUp = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
+      pointers.current.delete(event.pointerId);
+      if (pinchDistance.current !== null) {
+        if (pointers.current.size === 0) pinchDistance.current = null;
+        dragRef.current.mode = 'none';
+        return;
+      }
       const drag = dragRef.current;
       const wasClick = drag.mode === 'pan' && drag.travel <= CLICK_SLOP_PX;
       dragRef.current.mode = 'none';
@@ -336,20 +412,74 @@ export default function FloorPlanMap({
   const markerScale = 1 / zoom;
   const routePoints = routeLeg?.points ?? [];
   const polyline = routePoints.map((p) => `${p.x},${p.y}`).join(' ');
-  const connectors = nodes.filter((n) => n.kind === 'elevator' || n.kind === 'stairs');
-  const destination = destNodeId ? nodes.find((n) => n.id === destNodeId) : undefined;
+  const connectors = nodes.filter(
+    (n) => n.kind === 'elevator' || n.kind === 'stairs',
+  );
+  const destination = destNodeId
+    ? nodes.find((n) => n.id === destNodeId)
+    : undefined;
 
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-[var(--c3-style-border-radius-8)] border border-[var(--c3-style-basic-border-weak)] bg-[var(--c3-style-basic-bg-secondary)]">
+    <div className="floor-plan-viewer">
+      {/* The map is a custom keyboard-operated canvas; its application role enables map shortcuts. */}
+      {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */}
       <div
         ref={viewportRef}
         className="h-full w-full touch-none"
         style={{ cursor: authorMode ? 'crosshair' : 'grab' }}
-        onWheel={handleWheel}
+        tabIndex={0}
+        role="application"
+        aria-label={`${floor.name} map. Use plus and minus to zoom, arrow keys to pan, or zero to fit.`}
+        onKeyDown={(event) => {
+          if (event.target !== event.currentTarget) return;
+          if (
+            [
+              '+',
+              '=',
+              '-',
+              '0',
+              'ArrowLeft',
+              'ArrowRight',
+              'ArrowUp',
+              'ArrowDown',
+            ].includes(event.key)
+          )
+            event.preventDefault();
+          if (event.key === '+' || event.key === '=') zoomAtCenter(1.3);
+          else if (event.key === '-') zoomAtCenter(1 / 1.3);
+          else if (event.key === '0') fitToView();
+          else if (event.key.startsWith('Arrow'))
+            setView((previous) => ({
+              ...previous,
+              offset: clampOffset(
+                {
+                  x:
+                    previous.offset.x +
+                    (event.key === 'ArrowLeft'
+                      ? 50
+                      : event.key === 'ArrowRight'
+                        ? -50
+                        : 0),
+                  y:
+                    previous.offset.y +
+                    (event.key === 'ArrowUp'
+                      ? 50
+                      : event.key === 'ArrowDown'
+                        ? -50
+                        : 0),
+                },
+                previous.zoom,
+              ),
+            }));
+        }}
         onPointerDown={beginPan}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
+        onPointerCancel={() => {
+          dragRef.current.mode = 'none';
+          pointers.current.clear();
+          pinchDistance.current = null;
+        }}
       >
         <div
           ref={stageRef}
@@ -374,9 +504,36 @@ export default function FloorPlanMap({
             <div className="absolute inset-0 bg-[var(--c3-style-basic-bg-secondary)]" />
           )}
 
+          {nodes
+            .filter(
+              (node) =>
+                node.kind === 'room' ||
+                node.kind === 'entrance' ||
+                node.kind === 'restroom',
+            )
+            .map((node) => (
+              <button
+                key={node.id}
+                className={`map-room-marker ${destNodeId === node.id ? 'is-destination' : ''}`}
+                style={{
+                  left: node.imageX,
+                  top: node.imageY,
+                  transform: `translate(-50%, -50%) scale(${markerScale})`,
+                }}
+                aria-label={`Get directions to ${node.roomNumber ? `Room ${node.roomNumber}` : node.name}`}
+                title={`${node.roomNumber ? `Room ${node.roomNumber}` : node.name} · ${floor.name}`}
+                onPointerDown={(event) => event.stopPropagation()}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onDestinationSelect?.(node);
+                }}
+              >
+                {node.roomNumber || (node.kind === 'entrance' ? '↗' : 'WC')}
+              </button>
+            ))}
           <svg
             viewBox={`0 0 ${floor.imageWidth} ${floor.imageHeight}`}
-            className="pointer-events-none absolute inset-0 h-full w-full"
+            className="pointer-events-none absolute inset-0 z-[3] h-full w-full"
           >
             {/* Connector markers, so stairs and elevators are findable at a glance. */}
             {connectors.map((node) => (
@@ -419,7 +576,7 @@ export default function FloorPlanMap({
                 <polyline
                   points={polyline}
                   fill="none"
-                  stroke="#2563eb"
+                  stroke="#277663"
                   strokeWidth={7 * markerScale}
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -432,7 +589,7 @@ export default function FloorPlanMap({
                 cx={routePoints[routePoints.length - 1].x}
                 cy={routePoints[routePoints.length - 1].y}
                 r={8 * markerScale}
-                fill="#2563eb"
+                fill="#277663"
                 stroke="#ffffff"
                 strokeWidth={3 * markerScale}
               />
@@ -458,24 +615,32 @@ export default function FloorPlanMap({
                 cx={pin.x}
                 cy={pin.y}
                 r={accuracyRadiusPx}
-                fill="#2563eb"
+                fill="#277663"
                 fillOpacity={0.12}
-                stroke="#2563eb"
+                stroke="#277663"
                 strokeOpacity={0.45}
                 strokeWidth={2 * markerScale}
               />
             )}
 
             {pin && (
-              <g className="pointer-events-auto cursor-grab" onPointerDown={beginPinDrag}>
+              <g
+                className="pointer-events-auto cursor-grab"
+                onPointerDown={beginPinDrag}
+              >
                 {/* Invisible, generously sized hit target: the visible dot is far
                     too small to grab reliably on a phone. */}
-                <circle cx={pin.x} cy={pin.y} r={26 * markerScale} fill="transparent" />
+                <circle
+                  cx={pin.x}
+                  cy={pin.y}
+                  r={26 * markerScale}
+                  fill="transparent"
+                />
                 <circle
                   cx={pin.x}
                   cy={pin.y}
                   r={11 * markerScale}
-                  fill="#16a34a"
+                  fill="#277663"
                   stroke="#ffffff"
                   strokeWidth={4 * markerScale}
                 />
@@ -485,7 +650,14 @@ export default function FloorPlanMap({
         </div>
       </div>
 
-      <div className="absolute bottom-3 right-3 flex flex-col gap-1">
+      {/* eslint-enable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */}
+      {(imageFailed || !planUrl) && (
+        <p className="map-image-error" role="alert">
+          Floor plan image unavailable. Room positions are shown; reload to try
+          again.
+        </p>
+      )}
+      <div className="map-zoom-controls">
         <Button
           size="icon-md"
           variant="outline"

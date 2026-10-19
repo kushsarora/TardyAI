@@ -13,3 +13,7 @@ declare module 'components';
 declare module 'stylesheets'
 
 // / <reference types="vite/client" />
+
+declare module 'virtual:tardy-demo' {
+  export function demoAction(type: string, action: string, args?: unknown): Promise<unknown>;
+}

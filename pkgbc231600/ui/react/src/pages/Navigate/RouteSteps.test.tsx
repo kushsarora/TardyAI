@@ -66,7 +66,7 @@ test('shows each step text with its distance, numbered per floor', () => {
   const l3Items = within(level3).getAllByRole('listitem');
   expect(l3Items.map((li) => li.textContent)).toEqual([
     'Take West Stairs up to Level 3',
-    'Turn right, then walk 74 m to Elevator C (east)74 m',
+    'Turn right, then walk 74 m to Elevator C (east)',
     '3335 (Class Room 3335) is on your left45 m',
   ]);
   // The leg summaries stay visible above the steps.

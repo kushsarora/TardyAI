@@ -41,29 +41,39 @@ function stepsOf(leg: RouteLegWithSteps): RouteStep[] {
 /** Numbered turn-by-turn list for one leg, with each step's distance. */
 function LegStepList({ steps, label }: { steps: RouteStep[]; label: string }) {
   return (
-    <ol aria-label={label} className="ml-11 list-decimal space-y-1 pb-2 pr-3 marker:text-[var(--c3-style-basic-fg-neutral)]">
+    <ol
+      aria-label={label}
+      className="ml-11 list-decimal space-y-1 pb-2 pr-3 marker:text-[var(--c3-style-basic-fg-neutral)]"
+    >
       {steps.map((step, index) => (
         <li
           key={`${step.kind}-${step.pointIndex}-${index}`}
           className="text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-primary)]"
         >
           <span>{step.text}</span>
-          {step.meters > 0 && (
-            <span className="ml-2 whitespace-nowrap text-[var(--c3-style-basic-fg-neutral)]">
-              {formatMeters(step.meters)}
-            </span>
-          )}
+          {step.meters > 0 &&
+            !step.text.includes(formatMeters(step.meters)) && (
+              <span className="ml-2 whitespace-nowrap text-[var(--c3-style-basic-fg-neutral)]">
+                {formatMeters(step.meters)}
+              </span>
+            )}
         </li>
       ))}
     </ol>
   );
 }
 
-export default function RouteSteps({ route, activeFloorId, onFocusFloor }: RouteStepsProps) {
+export default function RouteSteps({
+  route,
+  activeFloorId,
+  onFocusFloor,
+}: RouteStepsProps) {
   if (!route.found) {
     return (
       <div className="rounded-[var(--c3-style-border-radius-8)] border border-[var(--c3-style-danger-border-strong)] bg-[var(--c3-style-danger-bg-weak)] p-3">
-        <p className="text-c3-bold-body-p2 text-[var(--c3-style-danger-fg-strong)]">No route</p>
+        <p className="text-c3-bold-body-p2 text-[var(--c3-style-danger-fg-strong)]">
+          No route
+        </p>
         <p className="text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-secondary)]">
           {route.message ?? 'We could not find a way there.'}
         </p>
@@ -74,13 +84,18 @@ export default function RouteSteps({ route, activeFloorId, onFocusFloor }: Route
   return (
     <div className="rounded-[var(--c3-style-border-radius-8)] border border-[var(--c3-style-basic-border-weak)] bg-[var(--c3-style-basic-bg-primary)]">
       <div className="flex items-baseline gap-2 border-b border-[var(--c3-style-basic-border-weak)] px-3 py-2">
-        <Footprints className="size-4 text-[var(--c3-style-accent-fg-strong)]" aria-hidden />
+        <Footprints
+          className="size-4 text-[var(--c3-style-accent-fg-strong)]"
+          aria-hidden
+        />
         <span className="text-c3-bold-body-p1 text-[var(--c3-style-basic-fg-primary)]">
           {formatDuration(route.totalSeconds)}
         </span>
         <span className="text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-secondary)]">
           {route.totalMeters ? `${Math.round(route.totalMeters)} m` : ''}
-          {route.floorsTraversed > 1 ? ` · ${route.floorsTraversed} floors` : ''}
+          {route.floorsTraversed > 1
+            ? ` · ${route.floorsTraversed} floors`
+            : ''}
           {route.stepFree ? ' · step-free' : ''}
         </span>
       </div>
@@ -92,7 +107,9 @@ export default function RouteSteps({ route, activeFloorId, onFocusFloor }: Route
               type="button"
               onClick={() => onFocusFloor(leg.floorId)}
               className={`flex w-full items-start gap-3 px-3 py-2 text-left hover:bg-[var(--c3-style-basic-bg-hover)] ${
-                leg.floorId === activeFloorId ? 'bg-[var(--c3-style-accent-bg-weak)]' : ''
+                leg.floorId === activeFloorId
+                  ? 'bg-[var(--c3-style-accent-bg-weak)]'
+                  : ''
               }`}
             >
               <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-[var(--c3-style-accent-bg-strong)] text-c3-bold-label-l3 text-[var(--c3-style-accent-fg-on-strong)]">
@@ -104,11 +121,16 @@ export default function RouteSteps({ route, activeFloorId, onFocusFloor }: Route
                 </span>
                 <span className="block text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-neutral)]">
                   {leg.floorName ?? `Level ${leg.floorLevel}`}
-                  {leg.seconds > 0 ? ` · ${formatDuration(leg.seconds)} walking` : ''}
+                  {leg.seconds > 0
+                    ? ` · ${formatDuration(leg.seconds)} walking`
+                    : ''}
                 </span>
               </span>
               {index < route.legs.length - 1 && (
-                <ArrowDown className="mt-1 size-4 shrink-0 text-[var(--c3-style-basic-fg-neutral)]" aria-hidden />
+                <ArrowDown
+                  className="mt-1 size-4 shrink-0 text-[var(--c3-style-basic-fg-neutral)]"
+                  aria-hidden
+                />
               )}
             </button>
             {stepsOf(leg).length > 0 && (

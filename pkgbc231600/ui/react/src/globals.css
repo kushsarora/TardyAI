@@ -32,6 +32,7 @@
 @import '@fontsource-variable/inter';
 @import './styles/tokens.css';
 @import './styles/manual-tokens.css';
+@import './styles/wayfinding.css';
 
 /*
   Dark mode is driven by a `.dark` class on <html> (see src/hooks/useTheme.ts),
