@@ -164,6 +164,9 @@ def build_waypoints(nodes, floors):
 
         for node in sorted(by_floor[fid], key=lambda n: (n["kind"], n["imageX"])):
             kind = node["kind"]
+            if kind == "door":
+                # A door is where a room meets its corridor; the room's own waypoint names it.
+                continue
             connector = node.get("connectorKey")
             if connector:
                 label = CONNECTOR_LABELS[connector]
