@@ -80,6 +80,7 @@ export default function Navigate() {
 
   const [activeFloorId, setActiveFloorId] = useState<string | null>(null);
   const [pin, setPin] = useState<PixelPoint | null>(null);
+  const [selectedStartId, setSelectedStartId] = useState<string | null>(null);
   const [pinFloorId, setPinFloorId] = useState<string | null>(null);
   const [startNode, setStartNode] = useState<MapNode | null>(null);
   const [destNode, setDestNode] = useState<MapNode | null>(null);
@@ -189,6 +190,13 @@ export default function Navigate() {
       return;
     }
 
+    if (selectedStartId) {
+      const selected = nodes.find((node) => node.id === selectedStartId);
+      if (selected) {
+        setStartNode(selected);
+        return;
+      }
+    }
     setStartNode(null);
     setRoute(null);
     setRouteError('');
@@ -210,7 +218,7 @@ export default function Navigate() {
       cancelled = true;
       window.clearTimeout(timer);
     };
-  }, [pin, pinFloorId, reportError]);
+  }, [pin, pinFloorId, selectedStartId, nodes, reportError]);
 
   /* --------------------------------------------------------------------- *
    * Recompute the route whenever its inputs change.
@@ -260,6 +268,7 @@ export default function Navigate() {
   const handlePinChange = useCallback(
     (point: PixelPoint) => {
       try {
+        setSelectedStartId(null);
         setPin(point);
         setPinFloorId(activeFloorId);
         // A hand-placed pin is exact by definition, so drop the GPS uncertainty.
@@ -320,6 +329,7 @@ export default function Navigate() {
           );
           return;
         }
+        setSelectedStartId(null);
         setPin(projected);
         setPinFloorId(activeFloor.id);
         setAccuracyMeters(position.coords.accuracy || ASSUMED_ACCURACY_M);
@@ -358,6 +368,7 @@ export default function Navigate() {
     setGuiding(false);
   };
   const chooseStart = (node: MapNode) => {
+    setSelectedStartId(node.id);
     setPin({ x: node.imageX, y: node.imageY });
     setPinFloorId(node.floor.id);
     setActiveFloorId(node.floor.id);
@@ -659,6 +670,7 @@ export default function Navigate() {
                   {(pin || destNode) && (
                     <button
                       onClick={() => {
+                        setSelectedStartId(null);
                         setPin(null);
                         setPinFloorId(null);
                         setDestNode(null);
@@ -789,7 +801,7 @@ export default function Navigate() {
                 )}
                 <div className="panel-footer">
                   <ShieldCheck size={14} />
-                  <span>Indoor routes. A little peace of mind.</span>
+                  <span>Routes follow mapped access points.</span>
                 </div>
               </aside>
               <section
@@ -812,7 +824,13 @@ export default function Navigate() {
                     floor={activeFloor}
                     nodes={nodesOnActiveFloor}
                     routeLeg={activeLeg}
-                    pin={pinFloorId === activeFloor.id ? pin : null}
+                    pin={
+                      pinFloorId === activeFloor.id
+                        ? startNode && accuracyMeters === null
+                          ? { x: startNode.imageX, y: startNode.imageY }
+                          : pin
+                        : null
+                    }
                     accuracyRadiusPx={accuracyRadiusPx}
                     destNodeId={destNode?.id ?? null}
                     authorMode={false}
@@ -854,7 +872,7 @@ export default function Navigate() {
                       </strong>
                       <small>
                         {pin
-                          ? 'Drag your pin to adjust. Tap a room to explore.'
+                          ? 'Routes use mapped access points. Tap a room to explore.'
                           : 'Select your floor, then tap the map to set your location.'}
                       </small>
                     </span>

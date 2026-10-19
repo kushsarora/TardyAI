@@ -17,6 +17,9 @@
  */
 type NavRoute {
 
+  /** Version of the authored routing geometry. */
+  routingRevision: string
+
   /**
    * Whether a usable path was found.
    *

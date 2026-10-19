@@ -129,6 +129,9 @@ export interface MapNode {
   name?: string;
   imageX: number;
   imageY: number;
+  /** Printed label center; room routing coordinates stay at its mapped access point. */
+  labelX?: number;
+  labelY?: number;
   /** Shared across floors by nodes in the same shaft; see `MapNode#connectorKey`. */
   connectorKey?: string;
   stepFree?: boolean;
@@ -149,6 +152,7 @@ export interface NavEdge {
 
 /** Return shape of `NavRouter.graphForBuilding`. Mirrors `NavGraphSnapshot`. */
 export interface NavGraphSnapshot {
+  routingRevision?: string;
   buildingId: string;
   nodes: MapNode[];
   edges: NavEdge[];
@@ -185,6 +189,7 @@ export interface RouteLeg {
  * `legs`.
  */
 export interface NavRoute {
+  routingRevision?: string;
   found: boolean;
   message?: string | null;
   legs: RouteLeg[];

@@ -1,0 +1,26 @@
+{
+  "1": [
+    { "name": "1210B classroom interior", "bounds": [735, 390, 840, 630] },
+    { "name": "1270 classroom interior", "bounds": [605, 820, 745, 910] },
+    { "name": "1280 classroom interior", "bounds": [605, 945, 745, 1040] },
+    { "name": "1070 classroom interior", "bounds": [480, 950, 540, 1035] },
+    { "name": "1080 classroom interior", "bounds": [480, 1065, 540, 1145] },
+    { "name": "men's restroom island", "bounds": [715, 690, 835, 748] },
+    { "name": "women's restroom island", "bounds": [885, 690, 995, 748] }
+  ],
+  "2": [
+    { "name": "central opening to floor below", "bounds": [440, 520, 585, 925] },
+    { "name": "restroom island", "bounds": [705, 690, 820, 748] },
+    { "name": "2210M classroom interior", "bounds": [895, 430, 970, 535] },
+    { "name": "2210N classroom interior", "bounds": [1035, 430, 1140, 535] }
+  ],
+  "3": [
+    { "name": "central opening (not a stair landing)", "bounds": [440, 645, 585, 760] },
+    { "name": "restroom island", "bounds": [705, 690, 845, 748] },
+    { "name": "3251 and 3253 offices", "bounds": [895, 690, 1170, 748] },
+    { "name": "3070 conference room interior", "bounds": [445, 825, 585, 915] },
+    { "name": "3270 conference room interior", "bounds": [650, 825, 705, 900] },
+    { "name": "3210 E F G H office block", "bounds": [850, 350, 940, 435] },
+    { "name": "Learning Commons elevator shaft", "bounds": [855, 468, 890, 500] }
+  ]
+}

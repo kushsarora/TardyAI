@@ -25,6 +25,9 @@
  */
 entity type MapNode {
 
+  /** Version of the authored routing geometry; excludes obsolete seed records after an upsert. */
+  routingRevision: string
+
   /**
    * The floor this node sits on; inverse of {@link Floor#nodes}.
    *
@@ -89,6 +92,10 @@ entity type MapNode {
    * Valid range is 0 to {@link Floor#imageHeight}.
    */
   imageY: !double
+
+  /** Printed room label position. Routing uses imageX/imageY at the mapped access point. */
+  labelX: double
+  labelY: double
 
   /**
    * Shared identifier linking one physical vertical connector across every

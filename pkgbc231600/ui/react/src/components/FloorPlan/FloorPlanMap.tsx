@@ -516,8 +516,8 @@ export default function FloorPlanMap({
                 key={node.id}
                 className={`map-room-marker ${destNodeId === node.id ? 'is-destination' : ''}`}
                 style={{
-                  left: node.imageX,
-                  top: node.imageY,
+                  left: node.labelX ?? node.imageX,
+                  top: node.labelY ?? node.imageY,
                   transform: `translate(-50%, -50%) scale(${markerScale})`,
                 }}
                 aria-label={`Get directions to ${node.roomNumber ? `Room ${node.roomNumber}` : node.name}`}
@@ -569,7 +569,7 @@ export default function FloorPlanMap({
                   fill="none"
                   stroke="#ffffff"
                   strokeOpacity={0.9}
-                  strokeWidth={14 * markerScale}
+                  strokeWidth={8 * markerScale}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -577,7 +577,7 @@ export default function FloorPlanMap({
                   points={polyline}
                   fill="none"
                   stroke="#277663"
-                  strokeWidth={7 * markerScale}
+                  strokeWidth={4 * markerScale}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -600,10 +600,10 @@ export default function FloorPlanMap({
               <circle
                 cx={destination.imageX}
                 cy={destination.imageY}
-                r={15 * markerScale}
+                r={11 * markerScale}
                 fill="none"
                 stroke="#dc2626"
-                strokeWidth={4 * markerScale}
+                strokeWidth={3 * markerScale}
               />
             )}
 
@@ -642,7 +642,7 @@ export default function FloorPlanMap({
                   r={11 * markerScale}
                   fill="#277663"
                   stroke="#ffffff"
-                  strokeWidth={4 * markerScale}
+                  strokeWidth={3 * markerScale}
                 />
               </g>
             )}

@@ -76,7 +76,12 @@ export default defineConfig(({ command, mode }) => {
         load(id) {
           if (id !== '\0virtual:tardy-demo') return;
           const packageRoot = path.resolve(__dirname, '../..');
-          const read = (file: string) => JSON.parse(readFileSync(path.join(packageRoot, 'data', file), 'utf8'));
+          const read = (file: string) => {
+            const filename = path.join(packageRoot, 'data', file);
+            this.addWatchFile(filename);
+            return JSON.parse(readFileSync(filename, 'utf8'));
+          };
+          this.addWatchFile(path.join(packageRoot, 'src/NavRouter.js'));
           const floors = read('Floor/Floor.json');
           const nodes = read('MapNode/MapNode.json').map((n: any) => ({ ...n, floor: floors.find((f: any) => f.id === n.floor.id) }));
           return `

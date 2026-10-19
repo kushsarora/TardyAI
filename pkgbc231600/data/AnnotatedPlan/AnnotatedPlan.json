@@ -17,7 +17,7 @@
     "annotatedHeight": 1159,
     "imageWidth": 1980,
     "imageHeight": 1530,
-    "waypointCount": 81
+    "waypointCount": 91
   },
   {
     "id": "plan-grainger-f2",
@@ -37,7 +37,7 @@
     "annotatedHeight": 1159,
     "imageWidth": 1980,
     "imageHeight": 1530,
-    "waypointCount": 136
+    "waypointCount": 146
   },
   {
     "id": "plan-grainger-f3",
@@ -57,6 +57,6 @@
     "annotatedHeight": 1159,
     "imageWidth": 1980,
     "imageHeight": 1530,
-    "waypointCount": 152
+    "waypointCount": 173
   }
 ]

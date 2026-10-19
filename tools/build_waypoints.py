@@ -39,6 +39,8 @@ BUILDING_ID = "grainger"
 #: model change floors correctly -- "S1" on floor 1 and "S1" on floor 3 are the same shaft.
 CONNECTOR_LABELS = {
     "stair-west": "S1",
+    "stair-commons": "S2",
+    "elev-commons": "E4",
     "elev-west-a": "E1",
     "elev-west-b": "E2",
     "elev-east": "E3",
@@ -69,14 +71,19 @@ BUILDING_FACTS = """\
   - x2xx -> central wing (around the atrium / learning commons)
   - x3xx -> east wing
   - x5xx -> south-east corner
-- Vertical circulation. All four shafts serve floors 1, 2 and 3:
-  - S1 = West Stairs (the only mapped stairwell; NOT step-free)
-  - E1 = Elevator A (west), E2 = Elevator B (west), E3 = Elevator C (east)
-  - E1/E2/E3 are step-free. Prefer an elevator when the user mentions a wheelchair,
-    crutches, luggage, a stroller, or asks to avoid stairs.
-- S1, E1 and E2 are all on the west half of the main corridor and are the fastest way between
-  floors for anything in the west or central wings. E3 is the right shaft for the east wing
-  (x3xx rooms) -- using a west shaft to reach an east-wing room means a long corridor walk.
+- Vertical circulation. The mapped connectors serve floors 1, 2 and 3:
+  - S1 = the enclosed West Stairs at the south-west end of the west wing.
+  - S2 = Learning Commons Stairs, inside the Huber/Learning Commons suite.
+  - E1 = Elevator A (west), E2 = Elevator B (west), E3 = Elevator C (east).
+  - E4 = Learning Commons Elevator, inside the Huber/Learning Commons suite.
+  - S1 and S2 are NOT step-free. E1/E2/E3/E4 are the mapped step-free options.
+- Upper-level Learning Commons offices (including 3210H) are approached through the
+  suite's internal circulation using S2 or E4. Do not draw a route through its solid
+  south wall from the public corridor, or through the elevator shaft or enclosed offices.
+- The hatched central opening on floor 3 is NOT a stair landing. S1 is in the enclosed
+  stairwell near the south-west perimeter; do not link the opening across floors.
+- Room waypoints name mapped access points. Printed labels inside rooms are kept
+  separately; a label position is never permission to draw a line through walls.
 - Each floor has one main east-west corridor across the middle of the plan. Hallway waypoints
   on it are labelled <floor>-W<n> and are numbered roughly west to east.
 - Restrooms sit at the central corridor junction on every floor: 1-WC, 2-WC, 3-WC.

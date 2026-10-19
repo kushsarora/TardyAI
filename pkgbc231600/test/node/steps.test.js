@@ -68,15 +68,15 @@ test('demo route (West Entrance L1 to 3335): steps satisfy every invariant and i
   assert.match(last[last.length - 1].text, /3335/);
 });
 
-test('demo route names the West Stairs in an upward connector step', () => {
+test('demo route names the public elevator in an upward connector step', () => {
   const connectors = allSteps(demoRoute(false)).filter((s) => s.kind === 'connector');
   assert.equal(connectors.length, 1);
-  assert.match(connectors[0].text, /West Stairs up to Level 3/);
+  assert.match(connectors[0].text, /Elevator C \(east\) up to Level 3/);
 });
 
-test('demo route: 3335 is on the left, off the L3 hallway', () => {
+test('demo route: arrival stops at the room access point, without guessing a doorway side', () => {
   const steps = Array.from(demoRoute(false).legs[1].steps);
-  assert.match(steps[steps.length - 1].text, /^3335 \(Class Room 3335\) is on your left/);
+  assert.match(steps[steps.length - 1].text, /^You have reached the mapped access point for 3335/);
 });
 
 test('step-free demo route takes Elevator C and still satisfies every invariant', () => {
@@ -87,10 +87,10 @@ test('step-free demo route takes Elevator C and still satisfies every invariant'
   assert.ok(!allSteps(route).some((s) => /Stairs/.test(s.text)));
 });
 
-test('instruction strings are unchanged by the steps feature', () => {
+test('floor instructions agree with the corrected public elevator route', () => {
   const normal = demoRoute(false);
-  assert.equal(normal.legs[0].instruction, 'Walk to West Stairs');
-  assert.equal(normal.legs[1].instruction, 'Take West Stairs to Level 3, then walk to 3335 (Class Room 3335)');
+  assert.equal(normal.legs[0].instruction, 'Walk to Elevator C (east)');
+  assert.equal(normal.legs[1].instruction, 'Take Elevator C (east) to Level 3, then walk to 3335 (Class Room 3335)');
   const stepFree = demoRoute(true);
   assert.equal(stepFree.legs[0].instruction, 'Walk to Elevator C (east)');
 });

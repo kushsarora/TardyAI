@@ -21,6 +21,9 @@
  */
 entity type NavEdge {
 
+  /** Version of the authored routing geometry; excludes obsolete seed records after an upsert. */
+  routingRevision: string
+
   /**
    * Origin node; inverse of {@link MapNode#outgoingEdges}.
    */
