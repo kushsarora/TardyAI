@@ -46,7 +46,8 @@ export default function RoomSearch({ buildingId, onSelect, selectedLabel }: Room
     let cancelled = false;
     setSearching(true);
     const timer = window.setTimeout(() => {
-      searchRooms(trimmed, buildingId, 8)
+      // Result count is `ROOM_SEARCH_LIMIT` in tardyApi, where the reasoning lives.
+      searchRooms(trimmed, buildingId)
         .then((found) => {
           if (cancelled) return;
           setResults(found);

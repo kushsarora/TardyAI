@@ -22,33 +22,45 @@ click the real location, and the UI shows the exact pixel coordinate to paste
 here. Re-run this script, re-run upsertSeedData. Nothing else needs to change.
 
 ----------------------------------------------------------------------------
-STUB: AUTOMATED FLOOR PLAN EXTRACTION
+WHERE THE ROOMS COME FROM
 ----------------------------------------------------------------------------
-`extract_nodes_from_plan()` below is the seam where a vision pipeline would
-replace this hand-authored dict. The intended shape:
+`PER_FLOOR` below is no longer the room list -- it is a small set of *curated*
+rooms whose names, aliases and corridor links were authored by hand for the demo
+routes. **Every room on the plan** comes from `tools/extract_rooms.py`, which
+reads the room-number labels off the plan raster and pinpoints each one inside
+its own room. It contributed 286 rooms on levels 1-3 against the 24 that used to
+be typed in here, which is why a room you could plainly see on the plan (2195,
+say) could not be found in the app.
 
-    1. Rasterize the floor plan page (already done -- see tools/render_plans.py).
-    2. OCR room-number labels -> text + bounding box centroid. The Grainger PDF
-       has its text converted to vector outlines, so a text layer does NOT exist
-       and OCR is genuinely required; do not expect pdftotext to work.
-    3. Detect corridor centerlines (morphological skeletonization of the
-       white/unfilled space, or a learned segmentation model).
-    4. Snap each room centroid to the nearest corridor skeleton point -> that
-       pair becomes a room node plus its connecting door edge.
-    5. Sample the skeleton at fixed intervals -> hallway nodes; consecutive
-       samples -> hallway edges.
-    6. Detect elevator/stair glyphs (the blue "X" boxes and stair hatching are
-       consistent across UW facilities drawings) -> connector nodes, keyed by
-       clustering their x/y across floors so the same shaft gets one
-       connectorKey.
+When a room appears in both, the *extracted* coordinate wins (it was derived
+from the plan, not estimated by eye) and the *curated* name, aliases and
+corridor link win (they are richer than the plan's own label text, and the
+verified demo routes depend on those links).
 
-    Returns the same {floor_level: [node dicts]} structure this module already
-    produces, so everything downstream is unchanged.
+----------------------------------------------------------------------------
+HOW A ROOM REACHES THE CORRIDOR -- AND THE LIMIT OF IT
+----------------------------------------------------------------------------
+A room node is useless if nothing connects it, so each extracted room gets a
+door edge to the closest point on the corridor network, inserting a junction
+node there (`_attach_point`). Projecting onto the closest point of the closest
+*segment* -- rather than hopping to the closest spine *vertex* -- matters a lot
+at this scale: the spine has only 14 vertices spaced ~200 px apart, so a vertex
+hop would send a room in the north-east corner diagonally across half the floor.
+
+**That door edge is still a straight line, and the corridor it joins is a
+hand-drawn abstraction, so a long one can cross a wall.** Routes between
+circulation nodes are as good as they were; the first and last hop of a route to
+one of the newly extracted rooms is an approximation of the real door. Treat the
+room's *position* as authoritative (it was traced from the plan) and the final
+hop as indicative. The durable fix is to trace the corridors off the raster too
+-- `tools/build_corridors.py` is that work -- at which point `_attach_point`
+should snap to a real corridor centreline instead of `SPINE_EDGES`.
 """
 
 import json
 import math
 import os
+import sys
 
 # --------------------------------------------------------------------------
 # Building constants
@@ -69,6 +81,12 @@ PIXELS_PER_METER = 12.0
 WALK_SPEED_MPS = 1.3
 DOOR_PENALTY_SECONDS = 3.0
 
+# Level 4 is deliberately absent even though `floor_p4.png` exists and
+# `extract_rooms.py --levels 4` reads 149 rooms off it cleanly. The blocker is
+# circulation, not rooms: `SPINE` was authored against levels 1-3 and does not
+# describe level 4's corridors (overlay it on the plan and the east-west line
+# runs through the 4251-4261 office row), so attaching rooms to it would invent
+# routes through walls. Adding level 4 = trace its corridors, then one row here.
 FLOORS = [
     (1, "Level 1", "floor_p1.png"),
     (2, "Level 2", "floor_p2.png"),
@@ -118,8 +136,13 @@ SPINE_EDGES = [
 ]
 
 # --------------------------------------------------------------------------
-# Per-floor rooms and wing corridors.
+# Per-floor wing corridors, entrances, restrooms -- and the curated rooms.
 # (local_id, x, y, kind, room_number, name, aliases, connects_to)
+#
+# A `room` row here does NOT decide that the room exists: every room comes from
+# the plan (see the module docstring). A room row contributes only its name,
+# aliases and corridor link, and its x/y is used only in the reported-and-kept
+# case where the extractor did not find that number on the plan at all.
 # --------------------------------------------------------------------------
 
 PER_FLOOR = {
@@ -166,11 +189,81 @@ PER_FLOOR = {
 }
 
 
-def extract_nodes_from_plan(image_path, floor_level):
-    """STUB -- automated floor plan extraction. See module docstring."""
-    raise NotImplementedError(
-        "Vision-based plan extraction is not implemented. "
-        "Nodes are hand-authored in PER_FLOOR / SPINE above."
+def extract_nodes_from_plan(image_path=None, floor_level=None, labels=None):
+    """Every room printed on one floor plan, as `{floor_level: [node dicts]}`.
+
+    Delegates to `tools/extract_rooms.py`; see that module for how the labels are
+    found and how each room's anchor is placed. Kept as a function here so this
+    module's only coupling to the extractor is one call with one contract.
+    """
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from extract_rooms import extract_nodes_from_plan as _extract
+
+    return _extract(image_path=image_path, floor_level=floor_level, labels=labels)
+
+
+# Spacing of the junction nodes inserted where a room's door edge meets a
+# corridor. Rooms whose entry points fall within one spacing of each other share
+# a junction, which keeps the graph from growing a node per room without moving
+# any entry point more than ~1.3 m along the corridor.
+JUNCTION_SPACING_PX = 16.0
+
+# A projected entry point this close to an existing corridor node just uses that
+# node. Without it, quantisation can place a junction a pixel from a spine vertex
+# and emit a zero-length hallway edge.
+ENDPOINT_SNAP_PX = 10.0
+
+
+def _segment_project(px, py, ax, ay, bx, by):
+    """Closest point on segment AB to P, as `(distance, along, qx, qy)`.
+
+    `along` is the distance from A to the projection measured along the segment,
+    which is what the junction quantisation needs.
+    """
+    vx, vy = bx - ax, by - ay
+    denom = vx * vx + vy * vy
+    if denom == 0.0:
+        return math.hypot(px - ax, py - ay), 0.0, ax, ay
+    t = ((px - ax) * vx + (py - ay) * vy) / denom
+    t = 0.0 if t < 0.0 else (1.0 if t > 1.0 else t)
+    qx, qy = ax + t * vx, ay + t * vy
+    return math.hypot(px - qx, py - qy), t * math.hypot(vx, vy), qx, qy
+
+
+def _attach_point(coords, corridors, x, y):
+    """Where a room at (x, y) should join the corridor network.
+
+    Returns `(local_id, junction)`. `junction` is None when an existing corridor
+    node is close enough to the projection to serve as the entry point; otherwise
+    it is `(segment_index, step, x, y)` for a new junction node the caller must
+    emit, where `step` orders the junctions along their segment.
+    See the module docstring for what this approximates and what it does not.
+    """
+    best = None
+    for index, (a, b) in enumerate(corridors):
+        ax, ay = coords[a]
+        bx, by = coords[b]
+        dist, along, qx, qy = _segment_project(x, y, ax, ay, bx, by)
+        if best is None or dist < best[0]:
+            best = (dist, index, along, a, b, ax, ay, bx, by)
+
+    _, index, along, a, b, ax, ay, bx, by = best
+    length = math.hypot(bx - ax, by - ay)
+
+    # Quantise along the segment rather than on an (x, y) grid: a diagonal
+    # segment's junctions have to stay *on* the corridor, not near it.
+    steps = int(length // JUNCTION_SPACING_PX)
+    snapped = min(max(int(round(along / JUNCTION_SPACING_PX)), 1), max(steps, 1)) * JUNCTION_SPACING_PX
+    if snapped <= ENDPOINT_SNAP_PX or snapped >= length - ENDPOINT_SNAP_PX:
+        return (a if snapped * 2 <= length else b), None
+
+    step = int(round(snapped / JUNCTION_SPACING_PX))
+    ratio = snapped / length
+    return "j%d-%d" % (index, step), (
+        index,
+        step,
+        ax + ratio * (bx - ax),
+        ay + ratio * (by - ay),
     )
 
 
@@ -209,6 +302,10 @@ def main():
         })
 
         coords = {}
+        corridors = []      # (a, b) segments a room may join
+        stair_links = []    # (a, b) emitted as stair edges
+        door_links = []     # (a, b) emitted as door edges
+        curated = {}        # room number -> hand-authored row
 
         # Shared circulation skeleton.
         for local_id, x, y, kind, ckey, step_free in SPINE:
@@ -231,9 +328,15 @@ def main():
                 }.get(ckey)
             nodes.append(node)
 
-        # Floor-specific rooms and wing corridors.
-        room_links = []
+        for a, b in SPINE_EDGES:
+            (stair_links if "stair" in a or "stair" in b else corridors).append((a, b))
+
+        # Curated wing corridors, the entrance and the restrooms. Curated *rooms*
+        # are held back: they are emitted below at their extracted coordinate.
         for local_id, x, y, kind, room_no, name, aliases, connects_to in PER_FLOOR[level]:
+            if kind == "room":
+                curated[room_no] = (local_id, x, y, name, aliases, connects_to)
+                continue
             coords[local_id] = (x, y)
             node = {
                 "id": node_id(level, local_id),
@@ -243,14 +346,79 @@ def main():
                 "imageY": float(y),
                 "stepFree": True,
             }
-            if room_no:
-                node["roomNumber"] = room_no
             if name:
                 node["name"] = name
             if aliases:
                 node["searchAliases"] = aliases
             nodes.append(node)
-            room_links.append((local_id, connects_to, kind))
+            (corridors if kind in ("hallway", "entrance") else door_links).append(
+                (local_id, connects_to)
+            )
+
+        # Every room printed on the plan.
+        junctions = {}
+        extracted = extract_nodes_from_plan(floor_level=level)[level]
+        for room in extracted:
+            hand = curated.pop(room["room_number"], None)
+            local_id = hand[0] if hand else room["local_id"]
+            name = (hand[3] if hand else None) or room["name"]
+            coords[local_id] = (room["x"], room["y"])
+            node = {
+                "id": node_id(level, local_id),
+                "floor": {"id": floor_id(level)},
+                "kind": "room",
+                "roomNumber": room["room_number"],
+                "imageX": float(room["x"]),
+                "imageY": float(room["y"]),
+                "stepFree": True,
+            }
+            if name:
+                node["name"] = name
+            if hand and hand[4]:
+                node["searchAliases"] = hand[4]
+            nodes.append(node)
+
+            if hand:
+                door_links.append((local_id, hand[5]))
+                continue
+            target, junction = _attach_point(coords, corridors, room["x"], room["y"])
+            if junction:
+                junctions[target] = junction
+                coords[target] = (junction[2], junction[3])
+            door_links.append((local_id, target))
+
+        # A curated room the extractor did not find is kept -- a demo route may
+        # depend on it -- but it is reported, because it means a printed label was
+        # missed and `extract_rooms.py --audit` should say why.
+        for room_no in sorted(curated):
+            local_id, x, y, name, aliases, connects_to = curated[room_no]
+            print("  WARNING level %d: curated room %s is not on the plan" % (level, room_no))
+            coords[local_id] = (x, y)
+            node = {
+                "id": node_id(level, local_id),
+                "floor": {"id": floor_id(level)},
+                "kind": "room",
+                "roomNumber": room_no,
+                "imageX": float(x),
+                "imageY": float(y),
+                "stepFree": True,
+            }
+            if name:
+                node["name"] = name
+            if aliases:
+                node["searchAliases"] = aliases
+            nodes.append(node)
+            door_links.append((local_id, connects_to))
+
+        for local_id, (_, _, jx, jy) in sorted(junctions.items()):
+            nodes.append({
+                "id": node_id(level, local_id),
+                "floor": {"id": floor_id(level)},
+                "kind": "hallway",
+                "imageX": round(jx, 1),
+                "imageY": round(jy, 1),
+                "stepFree": True,
+            })
 
         def add_edge(a, b, edge_type):
             ax, ay = coords[a]
@@ -272,13 +440,27 @@ def main():
                     "stepFree": step_free,
                 })
 
-        for a, b in SPINE_EDGES:
-            etype = "stair" if "stair" in a or "stair" in b else "hallway"
-            add_edge(a, b, etype)
+        # A corridor segment carrying junctions is emitted as the chain through
+        # them, in order along the segment -- not as the original end-to-end edge,
+        # which would let a route skip past every door on it.
+        for index, (a, b) in enumerate(corridors):
+            on_segment = sorted(
+                (junction[1], local_id)
+                for local_id, junction in junctions.items()
+                if junction[0] == index
+            )
+            chain = [a] + [local_id for _, local_id in on_segment] + [b]
+            for start, end in zip(chain, chain[1:]):
+                add_edge(start, end, "hallway")
 
-        for local_id, connects_to, kind in room_links:
-            etype = "hallway" if kind in ("hallway", "entrance") else "door"
-            add_edge(local_id, connects_to, etype)
+        for a, b in stair_links:
+            add_edge(a, b, "stair")
+
+        for a, b in door_links:
+            add_edge(a, b, "door")
+
+        print("level %d: %3d rooms on the plan, %3d corridor junctions"
+              % (level, len(extracted), len(junctions)))
 
     out = {
         "Building": buildings,

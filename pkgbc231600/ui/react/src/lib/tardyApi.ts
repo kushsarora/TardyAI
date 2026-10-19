@@ -91,11 +91,20 @@ export async function fetchGraph(buildingId: string = DEMO_BUILDING_ID): Promise
   };
 }
 
+/**
+ * How many search results to ask for. Grainger has 286 mapped rooms, so a
+ * two-digit prefix like "24" legitimately matches dozens; at the previous
+ * value of 8 the list looked like the room you wanted did not exist. The
+ * dropdown scrolls (`max-h-72 overflow-auto`), so the cost of a longer list is
+ * only bytes. `NavRouter.searchRooms` caps any request at 50 regardless.
+ */
+const ROOM_SEARCH_LIMIT = 25;
+
 /** Search a building's rooms by number, name or alias, ranked best-first. */
 export async function searchRooms(
   query: string,
   buildingId: string = DEMO_BUILDING_ID,
-  limit = 8,
+  limit = ROOM_SEARCH_LIMIT,
 ): Promise<MapNode[]> {
   const results = await c3Action('NavRouter', 'searchRooms', [buildingId, query, limit]);
   return toArray<MapNode>(results);
