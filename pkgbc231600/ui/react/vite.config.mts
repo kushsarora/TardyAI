@@ -71,10 +71,10 @@ export default defineConfig(({ command, mode }) => {
   return {
     plugins: [
       {
-        name: 'tardy-demo-router',
-        resolveId(id) { if (id === 'virtual:tardy-demo') return '\0virtual:tardy-demo'; },
+        name: 'tardy-floor-plan-router',
+        resolveId(id) { if (id === 'virtual:tardy-map') return '\0virtual:tardy-map'; },
         load(id) {
-          if (id !== '\0virtual:tardy-demo') return;
+          if (id !== '\0virtual:tardy-map') return;
           const packageRoot = path.resolve(__dirname, '../..');
           const read = (file: string) => {
             const filename = path.join(packageRoot, 'data', file);
@@ -95,11 +95,11 @@ export default defineConfig(({ command, mode }) => {
             const MapNode = { fetch: spec => fetchRows(nodes, spec) };
             const NavEdge = { fetch: spec => fetchRows(edges.map(e => ({ ...e, fromNode: nodes.find(n => n.id === e.fromNode.id) })), spec) };
             ${readFileSync(path.join(packageRoot, 'src/NavRouter.js'), 'utf8')}
-            export async function demoAction(type, action, args) {
-              if (type === 'Building') return { objs: buildings };
-              if (type === 'Floor') return { objs: floors };
+            export async function mapAction(type, action, args) {
+              if (type === 'Building' && action === 'fetch') return { objs: buildings };
+              if (type === 'Floor' && action === 'fetch') return { objs: floors };
               const actions = { findRoute, nearestNode, searchRooms, graphForBuilding };
-              if (!actions[action]) throw new Error('This feature requires a connected C3 backend.');
+              if (type !== 'NavRouter' || !Object.prototype.hasOwnProperty.call(actions, action)) throw new Error('This action is not supported by the bundled floor-plan map.');
               return actions[action](...args);
             }
           `;

@@ -14,6 +14,6 @@ declare module 'stylesheets'
 
 // / <reference types="vite/client" />
 
-declare module 'virtual:tardy-demo' {
-  export function demoAction(type: string, action: string, args?: unknown): Promise<unknown>;
+declare module 'virtual:tardy-map' {
+  export function mapAction(type: string, action: string, args?: unknown): Promise<unknown>;
 }

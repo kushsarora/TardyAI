@@ -1,8 +1,7 @@
 /**
- * Typed wrappers over the TardyAI backend.
- *
- * Calls use `c3Action` in connected mode and the same router with seed data in demo mode. Keeping them in one module means the FetchSpec shapes
- * are written once and the pages stay free of transport concerns.
+ * Navigation over the bundled floor-plan circulation map.
+ * C3 hosts the UI; it does not need Building/Floor/MapNode/NavEdge records.
+ * The optional server provider must be selected explicitly.
  */
 
 import { c3Action } from '@/c3Action';
@@ -15,16 +14,16 @@ import {
 } from '@/Interfaces';
 import type { RouteLegWithSteps, RouteStep } from '@/lib/routeStepTypes';
 
-export const DEMO_MODE =
-  import.meta.env.VITE_DATA_MODE === 'demo' ||
-  (!import.meta.env.VITE_C3_ENV && import.meta.env.VITE_DATA_MODE !== 'live');
+// Hosting inside C3 must not silently select a nonexistent C3 map database.
+// VITE_DATA_MODE and VITE_C3_ENV describe deployment, not map availability.
+export const BUNDLED_MAP_MODE = import.meta.env.VITE_NAV_DATA_MODE !== 'server';
 const action: typeof c3Action = async (type, method, args) => {
-  if (!DEMO_MODE) return c3Action(type, method, args);
-  const { demoAction } = await import('virtual:tardy-demo');
-  return demoAction(type, method, args);
+  if (!BUNDLED_MAP_MODE) return c3Action(type, method, args);
+  const { mapAction } = await import('virtual:tardy-map');
+  return mapAction(type, method, args);
 };
 
-/** The building this build of the app demos. */
+/** The building mapped by the included floor-plan pictures. */
 export const DEMO_BUILDING_ID = 'grainger';
 const ROUTING_REVISION = 'grainger-access-v2';
 
@@ -59,7 +58,7 @@ export function resolvePlanUrl(planImageUrl?: string | null): string | null {
   return `${base}${planImageUrl.startsWith('/') ? '' : '/'}${planImageUrl}`;
 }
 
-/** Load the demo building record. Returns null when it has not been seeded. */
+/** Load building details from the selected map provider. */
 export async function fetchBuilding(
   buildingId: string = DEMO_BUILDING_ID,
 ): Promise<Building | null> {
