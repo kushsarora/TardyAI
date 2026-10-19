@@ -199,3 +199,44 @@ as well. C3 upserts retain removed records, so routing filters nodes and edges t
 `routingRevision = grainger-access-v2`; obsolete shortcut records cannot rejoin the
 current graph. The frontend rejects an older graph/service instead of drawing it.
 The default bundled map packages the revised graph automatically at build time, including for C3-hosted builds.
+
+## 3D Grainger navigation
+
+Use the **2D / 3D** toggle above the map. Both views share the selected start,
+destination, accessible route, walking estimate, and directions. Switching views
+never changes route geometry. The selected view persists in this browser.
+
+The 3D view provides a plan-derived cutaway with extruded wall contours and the
+original floor-plan textures. Drag to orbit, right-drag/two-finger drag to pan,
+and scroll/pinch to zoom. The camera also supports arrow keys, `+`, `-`, and `0`.
+Choose all floors or one floor; separate the floors to see vertical connections,
+or stack them. Click a room label to choose a destination; click a floor to set
+an approximate start. The directory and search remain keyboard-accessible in
+both views. Starting directions focuses the current leg's floor.
+
+Hallway paths preserve every authored route point. Colored connections join the
+actual stair/elevator endpoints between floor legs. The moving bead indicates
+route direction, not a tracked user position. Start/destination markers stay at
+their mapped positions. Room markers use their independent printed-label position.
+
+The 3D model is **illustrative, not a surveyed BIM**. Dark strokes in the plan
+rasters are traced after masking labels and removing small text components;
+some annotations can remain and some wall details can be omitted. The footprint
+and openings are approximate. Wall height (2.8 m) and floor spacing (4.2 m) are
+assumptions; separated floors use an exaggerated 26 m display gap. Rendering
+geometry is separate from the circulation graph and never creates walkable edges.
+Only the three mapped floors are modeled.
+
+Regenerate the model after changing the plan rasters or room label coordinates:
+
+```bash
+python3 tools/build_graph.py
+python3 tools/build_3d_model.py
+```
+
+The generated model is `ui/react/src/assets/grainger-3d.json`. Its Three.js renderer
+loads only when 3D is selected. All geometry and textures ship with the frontend;
+no C3 map database or external model service is needed. Rebuild/sync the frontend
+in C3 to apply the feature. WebGL2 is required for 3D; unsupported browsers retain
+the same route in the 2D view. The renderer releases GPU resources on view changes
+and respects reduced-motion preferences.

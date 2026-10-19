@@ -1844,7 +1844,10 @@ p {
 /* Keep secondary text readable while giving place cards a subtle tactile response. */
 .quick-place,
 .directory-card {
-  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
 }
 .quick-place:hover,
 .directory-card:focus-within {
@@ -1852,11 +1855,287 @@ p {
   box-shadow: 0 5px 16px #213e360a;
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .quick-place:hover { transform: translateY(-2px); }
+  .quick-place:hover {
+    transform: translateY(-2px);
+  }
 }
 @media (max-width: 650px) {
-  .quick-place strong { font-size: 10px; }
-  .quick-place small { font-size: 9px; }
-  .map-legend { font-size: 10px; }
-  .page-footer { font-size: 9px; }
+  .quick-place strong {
+    font-size: 10px;
+  }
+  .quick-place small {
+    font-size: 9px;
+  }
+  .map-legend {
+    font-size: 10px;
+  }
+  .page-footer {
+    font-size: 9px;
+  }
+}
+
+/* 3D cutaway shares the navigator's route and floor controls. */
+.map-view-toggle {
+  display: flex !important;
+  gap: 2px !important;
+  border: 1px solid #e1e7db;
+  background: #f5f7ef;
+  border-radius: 7px;
+  padding: 3px;
+  flex-shrink: 0;
+}
+.map-view-toggle button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 11px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #87977a;
+  font-size: 10px;
+  line-height: 1;
+}
+.map-view-toggle button.selected {
+  background: #fff;
+  color: #315d47;
+  box-shadow: 0 1px 4px #244e2e14;
+  font-weight: 650;
+}
+.building-3d-view,
+.building-3d-canvas {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.building-3d-view {
+  background: radial-gradient(ellipse at 60% 30%, #f6f8f1, #e9eee4);
+}
+.building-3d-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  outline-offset: -4px;
+  cursor: grab;
+}
+.model-toolbar {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  max-width: calc(100% - 82px);
+  flex-wrap: wrap;
+}
+.model-scope {
+  display: flex;
+  padding: 3px;
+  border: 1px solid #dce5d5;
+  border-radius: 7px;
+  background: #fffffff2;
+  box-shadow: 0 2px 8px #27412a08;
+}
+.model-scope button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  padding: 7px 9px;
+  color: #7d8f6e;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.model-scope .selected {
+  background: #e8f0df;
+  color: #416341;
+  font-weight: 600;
+}
+.model-small-control {
+  height: 33px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 9px;
+  border: 1px solid #dce5d5;
+  border-radius: 7px;
+  background: #fffffff2;
+  color: #88987c;
+  font-size: 9px;
+}
+.model-small-control.selected {
+  color: #4d7251;
+}
+.model-caption {
+  position: absolute;
+  left: 16px;
+  bottom: 19px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  pointer-events: none;
+  padding: 13px;
+  background: #fffffff0;
+  border: 1px solid #dce6d5;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px #2c512209;
+  max-width: calc(100% - 80px);
+}
+.model-caption-icon {
+  display: grid;
+  place-items: center;
+  background: #eaf1e3;
+  color: #6b895b;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.model-caption strong {
+  font-size: 11px;
+  font-weight: 600;
+  display: block;
+  color: #496441;
+  margin-bottom: 5px;
+}
+.model-caption small {
+  font-size: 9px;
+  color: #8a987d;
+  display: block;
+  line-height: 1.65;
+}
+.model-zoom-controls {
+  position: absolute;
+  bottom: 19px;
+  right: 17px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #dce5d4;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px #2b4a2110;
+}
+.model-zoom-controls button {
+  border: 0;
+  background: #fff;
+  color: #627c53;
+  width: 34px;
+  height: 33px;
+  display: grid;
+  place-items: center;
+}
+.model-zoom-controls button + button {
+  border-top: 1px solid #e8edde;
+}
+.model-zoom-controls button:hover {
+  background: #eef4e7;
+}
+.model-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: #fff;
+  border: 1px solid #d6e1cf;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 11px;
+  color: #466540;
+  box-shadow: 0 3px 12px #213e3614;
+  z-index: 4;
+  max-width: 190px;
+}
+.model-loading,
+.model-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 32px;
+  text-align: center;
+  background: #f0f4e9;
+  color: #789366;
+}
+.model-loading strong,
+.model-fallback strong {
+  font-size: 17px;
+  font-weight: 550;
+  color: #45633e;
+  letter-spacing: -0.3px;
+}
+.model-loading span,
+.model-fallback p {
+  font-size: 12px;
+  color: #839475;
+  max-width: 330px;
+  line-height: 1.8;
+}
+.model-fallback {
+  z-index: 10;
+}
+.model-image-notice {
+  position: absolute;
+  left: 16px;
+  right: 75px;
+  top: 62px;
+  padding: 8px 10px;
+  font-size: 10px;
+  line-height: 1.7;
+  color: #8c754b;
+  background: #fff7e6;
+  border: 1px solid #eddfb6;
+  border-radius: 6px;
+}
+@media (max-width: 650px) {
+  .map-view-toggle button {
+    padding: 6px 9px;
+    font-size: 10px;
+  }
+  .model-toolbar {
+    left: 10px;
+    top: 12px;
+    gap: 5px;
+  }
+  .model-scope button {
+    padding: 6px;
+    font-size: 9px;
+  }
+  .model-small-control {
+    padding: 0 7px;
+    height: 30px;
+  }
+  .model-small-control span {
+    display: none;
+  }
+  .model-caption {
+    left: 11px;
+    bottom: 12px;
+    padding: 9px;
+    gap: 7px;
+  }
+  .model-caption strong {
+    font-size: 10px;
+  }
+  .model-caption small {
+    font-size: 8px;
+  }
+  .model-caption-icon {
+    display: none;
+  }
+  .model-zoom-controls {
+    right: 14px;
+    bottom: 12px;
+  }
+  .model-image-notice {
+    font-size: 9px;
+    top: 55px;
+    left: 10px;
+  }
+  .model-zoom-controls button {
+    height: 30px;
+  }
 }
