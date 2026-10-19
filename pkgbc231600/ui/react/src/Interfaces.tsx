@@ -195,3 +195,100 @@ export interface NavRoute {
   destNodeId?: string | null;
   stepFree: boolean;
 }
+
+/* ------------------------------------------------------------------------- *
+ * Room Finder — vision-LLM wayfinding
+ *
+ * These mirror the C3 types backing `RoomFinder.findRoute`. The model answers
+ * with waypoint *labels*, which the server resolves against the database into
+ * the pixel positions below — so everything here has already been validated
+ * and is safe to draw.
+ * ------------------------------------------------------------------------- */
+
+/** The plain-text brief the model is given about a building. Mirrors `BuildingFacts`. */
+export interface BuildingFacts {
+  id: string;
+  facts: string;
+  /** Curated example questions, shown as one-tap chips. */
+  demoRoutes?: string[];
+  building?: { id: string };
+}
+
+/** What a point is doing in the journey. Mirrors `RouteWaypoint#role`. */
+export type RouteWaypointRole = 'start' | 'via' | 'connector' | 'end';
+
+/**
+ * One resolved point of a vision route, in floor pixel space. Mirrors `RouteWaypoint`.
+ *
+ * `imageX` / `imageY` are in the same coordinate space as {@link MapNode} — the
+ * original plan raster, NOT the downscaled annotated render the model reads.
+ */
+export interface RouteWaypoint {
+  label: string;
+  floorKey: string;
+  floorLevel: number;
+  imageX: number;
+  imageY: number;
+  kind: string;
+  name?: string | null;
+  roomNumber?: string | null;
+  /** True on the point where the user leaves this floor, i.e. boards a stair or lift. */
+  isFloorChange: boolean;
+  role: RouteWaypointRole;
+}
+
+/**
+ * The part of a vision route walked on one floor. Mirrors `RouteFloorSegment`.
+ *
+ * One segment per floor *visit*, in travel order. A shaft appears in both
+ * adjacent segments — once as the point walked to, once as the point arrived at.
+ */
+export interface RouteFloorSegment {
+  floorKey: string;
+  floorLevel: number;
+  floorName?: string | null;
+  /** Root-relative path of the clean plan; pass through `resolvePlanUrl` before use. */
+  planImageUrl?: string | null;
+  /** Root-relative path of the labelled plan the model was shown. */
+  annotatedUrl?: string | null;
+  imageWidth: number;
+  imageHeight: number;
+  points: RouteWaypoint[];
+  /** Indices into {@link VisionRoute.steps} belonging to this floor. */
+  stepIndexes?: number[];
+}
+
+/** Outcome of a vision route request. Mirrors `VisionRoute#status`. */
+export type VisionRouteStatus = 'ok' | 'clarify' | 'error';
+
+/**
+ * Return shape of `RoomFinder.findRoute`. Mirrors `VisionRoute`.
+ *
+ * Branch on `status` before reading anything else, and note the degraded
+ * fourth case: `status: 'ok'` with `drawable: false` means the written steps
+ * are usable but a label did not resolve, so `segments` is empty and nothing
+ * may be drawn.
+ */
+export interface VisionRoute {
+  status: VisionRouteStatus;
+  message?: string | null;
+  question?: string | null;
+  drawable: boolean;
+  route: RouteWaypoint[];
+  segments: RouteFloorSegment[];
+  steps: string[];
+  /** Parallel to `steps`; the floor each instruction applies to. */
+  stepFloorKeys?: (string | null)[];
+  /** Labels exactly as the model emitted them, before normalization. */
+  rawLabels?: string[];
+  retried: boolean;
+  validationError?: string | null;
+  /** `llm` for a live call, `cache` for a replayed pinned answer. */
+  source: 'llm' | 'cache';
+  latencyMs?: number;
+  modelName?: string | null;
+  promptTokens?: number;
+  cachedTokens?: number;
+  completionTokens?: number;
+  queryId?: string | null;
+}

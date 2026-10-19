@@ -7,7 +7,7 @@
  * This material may be covered by one or more patents or pending patent applications.
  */
 
-import { Navigation } from 'lucide-react';
+import { Compass, Navigation } from 'lucide-react';
 
 import { NavigationItem } from '@/types/navigation';
 
@@ -26,6 +26,14 @@ export const navigationConfig: NavigationItem[] = [
     iconActive: Navigation,
     label: 'Navigate',
     tooltip: 'Find a room and get walking directions',
+  },
+  {
+    id: 'room-finder',
+    path: '/room-finder',
+    icon: Compass,
+    iconActive: Compass,
+    label: 'Room Finder',
+    tooltip: 'Ask for directions in plain English',
   },
 
   /*

@@ -10,6 +10,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Navigate from './pages/Navigate/Navigate';
+import RoomFinder from './pages/RoomFinder/RoomFinder';
 import SideNav from './components/SideNav/SideNav';
 import TopNav from './components/TopNav/TopNav';
 import ErrorReporterProvider from './components/ErrorBoundary/ErrorBoundary';
@@ -37,6 +38,7 @@ export default function App() {
                 {/* Add page routes here */}
                 <Route path="/" element={<Navigate />} />
                 <Route path="/navigate" element={<Navigate />} />
+                <Route path="/room-finder" element={<RoomFinder />} />
                 <Route
                   path="*"
                   element={
