@@ -8,6 +8,7 @@
 
 import { c3Action } from '@/c3Action';
 import { Building, Floor, MapNode, NavGraphSnapshot, NavRoute } from '@/Interfaces';
+import type { RouteLegWithSteps, RouteStep } from '@/lib/routeStepTypes';
 
 /** The building this build of the app demos. */
 export const DEMO_BUILDING_ID = 'grainger';
@@ -116,10 +117,14 @@ function normalizeRoute(raw: unknown): NavRoute {
   return {
     ...route,
     found: !!route.found,
-    legs: toArray<NavRoute['legs'][number]>(route.legs).map((leg) => ({
-      ...leg,
-      points: toArray(leg.points),
-    })),
+    legs: toArray<RouteLegWithSteps>(route.legs).map(
+      (leg): RouteLegWithSteps => ({
+        ...leg,
+        points: toArray(leg.points),
+        // Absent on an older server: keep it absent so the UI falls back to `instruction`.
+        ...(leg.steps == null ? {} : { steps: toArray<RouteStep>(leg.steps) }),
+      })
+    ),
     totalSeconds: route.totalSeconds ?? 0,
     floorsTraversed: route.floorsTraversed ?? 0,
     stepFree: !!route.stepFree,

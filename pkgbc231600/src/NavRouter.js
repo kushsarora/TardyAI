@@ -269,13 +269,215 @@ function failedRoute(message, startNodeId, destNodeId, stepFree) {
   };
 }
 
+/*
+ * Turn thresholds for RouteStep, in degrees between consecutive hop headings.
+ * Below TURN_MIN the hops are treated as one straight walk and merged; above
+ * TURN_AROUND_MIN the student is doubling back.
+ */
+var TURN_MIN_DEGREES = 30;
+var TURN_AROUND_MIN_DEGREES = 150;
+
+/** RouteStep#kind values; see RouteStep.c3typ. */
+var STEP_START = 'start';
+var STEP_STRAIGHT = 'straight';
+var STEP_TURN = 'turn';
+var STEP_CONNECTOR = 'connector';
+var STEP_ARRIVE = 'arrive';
+
+/** Results of turnDirection. */
+var DIR_STRAIGHT = 'straight';
+var DIR_LEFT = 'left';
+var DIR_RIGHT = 'right';
+var DIR_AROUND = 'around';
+
+/**
+ * Classify the change of heading from h1 to h2, both {dx, dy} in floor-plan
+ * pixels, as straight, left, right, or around.
+ *
+ * Image y grows downward, so on screen a positive cross product is a
+ * clockwise, i.e. right, turn (east (1,0) then south (0,1) gives +1). That is
+ * the opposite of the math-axes rule. Neither vector may be zero-length;
+ * callers skip zero-length hops before calling. Never throws.
+ */
+function turnDirection(h1, h2) {
+  var cross = h1.dx * h2.dy - h1.dy * h2.dx;
+  var dot = h1.dx * h2.dx + h1.dy * h2.dy;
+  var degrees = (Math.atan2(Math.abs(cross), dot) * 180) / Math.PI;
+  if (degrees < TURN_MIN_DEGREES) return DIR_STRAIGHT;
+  if (degrees > TURN_AROUND_MIN_DEGREES) return DIR_AROUND;
+  return cross > 0 ? DIR_RIGHT : DIR_LEFT;
+}
+
+/** A node worth naming at a turn: a numbered room or a stair/elevator. Null otherwise. */
+function landmarkLabel(node) {
+  if (node.roomNumber) return node.roomNumber;
+  if (node.connectorKey || node.kind === 'elevator' || node.kind === 'stairs') return connectorLabel(node);
+  return null;
+}
+
+/** Meters as a student reads them: whole meters, at least 1 for any real walk. */
+function metersText(meters) {
+  return Math.max(1, Math.round(meters)) + ' m';
+}
+
+/** One decimal place, matching how findRoute rounds route totals. */
+function roundTenth(x) {
+  return Math.round(x * 10) / 10;
+}
+
+/**
+ * Build the RouteStep list for one leg.
+ *
+ * - leg: the assembled leg (points, floorLevel, floorName, exitConnectorKey).
+ * - hops: the leg's horizontal hops in travel order, each
+ *   {fromIndex, toIndex, meters, seconds}, indexing leg.points.
+ * - nodesById: the routing graph's nodes.
+ * - arrivedFromNode: the connector node on the previous floor this leg was
+ *   reached from, or null for the first leg.
+ * - destNode: the route's destination when this is the last leg, else null.
+ *
+ * Collinear hops (under TURN_MIN_DEGREES from the previous hop) merge into
+ * the current step; we compare each hop with the previous hop rather than with
+ * the step's first heading, so a gentle curve made of many small bends stays
+ * one step even after its total drift exceeds 30 degrees. Accepted
+ * simplification: the seed hallways are straight.
+ *
+ * The final hop into the destination is the doorway: when it bends left or
+ * right, it becomes the arrive step instead of a separate turn step. The
+ * arrive step then says which side the room is on, names the landmark where
+ * the doorway leaves the hallway, and carries that hop's meters and seconds
+ * (otherwise arrive is zero meters). Zero-length hops add their meters to the
+ * current step without changing heading.
+ *
+ * Total: never throws on a valid leg, including a one-point leg with no hops.
+ * Step meters and seconds sum to the hop sums (before per-step rounding).
+ */
+function buildSteps(leg, hops, nodesById, arrivedFromNode, destNode) {
+  var lastIndex = leg.points.length - 1;
+  var steps = [];
+  var walk = null; // the step currently accumulating hops
+  var heading = null;
+  var doorway = null; // {side, fromIndex, meters, seconds} when the last hop bends into the room
+  var i;
+
+  function nodeAt(index) {
+    return nodesById[leg.points[index].nodeId];
+  }
+
+  if (arrivedFromNode) {
+    var arrivalNode = nodeAt(0);
+    var upOrDown = leg.floorLevel > arrivedFromNode.floor.level ? 'up' : 'down';
+    steps.push({
+      kind: STEP_CONNECTOR,
+      text:
+        'Take ' + connectorLabel(arrivalNode) + ' ' + upOrDown + ' to ' + (leg.floorName || 'Level ' + leg.floorLevel),
+      meters: 0,
+      seconds: 0,
+      pointIndex: 0,
+      turn: null,
+      endIndex: 0,
+    });
+  }
+
+  function openWalk(kind, turn, fromIndex) {
+    walk = { kind: kind, text: '', meters: 0, seconds: 0, pointIndex: fromIndex, turn: turn, endIndex: fromIndex };
+    steps.push(walk);
+  }
+
+  for (i = 0; i < hops.length; i++) {
+    var hop = hops[i];
+    var from = leg.points[hop.fromIndex];
+    var to = leg.points[hop.toIndex];
+    var h = { dx: to.x - from.x, dy: to.y - from.y };
+    var zeroLength = h.dx === 0 && h.dy === 0;
+    var dir = zeroLength || !heading ? DIR_STRAIGHT : turnDirection(heading, h);
+    var isDoorway = destNode && i === hops.length - 1 && to.nodeId === destNode.id;
+
+    if (isDoorway && walk && (dir === DIR_LEFT || dir === DIR_RIGHT)) {
+      doorway = { side: dir, fromIndex: hop.fromIndex, meters: hop.meters, seconds: hop.seconds };
+      continue;
+    }
+    if (!walk) {
+      openWalk(arrivedFromNode ? STEP_STRAIGHT : STEP_START, null, hop.fromIndex);
+    } else if (dir !== DIR_STRAIGHT) {
+      openWalk(STEP_TURN, dir, hop.fromIndex);
+    }
+
+    walk.meters += hop.meters;
+    walk.seconds += hop.seconds;
+    walk.endIndex = hop.toIndex;
+    if (!zeroLength) heading = h;
+  }
+
+  // A first leg that never walks (the start is a connector) still says where to start.
+  if (!arrivedFromNode && steps.length === 0) openWalk(STEP_START, null, 0);
+
+  var boardLabel = leg.exitConnectorKey ? connectorLabel(nodeAt(lastIndex)) : null;
+  var doorLandmark = doorway ? landmarkLabel(nodeAt(doorway.fromIndex)) : null;
+  for (i = 0; i < steps.length; i++) {
+    var step = steps[i];
+    if (step.kind === STEP_CONNECTOR) continue;
+    var walkText = step.meters > 0 ? 'walk ' + metersText(step.meters) : '';
+    if (walkText && boardLabel && step.endIndex === lastIndex) walkText += ' to ' + boardLabel;
+    else if (walkText && doorLandmark && step.endIndex === doorway.fromIndex) walkText += ' to ' + doorLandmark;
+
+    if (step.kind === STEP_START) {
+      var startNode = nodeAt(step.pointIndex);
+      var startLabel = startNode.name || startNode.roomNumber;
+      if (!walkText) step.text = 'Start at ' + (startLabel || 'your starting point');
+      else step.text = startLabel ? 'From ' + startLabel + ', ' + walkText : capitalize(walkText);
+    } else if (step.kind === STEP_STRAIGHT) {
+      step.text = capitalize(walkText || 'continue straight');
+    } else {
+      var landmark = landmarkLabel(nodeAt(step.pointIndex));
+      step.text =
+        'Turn ' + step.turn + (landmark ? ' at ' + landmark : '') + (walkText ? ', then ' + walkText : '');
+    }
+  }
+
+  if (destNode) {
+    var destText = destinationLabel(destNode);
+    var arrive = { kind: STEP_ARRIVE, text: '', meters: 0, seconds: 0, pointIndex: lastIndex };
+    if (doorway) {
+      arrive.text = destText + ' is on your ' + doorway.side + (doorLandmark ? ' at ' + doorLandmark : '');
+      arrive.meters = doorway.meters;
+      arrive.seconds = doorway.seconds;
+      arrive.pointIndex = doorway.fromIndex;
+    } else if (hops.length === 0) {
+      arrive.text = 'You have arrived at ' + destText;
+    } else {
+      arrive.text = destText + ' is straight ahead';
+    }
+    steps.push(arrive);
+  }
+
+  // Strip builder-only fields so only the RouteStep shape leaves this function.
+  var out = [];
+  for (i = 0; i < steps.length; i++) {
+    out.push({
+      kind: steps[i].kind,
+      text: steps[i].text,
+      meters: roundTenth(steps[i].meters),
+      seconds: roundTenth(steps[i].seconds),
+      pointIndex: steps[i].pointIndex,
+    });
+  }
+  return out;
+}
+
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 /**
  * Split an A* node path into one RouteLeg per floor and phrase the per-leg
- * instructions.
+ * instructions and turn-by-turn steps.
  */
 function assembleLegs(path, adjacency, nodesById, destNode) {
   var legs = [];
+  var legHops = []; // per leg, the hops buildSteps needs; kept out of the result
   var current = null;
+  var currentHops = null;
   var totalSeconds = 0;
   var totalMeters = 0;
   var i;
@@ -285,7 +487,11 @@ function assembleLegs(path, adjacency, nodesById, destNode) {
     var floorId = node.floor ? node.floor.id : 'unknown';
 
     if (!current || current.floorId !== floorId) {
-      if (current) legs.push(current);
+      if (current) {
+        legs.push(current);
+        legHops.push(currentHops);
+      }
+      currentHops = [];
       current = {
         floorId: floorId,
         floorLevel: node.floor ? node.floor.level : 0,
@@ -323,11 +529,27 @@ function assembleLegs(path, adjacency, nodesById, destNode) {
           current.seconds += chosen.seconds;
           current.meters += chosen.meters;
           totalMeters += chosen.meters;
+          // A non-connector edge between floors would be a seed error; its
+          // cost still counts above, but it has no on-floor geometry to step.
+          var nextNode = nodesById[path[i + 1]];
+          var nextFloorId = nextNode.floor ? nextNode.floor.id : 'unknown';
+          if (nextFloorId === floorId) {
+            var fromIndex = current.points.length - 1;
+            currentHops.push({
+              fromIndex: fromIndex,
+              toIndex: fromIndex + 1,
+              meters: chosen.meters,
+              seconds: chosen.seconds,
+            });
+          }
         }
       }
     }
   }
-  if (current) legs.push(current);
+  if (current) {
+    legs.push(current);
+    legHops.push(currentHops);
+  }
 
   // Phrase instructions now that leg boundaries and connectors are known.
   var destText = destinationLabel(destNode);
@@ -352,6 +574,10 @@ function assembleLegs(path, adjacency, nodesById, destNode) {
     } else {
       leg.instruction = 'Walk to ' + destText;
     }
+
+    var arrivedFromNode = arrivingVia ? nodesById[legs[i - 1].points[legs[i - 1].points.length - 1].nodeId] : null;
+    var isLastLeg = i === legs.length - 1;
+    leg.steps = buildSteps(leg, legHops[i], nodesById, arrivedFromNode, isLastLeg ? destNode : null);
   }
 
   return { legs: legs, totalSeconds: totalSeconds, totalMeters: totalMeters };
