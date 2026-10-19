@@ -22,10 +22,13 @@ answer to the only question that matters: *am I going to be late?*
 
 ## Architecture
 
-The app supports both a **connected C3 AI environment** and a **standalone building demo**.
-Connected mode fetches domain data over `c3Action`. Demo mode packages the existing JSON seed data
-and the **same `NavRouter.js` implementation** through a Vite virtual module; there is no second routing algorithm.
-The header identifies demo mode. There is no silent fallback from a failed live API to demo data.
+The **floor-plan pictures are the map source**. Their authored circulation, room access
+points, building details, and routing engine are packaged with the frontend. Navigation runs
+in the browser, including when C3 hosts the app. No C3 `Building`, `Floor`, `MapNode`, or
+`NavEdge` records are required for the map, room directory, search, or walking routes.
+This is authored routing aligned to the pictures, not automatic wall detection or indoor tracking.
+
+An optional C3 map provider remains available for a future server-managed map.
 
 ```
 pkgbc231600/                  # the C3 package (name is fixed — do not rename)
@@ -78,14 +81,15 @@ npm ci
 npm run build
 ```
 
-The default is demo mode when `VITE_C3_ENV` is absent. Set `VITE_DATA_MODE=live` to force live mode,
-or `VITE_DATA_MODE=demo` to force the standalone demo. For live C3 development, configure
-`VITE_C3_PKG`, `VITE_C3_BASE_URL`, `VITE_C3_ENV`, and `VITE_C3_APP` through your environment;
-C3 Code manages the dev server and deployment sync. Authentication remains in C3 settings.
-A deployed live bundle must be built with the live environment variables; do not deploy a demo build as a live client.
+The default map provider is **bundled**, both locally and inside C3. C3 environment variables
+and the old `VITE_DATA_MODE=live` setting do not switch navigation to C3 entity records.
+For C3 hosting, configure `VITE_C3_PKG`, `VITE_C3_BASE_URL`, `VITE_C3_ENV`, and `VITE_C3_APP`
+as usual; C3 Code manages the dev server and deployment sync. **Rebuild/sync the frontend to
+apply map updates. There is no map database to seed for the default provider.**
 
-The standalone demo includes only the graph-based navigation flow. The legacy `/room-finder`
-vision assistant requires its C3 backend and model configuration.
+Only set `VITE_NAV_DATA_MODE=server` when deliberately using a fully configured C3 map backend.
+Authentication remains in C3 settings. The optional conversational `/room-finder` feature is
+separate: it still requires its C3 backend, model configuration, and server-side navigation data.
 
 `npm run build` runs ESLint at error level, then `tsc`, then Vite. All three must pass.
 
@@ -187,11 +191,11 @@ These obstacle fixtures cover specific problem areas; they do not certify every 
 entrance, lift, or access restriction in the real building. Plan-derived circulation and
 connector access still need an on-site check before production wayfinding.
 
-**Updating an existing C3 environment:** deploy the updated `MapNode`, `NavEdge`,
+**Optional server map provider only:** when using `VITE_NAV_DATA_MODE=server`, deploy the updated `MapNode`, `NavEdge`,
 `NavGraphSnapshot`, and `NavRoute` types and `NavRouter.js`, then upsert the regenerated
 MapNode/NavEdge seeds. Reload the generated Waypoint, AnnotatedPlan, and BuildingFacts
 data and annotated images if using the vision room finder. Deploy/rebuild the frontend
 as well. C3 upserts retain removed records, so routing filters nodes and edges to
 `routingRevision = grainger-access-v2`; obsolete shortcut records cannot rejoin the
 current graph. The frontend rejects an older graph/service instead of drawing it.
-The standalone demo packages the revised graph automatically at build time.
+The default bundled map packages the revised graph automatically at build time, including for C3-hosted builds.

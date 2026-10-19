@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, GraduationCap, Navigation } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { DEMO_MODE } from '@/lib/tardyApi';
+import { BUNDLED_MAP_MODE } from '@/lib/tardyApi';
 
 export default function TopNav({ title = 'TardyAI' }: { title?: string }) {
   return (
@@ -24,7 +24,7 @@ export default function TopNav({ title = 'TardyAI' }: { title?: string }) {
       <div className="header-right">
         <span className="connection-badge">
           <i />
-          {DEMO_MODE ? 'Building demo' : 'Connected'}
+          {BUNDLED_MAP_MODE ? 'Floor-plan map' : 'Server map'}
         </span>
         <a href="#/help" className="header-help">
           How it works <ArrowUpRight size={14} />
