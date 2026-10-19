@@ -1,0 +1,1697 @@
+{
+ "_about": "Hand-reviewed transcription of every room label printed on the Grainger Hall floor plans. Keys are the level, then the top-left pixel (x,y) of the label block's first line in floor_p<level>.png -- a stable identity that does not depend on detection order. 'number' is null for a detected text block that is not a room label (title block, a callout with no number); 'note' says why. tools/extract_rooms.py reads this table instead of guessing characters, and its --audit mode reports any drift between the table and what detection finds.",
+ "_source": "pkgbc231600/ui/react/public/plans/floor_p{1,2,3,4}.png (1980x1530)",
+ "levels": {
+  "1": {
+   "268,194": {
+    "number": "1100",
+    "name": "Morgridge Auditorium"
+   },
+   "1341,263": {
+    "number": "1310",
+    "name": "Plenary Room"
+   },
+   "760,282": {
+    "number": "1210",
+    "name": "Huber Undergraduate Computer Lab"
+   },
+   "945,286": {
+    "number": "1210F",
+    "name": "PhD Programs"
+   },
+   "144,292": {
+    "number": "1110"
+   },
+   "1046,293": {
+    "number": "1325",
+    "name": "MBA & Master's Club Room"
+   },
+   "954,303": {
+    "number": null,
+    "note": "name line (1210F)"
+   },
+   "1043,310": {
+    "number": null,
+    "note": "name line (1325)"
+   },
+   "1117,387": {
+    "number": "1329",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "1046,403": {
+    "number": "1323",
+    "name": "MBA & Masters Student Org Offices"
+   },
+   "1493,404": {
+    "number": "1301"
+   },
+   "931,409": {
+    "number": "1210E"
+   },
+   "977,410": {
+    "number": "1210G"
+   },
+   "1229,411": {
+    "number": "1324"
+   },
+   "612,414": {
+    "number": "1210C"
+   },
+   "1117,444": {
+    "number": "1327",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "1285,448": {
+    "number": null,
+    "note": "MBA&M Study"
+   },
+   "768,479": {
+    "number": "1210B",
+    "name": "Finance & Analytics Lab"
+   },
+   "131,533": {
+    "number": "1145"
+   },
+   "1436,536": {
+    "number": "1305"
+   },
+   "236,549": {
+    "number": "1140",
+    "name": "Class Room"
+   },
+   "1351,552": {
+    "number": null,
+    "note": "INFO Desk"
+   },
+   "1030,559": {
+    "number": "1230",
+    "name": "MBA & Master's Lounge"
+   },
+   "1199,560": {
+    "number": "1324"
+   },
+   "1540,569": {
+    "number": "1413"
+   },
+   "1658,576": {
+    "number": "1411",
+    "name": "Facilities Services"
+   },
+   "638,580": {
+    "number": "1210A",
+    "name": "Huber Lab South"
+   },
+   "1577,584": {
+    "number": "1411"
+   },
+   "1029,588": {
+    "number": null,
+    "note": "name line (1230 callout)"
+   },
+   "1529,607": {
+    "number": "1414"
+   },
+   "104,615": {
+    "number": "1149",
+    "name": "Multi-Media Center"
+   },
+   "1118,618": {
+    "number": "1238"
+   },
+   "1545,731": {
+    "number": "1405"
+   },
+   "194,851": {
+    "number": "1170",
+    "name": "Class Room"
+   },
+   "334,851": {
+    "number": "1175",
+    "name": "Class Room"
+   },
+   "664,851": {
+    "number": "1270",
+    "name": "Class Room"
+   },
+   "1040,851": {
+    "number": "1266",
+    "name": "Private Dining"
+   },
+   "195,883": {
+    "number": null,
+    "note": "name line (1170 callout)"
+   },
+   "334,883": {
+    "number": null,
+    "note": "name line (1175 callout)"
+   },
+   "664,883": {
+    "number": null,
+    "note": "name line (1270 callout)"
+   },
+   "1281,885": {
+    "number": "1450",
+    "name": "Dining Commons"
+   },
+   "1541,905": {
+    "number": "1425"
+   },
+   "1411,906": {
+    "number": "1424"
+   },
+   "837,920": {
+    "number": "1250",
+    "name": "Undergraduate Lounge"
+   },
+   "495,972": {
+    "number": "1070",
+    "name": "Class Room"
+   },
+   "194,978": {
+    "number": "1180",
+    "name": "Class Room"
+   },
+   "334,978": {
+    "number": "1185",
+    "name": "Class Room"
+   },
+   "664,980": {
+    "number": "1280",
+    "name": "Class Room"
+   },
+   "1549,996": {
+    "number": "1435"
+   },
+   "1463,997": {
+    "number": "1430"
+   },
+   "195,1010": {
+    "number": null,
+    "note": "name line (1180 callout)"
+   },
+   "334,1010": {
+    "number": null,
+    "note": "name line (1185 callout)"
+   },
+   "664,1012": {
+    "number": null,
+    "note": "name line (1280 callout)"
+   },
+   "495,1081": {
+    "number": "1080",
+    "name": "Class Room"
+   },
+   "1513,1086": {
+    "number": "1505",
+    "name": "Capital Cafe"
+   },
+   "794,1091": {
+    "number": "1290A"
+   },
+   "194,1105": {
+    "number": "1190",
+    "name": "Class Room"
+   },
+   "334,1105": {
+    "number": "1195",
+    "name": "Class Room"
+   },
+   "623,1132": {
+    "number": "1293",
+    "name": "Lab"
+   },
+   "794,1150": {
+    "number": "1290B"
+   },
+   "1455,1215": {
+    "number": "1520",
+    "name": "Capital Cafe Dining"
+   },
+   "766,1219": {
+    "number": "1290C"
+   },
+   "705,1340": {
+    "number": "1295",
+    "name": "Class Room"
+   },
+   "706,1372": {
+    "number": null,
+    "note": "name line (1295 callout)"
+   },
+   "1824,1459": {
+    "number": null,
+    "note": "title block"
+   },
+   "1890,1460": {
+    "number": null,
+    "note": "title block"
+   },
+   "1831,1494": {
+    "number": null,
+    "note": "title block"
+   }
+  },
+  "2": {
+   "1173,131": {
+    "number": "2325",
+    "name": "Evening/Executive/Professional MBA Study"
+   },
+   "1301,136": {
+    "number": "2329",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "1471,160": {
+    "number": "2335",
+    "name": "Class Room"
+   },
+   "1315,172": {
+    "number": "2327"
+   },
+   "1242,205": {
+    "number": "2325"
+   },
+   "1110,221": {
+    "number": "2210D"
+   },
+   "1331,259": {
+    "number": "2310",
+    "name": "Evening/Executive/Professional MBA"
+   },
+   "495,272": {
+    "number": "2020F"
+   },
+   "150,276": {
+    "number": "2111",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "561,281": {
+    "number": "2020E"
+   },
+   "431,283": {
+    "number": "2020G"
+   },
+   "1334,304": {
+    "number": null,
+    "note": "name line (2310 callout)"
+   },
+   "906,309": {
+    "number": "2210J"
+   },
+   "1172,317": {
+    "number": "2313"
+   },
+   "957,320": {
+    "number": "2210H"
+   },
+   "1008,321": {
+    "number": "2210G"
+   },
+   "152,322": {
+    "number": "2113"
+   },
+   "1268,325": {
+    "number": "2311"
+   },
+   "1228,334": {
+    "number": "2312"
+   },
+   "427,336": {
+    "number": "2020H"
+   },
+   "495,343": {
+    "number": "2020",
+    "name": "Undergraduate Admissions"
+   },
+   "560,350": {
+    "number": "2020D"
+   },
+   "905,350": {
+    "number": "2210K"
+   },
+   "1471,352": {
+    "number": "2339",
+    "name": "Class Room"
+   },
+   "292,359": {
+    "number": "2120",
+    "name": "Jack F. Keller Lecture Hall"
+   },
+   "803,371": {
+    "number": "2210",
+    "name": "Learning Commons"
+   },
+   "1027,371": {
+    "number": "2210E"
+   },
+   "150,376": {
+    "number": "2115"
+   },
+   "515,376": {
+    "number": null,
+    "note": "name line (2020 callout)"
+   },
+   "438,384": {
+    "number": "2020I"
+   },
+   "1226,390": {
+    "number": "2310"
+   },
+   "692,392": {
+    "number": "2210A",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "905,392": {
+    "number": "2210L"
+   },
+   "560,399": {
+    "number": "2020C"
+   },
+   "434,429": {
+    "number": "2020J"
+   },
+   "149,433": {
+    "number": "2117"
+   },
+   "561,435": {
+    "number": "2020B"
+   },
+   "933,446": {
+    "number": "2210M",
+    "name": "Class Room"
+   },
+   "1065,446": {
+    "number": "2210N",
+    "name": "Class Room"
+   },
+   "1165,460": {
+    "number": "2315"
+   },
+   "1212,460": {
+    "number": "2316"
+   },
+   "1254,460": {
+    "number": "2317"
+   },
+   "1297,461": {
+    "number": "2318"
+   },
+   "334,521": {
+    "number": "2130"
+   },
+   "160,526": {
+    "number": "2131"
+   },
+   "335,560": {
+    "number": "2132"
+   },
+   "160,569": {
+    "number": "2133"
+   },
+   "1552,569": {
+    "number": "2411"
+   },
+   "1494,592": {
+    "number": "2407"
+   },
+   "1460,603": {
+    "number": "2405"
+   },
+   "746,604": {
+    "number": "2210U",
+    "name": "Class Room"
+   },
+   "619,609": {
+    "number": "2200K"
+   },
+   "1425,610": {
+    "number": "2403"
+   },
+   "1570,612": {
+    "number": "2415"
+   },
+   "161,613": {
+    "number": "2135"
+   },
+   "1390,614": {
+    "number": "2401"
+   },
+   "1570,654": {
+    "number": "2417"
+   },
+   "1394,667": {
+    "number": "2402"
+   },
+   "901,678": {
+    "number": "2210S",
+    "name": "Class Room"
+   },
+   "1000,678": {
+    "number": "2210R",
+    "name": "Class Room"
+   },
+   "1570,697": {
+    "number": "2419"
+   },
+   "145,702": {
+    "number": "2167",
+    "name": "TA Space"
+   },
+   "270,703": {
+    "number": "2165",
+    "name": "Class Room"
+   },
+   "822,703": {
+    "number": null,
+    "note": "restroom pictogram"
+   },
+   "1460,708": {
+    "number": "2455"
+   },
+   "1494,717": {
+    "number": "2421"
+   },
+   "1570,739": {
+    "number": "2423"
+   },
+   "1434,744": {
+    "number": "2451"
+   },
+   "1643,759": {
+    "number": "2450",
+    "name": "MBA & Master's Programs"
+   },
+   "1662,791": {
+    "number": null,
+    "note": "name line (2450 callout)"
+   },
+   "1570,803": {
+    "number": "2425"
+   },
+   "1497,804": {
+    "number": "2456"
+   },
+   "1169,826": {
+    "number": "2266A"
+   },
+   "1085,846": {
+    "number": "2266"
+   },
+   "207,851": {
+    "number": "2170",
+    "name": "Class Room"
+   },
+   "317,851": {
+    "number": "2175",
+    "name": "Class Room"
+   },
+   "700,851": {
+    "number": "2270",
+    "name": "Class Room"
+   },
+   "928,855": {
+    "number": "2256",
+    "name": "Multicultural Center"
+   },
+   "1570,866": {
+    "number": "2427"
+   },
+   "1395,867": {
+    "number": "2462"
+   },
+   "1040,908": {
+    "number": "2266D"
+   },
+   "1091,908": {
+    "number": "2266C"
+   },
+   "1155,908": {
+    "number": "2266B"
+   },
+   "1570,909": {
+    "number": "2429"
+   },
+   "1570,951": {
+    "number": "2431"
+   },
+   "1297,961": {
+    "number": "2471"
+   },
+   "1225,964": {
+    "number": "2473"
+   },
+   "836,967": {
+    "number": "2250",
+    "name": "Multicultural Center Lounge"
+   },
+   "1476,971": {
+    "number": "2434"
+   },
+   "207,978": {
+    "number": "2180",
+    "name": "Class Room"
+   },
+   "317,978": {
+    "number": "2185",
+    "name": "Class Room"
+   },
+   "700,980": {
+    "number": "2280",
+    "name": "Class Room"
+   },
+   "1049,986": {
+    "number": "2266",
+    "name": "FES/FMO Services"
+   },
+   "1570,993": {
+    "number": "2435"
+   },
+   "1250,1005": {
+    "number": "2475"
+   },
+   "1395,1011": {
+    "number": "2436"
+   },
+   "1297,1030": {
+    "number": "2477"
+   },
+   "1570,1038": {
+    "number": "2437"
+   },
+   "495,1061": {
+    "number": "2080",
+    "name": "Nicholas Lecture Hall"
+   },
+   "207,1105": {
+    "number": "2190",
+    "name": "Class Room"
+   },
+   "317,1105": {
+    "number": "2195",
+    "name": "Class Room"
+   },
+   "729,1105": {
+    "number": "2290",
+    "name": "Computer ClassRoom"
+   },
+   "1470,1136": {
+    "number": "2510",
+    "name": "Class Room"
+   },
+   "1471,1168": {
+    "number": null,
+    "note": "name line (2520 callout)"
+   },
+   "729,1248": {
+    "number": "2294",
+    "name": "Computer ClassRoom"
+   },
+   "1369,1248": {
+    "number": "2515"
+   },
+   "1470,1347": {
+    "number": "2520",
+    "name": "Class Room"
+   },
+   "745,1436": {
+    "number": "2296"
+   },
+   "1256,1452": {
+    "number": "2525",
+    "name": "MBA&M Study"
+   },
+   "1346,1457": {
+    "number": "2525"
+   },
+   "1735,1469": {
+    "number": null,
+    "note": "title block"
+   }
+  },
+  "3": {
+   "195,74": {
+    "number": "3102"
+   },
+   "236,84": {
+    "number": "3104"
+   },
+   "277,104": {
+    "number": "3106"
+   },
+   "322,132": {
+    "number": "3108"
+   },
+   "1461,135": {
+    "number": "3335",
+    "name": "Class Room"
+   },
+   "1301,154": {
+    "number": "3325",
+    "name": "Class Room"
+   },
+   "1642,170": {
+    "number": "3337",
+    "name": "MBA&M Study"
+   },
+   "352,172": {
+    "number": "3110"
+   },
+   "227,187": {
+    "number": "3111",
+    "name": "Conference Room"
+   },
+   "1109,224": {
+    "number": "3210D"
+   },
+   "373,229": {
+    "number": "3112"
+   },
+   "1555,244": {
+    "number": "3337"
+   },
+   "893,250": {
+    "number": "3210"
+   },
+   "1372,264": {
+    "number": "3320"
+   },
+   "263,273": {
+    "number": "3115B"
+   },
+   "199,274": {
+    "number": "3115A"
+   },
+   "373,275": {
+    "number": "3114"
+   },
+   "1522,303": {
+    "number": "3339",
+    "name": "Class Room"
+   },
+   "373,316": {
+    "number": "3116"
+   },
+   "1241,338": {
+    "number": "3319"
+   },
+   "617,351": {
+    "number": "3210C"
+   },
+   "1635,351": {
+    "number": "3340",
+    "name": "Bolz Center for Arts Administration"
+   },
+   "373,356": {
+    "number": "3118"
+   },
+   "855,356": {
+    "number": "3210F"
+   },
+   "904,356": {
+    "number": "3210E"
+   },
+   "236,359": {
+    "number": "3115"
+   },
+   "1402,361": {
+    "number": "3346"
+   },
+   "734,364": {
+    "number": "3210",
+    "name": "Learning Commons"
+   },
+   "1266,373": {
+    "number": "3317"
+   },
+   "1505,393": {
+    "number": "3344"
+   },
+   "1303,398": {
+    "number": "3315"
+   },
+   "373,400": {
+    "number": "3120"
+   },
+   "632,400": {
+    "number": "3210B"
+   },
+   "853,408": {
+    "number": "3210G"
+   },
+   "906,408": {
+    "number": "3210H"
+   },
+   "1450,417": {
+    "number": "3341"
+   },
+   "1300,439": {
+    "number": "3311"
+   },
+   "373,441": {
+    "number": "3122"
+   },
+   "199,443": {
+    "number": "3150Q"
+   },
+   "1398,444": {
+    "number": "3340",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "1473,446": {
+    "number": "3343",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "1646,461": {
+    "number": "3410",
+    "name": "Center for Brand & Product Management"
+   },
+   "273,463": {
+    "number": "3150P"
+   },
+   "373,478": {
+    "number": "3124"
+   },
+   "1300,482": {
+    "number": "3309"
+   },
+   "199,485": {
+    "number": "3150N"
+   },
+   "1418,485": {
+    "number": "3342"
+   },
+   "1300,524": {
+    "number": "3307"
+   },
+   "200,528": {
+    "number": "3150L"
+   },
+   "600,541": {
+    "number": "3210A"
+   },
+   "1459,541": {
+    "number": "3350"
+   },
+   "273,548": {
+    "number": "3150K"
+   },
+   "1300,566": {
+    "number": "3305"
+   },
+   "1570,569": {
+    "number": "3415"
+   },
+   "201,571": {
+    "number": "3150J"
+   },
+   "273,590": {
+    "number": "3150H"
+   },
+   "1455,595": {
+    "number": "3413"
+   },
+   "1655,604": {
+    "number": "3420",
+    "name": "A. C. Nielsen Marketing Analytics & Insights"
+   },
+   "1300,607": {
+    "number": "3303"
+   },
+   "1570,612": {
+    "number": "3417"
+   },
+   "199,614": {
+    "number": "3150G"
+   },
+   "1398,615": {
+    "number": "3410"
+   },
+   "1492,626": {
+    "number": "3414"
+   },
+   "1442,628": {
+    "number": "3412"
+   },
+   "273,629": {
+    "number": "3150F"
+   },
+   "1300,647": {
+    "number": "3301"
+   },
+   "1570,655": {
+    "number": "3425"
+   },
+   "1432,665": {
+    "number": "3420"
+   },
+   "102,673": {
+    "number": "3150B"
+   },
+   "242,696": {
+    "number": "3150",
+    "name": "Undergraduate Program Office"
+   },
+   "1486,697": {
+    "number": "3424"
+   },
+   "1570,697": {
+    "number": "3427"
+   },
+   "1434,699": {
+    "number": "3422"
+   },
+   "1048,704": {
+    "number": "3259B"
+   },
+   "1159,704": {
+    "number": "3259A"
+   },
+   "102,718": {
+    "number": "3150C"
+   },
+   "978,721": {
+    "number": "3253"
+   },
+   "896,722": {
+    "number": "3251"
+   },
+   "1102,730": {
+    "number": "3259"
+   },
+   "1511,747": {
+    "number": "3432"
+   },
+   "102,765": {
+    "number": "3150D"
+   },
+   "165,773": {
+    "number": "3150E"
+   },
+   "275,810": {
+    "number": "3160"
+   },
+   "202,819": {
+    "number": "3161"
+   },
+   "1163,826": {
+    "number": "3260A"
+   },
+   "908,829": {
+    "number": "3260J"
+   },
+   "998,833": {
+    "number": "3260F"
+   },
+   "1050,833": {
+    "number": "3260D"
+   },
+   "1657,836": {
+    "number": null,
+    "note": "MBA & Master's Student Lounge Areas (no room number printed)"
+   },
+   "953,843": {
+    "number": "3260H"
+   },
+   "666,845": {
+    "number": "3270",
+    "name": "Conference Room"
+   },
+   "1548,845": {
+    "number": "3434",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "496,850": {
+    "number": "3070",
+    "name": "Conference Room"
+   },
+   "307,857": {
+    "number": "3162"
+   },
+   "1114,866": {
+    "number": "3260",
+    "name": "Alumni Relations"
+   },
+   "820,867": {
+    "number": "3264B"
+   },
+   "1396,867": {
+    "number": "3442"
+   },
+   "202,870": {
+    "number": "3163"
+   },
+   "750,871": {
+    "number": "3264"
+   },
+   "1452,875": {
+    "number": "3453",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "905,894": {
+    "number": "3260I"
+   },
+   "1125,897": {
+    "number": null,
+    "note": "name line (3260 callout)"
+   },
+   "308,904": {
+    "number": "3164"
+   },
+   "1173,904": {
+    "number": "3260B"
+   },
+   "832,905": {
+    "number": "3264A"
+   },
+   "955,905": {
+    "number": "3260G"
+   },
+   "1007,906": {
+    "number": "3260E"
+   },
+   "1058,906": {
+    "number": "3260C"
+   },
+   "1460,908": {
+    "number": "3452"
+   },
+   "202,909": {
+    "number": "3165"
+   },
+   "1578,909": {
+    "number": "3455",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "742,950": {
+    "number": "3290",
+    "name": "Undergraduate Program Office"
+   },
+   "1570,951": {
+    "number": "3457"
+   },
+   "1423,953": {
+    "number": "3450",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "438,958": {
+    "number": "3081"
+   },
+   "496,958": {
+    "number": "3083"
+   },
+   "556,959": {
+    "number": "3085"
+   },
+   "263,975": {
+    "number": "3180",
+    "name": "Conference Room"
+   },
+   "1262,982": {
+    "number": "3447"
+   },
+   "1570,993": {
+    "number": "3467"
+   },
+   "1400,1009": {
+    "number": "3460"
+   },
+   "1491,1024": {
+    "number": "3468",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "1178,1034": {
+    "number": "3460",
+    "name": "Strategic Human Resource Management"
+   },
+   "1570,1036": {
+    "number": "3469"
+   },
+   "1393,1038": {
+    "number": "3462"
+   },
+   "1442,1039": {
+    "number": "3464",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "658,1051": {
+    "number": "3290A"
+   },
+   "1490,1071": {
+    "number": "3515"
+   },
+   "1570,1078": {
+    "number": "3519"
+   },
+   "1660,1081": {
+    "number": "3510",
+    "name": "Erdman Center for Operations & Technology Management"
+   },
+   "1204,1082": {
+    "number": null,
+    "note": "name line (3460 callout)"
+   },
+   "1400,1092": {
+    "number": "3510"
+   },
+   "496,1102": {
+    "number": "2080",
+    "name": "Class Room"
+   },
+   "263,1104": {
+    "number": "3190",
+    "name": "Conference Room"
+   },
+   "1688,1112": {
+    "number": null,
+    "note": "name line (3510 callout)"
+   },
+   "1460,1136": {
+    "number": "3514"
+   },
+   "1570,1141": {
+    "number": "3521"
+   },
+   "1393,1148": {
+    "number": "3512"
+   },
+   "1570,1205": {
+    "number": "3525"
+   },
+   "1570,1250": {
+    "number": "3545"
+   },
+   "621,1275": {
+    "number": "3295",
+    "name": "Undergraduate Interview Center"
+   },
+   "1440,1299": {
+    "number": "3540"
+   },
+   "1562,1299": {
+    "number": "3547"
+   },
+   "1645,1318": {
+    "number": "3540",
+    "name": "S. L. Hawk Center for Applied Security"
+   },
+   "1364,1322": {
+    "number": "3550"
+   },
+   "1528,1350": {
+    "number": "3549"
+   },
+   "1638,1351": {
+    "number": "3540",
+    "name": "S. L. Hawk Center for Applied Security"
+   },
+   "1441,1392": {
+    "number": "3560",
+    "name": "Seminar Room"
+   },
+   "1441,1423": {
+    "number": null,
+    "note": "name line (3560 callout)"
+   },
+   "1826,1456": {
+    "number": null,
+    "note": "title block"
+   },
+   "1885,1456": {
+    "number": null,
+    "note": "titleblock 0140A03"
+   },
+   "1349,1458": {
+    "number": "3565"
+   },
+   "1642,1469": {
+    "number": null,
+    "note": "GRAINGER HALL 975 UNIVERSITY AVENUE"
+   },
+   "1741,1469": {
+    "number": null,
+    "note": "blank"
+   },
+   "1827,1479": {
+    "number": null,
+    "note": "titleblock 02-17"
+   },
+   "1827,1491": {
+    "number": null,
+    "note": "title block"
+   }
+  },
+  "4": {
+   "194,78": {
+    "number": "4102"
+   },
+   "237,84": {
+    "number": "4104"
+   },
+   "1401,94": {
+    "number": "4333"
+   },
+   "280,100": {
+    "number": "4106"
+   },
+   "1452,111": {
+    "number": "4335"
+   },
+   "320,132": {
+    "number": "4108"
+   },
+   "1346,133": {
+    "number": "4329"
+   },
+   "1303,150": {
+    "number": "4327"
+   },
+   "1513,162": {
+    "number": "4339"
+   },
+   "1270,173": {
+    "number": "4325"
+   },
+   "352,174": {
+    "number": "4110"
+   },
+   "212,193": {
+    "number": "4113A"
+   },
+   "1246,206": {
+    "number": "4323"
+   },
+   "1363,221": {
+    "number": "4328"
+   },
+   "369,225": {
+    "number": "4112"
+   },
+   "1413,238": {
+    "number": "4336"
+   },
+   "213,239": {
+    "number": "4113B"
+   },
+   "1548,244": {
+    "number": "4341"
+   },
+   "275,254": {
+    "number": "4113"
+   },
+   "1362,273": {
+    "number": "4320",
+    "name": "Dean's Office"
+   },
+   "372,275": {
+    "number": "4114"
+   },
+   "214,283": {
+    "number": "4113C"
+   },
+   "1550,308": {
+    "number": "4345"
+   },
+   "372,316": {
+    "number": "4116"
+   },
+   "265,331": {
+    "number": "4117"
+   },
+   "1491,336": {
+    "number": "4347"
+   },
+   "205,339": {
+    "number": "4117B"
+   },
+   "372,358": {
+    "number": "4118"
+   },
+   "269,386": {
+    "number": "4117C"
+   },
+   "205,394": {
+    "number": "4117D"
+   },
+   "114,395": {
+    "number": "4121",
+    "name": "Accounting"
+   },
+   "1443,397": {
+    "number": "4349",
+    "name": "Seminar Room"
+   },
+   "1299,400": {
+    "number": "4315"
+   },
+   "372,406": {
+    "number": "4120"
+   },
+   "117,412": {
+    "number": "4121B",
+    "name": "Accounting",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "1299,440": {
+    "number": "4311"
+   },
+   "268,443": {
+    "number": "4121"
+   },
+   "203,444": {
+    "number": "4121B",
+    "name": "Accounting"
+   },
+   "372,466": {
+    "number": "4122"
+   },
+   "1299,482": {
+    "number": "4309"
+   },
+   "208,483": {
+    "number": "4125",
+    "name": "Arthur Andersen Center"
+   },
+   "1469,495": {
+    "number": "4355"
+   },
+   "218,514": {
+    "number": null,
+    "note": "name line (4125 callout)"
+   },
+   "1396,516": {
+    "number": "4354",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "1508,520": {
+    "number": "4357"
+   },
+   "1300,524": {
+    "number": "4307"
+   },
+   "1414,545": {
+    "number": "4350"
+   },
+   "1531,553": {
+    "number": "4359"
+   },
+   "271,555": {
+    "number": "4133B"
+   },
+   "1662,564": {
+    "number": "4410",
+    "name": "MACC Computer Lab/Lounge"
+   },
+   "207,566": {
+    "number": "4133C"
+   },
+   "1299,567": {
+    "number": "4305"
+   },
+   "122,576": {
+    "number": "4133",
+    "name": "Beyer Center"
+   },
+   "1661,581": {
+    "number": null,
+    "note": "name line (4410 callout)"
+   },
+   "1442,586": {
+    "number": "4351"
+   },
+   "1300,607": {
+    "number": "4303"
+   },
+   "266,613": {
+    "number": "4133"
+   },
+   "207,615": {
+    "number": "4133D"
+   },
+   "1299,648": {
+    "number": "4301"
+   },
+   "1569,655": {
+    "number": "4417"
+   },
+   "1402,659": {
+    "number": "4410",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "1469,659": {
+    "number": "4414"
+   },
+   "1569,697": {
+    "number": "4419"
+   },
+   "193,698": {
+    "number": "4151",
+    "name": "Director's Conference Room"
+   },
+   "1179,704": {
+    "number": "4265",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "879,717": {
+    "number": "4251"
+   },
+   "919,717": {
+    "number": "4253"
+   },
+   "962,717": {
+    "number": "4255"
+   },
+   "1006,717": {
+    "number": "4257"
+   },
+   "1049,717": {
+    "number": "4259",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "1089,717": {
+    "number": "4261"
+   },
+   "1132,717": {
+    "number": "4263"
+   },
+   "1662,718": {
+    "number": "4420",
+    "name": "MBA & MACC Computer Lab/Lounge"
+   },
+   "1476,722": {
+    "number": "4423"
+   },
+   "1664,735": {
+    "number": null,
+    "note": "name line (4420 callout)"
+   },
+   "1402,779": {
+    "number": "4420"
+   },
+   "1569,782": {
+    "number": "4425"
+   },
+   "1461,800": {
+    "number": "4422"
+   },
+   "615,819": {
+    "number": "4267",
+    "name": "Operations & Technology Management"
+   },
+   "236,822": {
+    "number": "4161",
+    "name": "Conference Room"
+   },
+   "1000,822": {
+    "number": "4250"
+   },
+   "881,824": {
+    "number": "4250A"
+   },
+   "1569,824": {
+    "number": "4429"
+   },
+   "374,828": {
+    "number": "4166",
+    "name": "Marketing"
+   },
+   "746,828": {
+    "number": "4268D"
+   },
+   "119,836": {
+    "number": "4171",
+    "name": "Accounting PhDs"
+   },
+   "1155,864": {
+    "number": "4260"
+   },
+   "1569,866": {
+    "number": "4445"
+   },
+   "1395,867": {
+    "number": "4432"
+   },
+   "258,870": {
+    "number": "4171"
+   },
+   "1460,875": {
+    "number": "4443",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "200,886": {
+    "number": "4171C"
+   },
+   "714,891": {
+    "number": "4268"
+   },
+   "808,892": {
+    "number": "4268A"
+   },
+   "876,892": {
+    "number": "4250B"
+   },
+   "921,892": {
+    "number": "4250C",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "963,892": {
+    "number": "4250D",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "1006,892": {
+    "number": "4250E",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "1049,892": {
+    "number": "4250F"
+   },
+   "1090,892": {
+    "number": "4250G"
+   },
+   "617,906": {
+    "number": "4269"
+   },
+   "1569,909": {
+    "number": "4447"
+   },
+   "1471,911": {
+    "number": "4442"
+   },
+   "373,913": {
+    "number": "4172"
+   },
+   "1664,916": {
+    "number": "4440",
+    "name": "J. A. Graaskamp Center for Real Estate"
+   },
+   "270,923": {
+    "number": "4171B"
+   },
+   "204,943": {
+    "number": "4171D"
+   },
+   "731,948": {
+    "number": "4270"
+   },
+   "372,951": {
+    "number": "4176"
+   },
+   "617,951": {
+    "number": "4271"
+   },
+   "1438,962": {
+    "number": "4440"
+   },
+   "1569,972": {
+    "number": "4449"
+   },
+   "243,989": {
+    "number": "4181"
+   },
+   "111,990": {
+    "number": "4181",
+    "name": "Marketing PhDs"
+   },
+   "372,994": {
+    "number": "4182"
+   },
+   "617,994": {
+    "number": "4273"
+   },
+   "715,1000": {
+    "number": "4270H"
+   },
+   "118,1007": {
+    "number": "4185",
+    "name": "Marketing PhDs",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "868,1015": {
+    "number": "4270",
+    "name": "ITS Info Tech Solutions"
+   },
+   "875,1032": {
+    "number": null,
+    "note": "name line (4270 callout)"
+   },
+   "617,1034": {
+    "number": "4275"
+   },
+   "372,1036": {
+    "number": "4184"
+   },
+   "1569,1036": {
+    "number": "4451"
+   },
+   "243,1048": {
+    "number": "4185",
+    "name": "Marketing PhDs"
+   },
+   "714,1062": {
+    "number": "4270I"
+   },
+   "1664,1065": {
+    "number": "4510",
+    "name": "Risk Management & Insurance"
+   },
+   "372,1076": {
+    "number": "4186"
+   },
+   "617,1078": {
+    "number": "4277"
+   },
+   "1569,1078": {
+    "number": "4453"
+   },
+   "1428,1092": {
+    "number": "4510",
+    "note": "recovered by --audit: number line is not its block's first line"
+   },
+   "198,1102": {
+    "number": "4191D"
+   },
+   "258,1108": {
+    "number": "4191"
+   },
+   "373,1119": {
+    "number": "4192"
+   },
+   "1569,1120": {
+    "number": "4519"
+   },
+   "617,1121": {
+    "number": "4279"
+   },
+   "712,1126": {
+    "number": "4270J"
+   },
+   "208,1159": {
+    "number": "4191C"
+   },
+   "274,1159": {
+    "number": "4191B"
+   },
+   "617,1163": {
+    "number": "4281"
+   },
+   "1569,1163": {
+    "number": "4521"
+   },
+   "387,1186": {
+    "number": "4194"
+   },
+   "1398,1187": {
+    "number": "4561"
+   },
+   "1466,1193": {
+    "number": "4563"
+   },
+   "714,1199": {
+    "number": "4284D"
+   },
+   "1664,1202": {
+    "number": "4560",
+    "name": "Nicholas Center for Corporate Finance"
+   },
+   "1569,1205": {
+    "number": "4565"
+   },
+   "617,1206": {
+    "number": "4283"
+   },
+   "781,1208": {
+    "number": "4284A"
+   },
+   "1420,1242": {
+    "number": "4560"
+   },
+   "716,1247": {
+    "number": "4284"
+   },
+   "617,1248": {
+    "number": "4285"
+   },
+   "1569,1250": {
+    "number": "4567"
+   },
+   "780,1251": {
+    "number": "4284B"
+   },
+   "617,1290": {
+    "number": "4287"
+   },
+   "779,1296": {
+    "number": "4284C"
+   },
+   "1369,1310": {
+    "number": "4570"
+   },
+   "627,1329": {
+    "number": "4289"
+   },
+   "779,1335": {
+    "number": "4298"
+   },
+   "648,1372": {
+    "number": "4291"
+   },
+   "1437,1394": {
+    "number": "4580",
+    "name": "Seminar Room"
+   },
+   "676,1405": {
+    "number": "4293"
+   },
+   "1438,1425": {
+    "number": null,
+    "note": "name line (4580 callout)"
+   },
+   "712,1432": {
+    "number": "4295"
+   },
+   "755,1448": {
+    "number": "4297"
+   },
+   "797,1452": {
+    "number": "4299"
+   },
+   "1825,1457": {
+    "number": null,
+    "note": "title block"
+   },
+   "1348,1458": {
+    "number": "4585"
+   },
+   "1641,1470": {
+    "number": null,
+    "note": "title block"
+   },
+   "1827,1481": {
+    "number": null,
+    "note": "title block"
+   },
+   "1832,1492": {
+    "number": null,
+    "note": "title block"
+   }
+  }
+ }
+}
