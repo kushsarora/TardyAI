@@ -28,7 +28,7 @@ and is fetched over `c3Action`; there is no hardcoded data in the frontend.
 ```
 pkgbc231600/                  # the C3 package (name is fixed — do not rename)
   src/                        # C3 types (.c3typ) + NavRouter.js (the A* router, server-side JS)
-  data/                       # the Grainger Hall graph: 1 building, 3 floors, 75 nodes, 156 edges
+  data/                       # the Grainger Hall graph: 1 building, 3 floors, 626 nodes (254 rooms), 1260 edges
   ui/react/                   # Vite + React 18 + TypeScript + Tailwind frontend
     public/plans/             # rasterized floor plans (1980×1530)
 tools/                        # offline helpers (PDF → PNG, graph authoring)
