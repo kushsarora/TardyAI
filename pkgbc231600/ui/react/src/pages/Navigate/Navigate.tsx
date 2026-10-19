@@ -387,7 +387,11 @@ export default function Navigate() {
       </aside>
 
       {/* ---------------- Map ---------------- */}
-      <section className="relative flex min-h-[420px] flex-1 flex-col gap-2">
+      {/* min-w-0: a flex item's default min-width:auto floors it at its
+          min-content width, so anything intrinsically wide inside the map (the
+          plan stage is 1980px) would otherwise stretch this panel past the
+          window instead of letting the map scale down to fit. */}
+      <section className="relative flex min-h-[420px] min-w-0 flex-1 flex-col gap-2">
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-c3-bold-label-l3 text-[var(--c3-style-basic-fg-secondary)]">Floor</span>
           {/* Descending so the stack reads like a building elevation. */}
@@ -422,7 +426,7 @@ export default function Navigate() {
           )}
         </div>
 
-        <div className="min-h-0 flex-1">
+        <div className="min-h-0 min-w-0 flex-1">
           <FloorPlanMap
             floor={activeFloor}
             nodes={nodesOnActiveFloor}

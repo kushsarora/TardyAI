@@ -43,22 +43,29 @@ const CLICK_SLOP_PX = 4;
  * Constrain one axis of the stage translation so the plan can never be dragged
  * out of the viewport.
  *
- * Two regimes, decided by whether the scaled plan is bigger than the viewport:
+ * Both regimes are the same interval with its endpoints swapped — `0` and the
+ * slack `viewportExtent - scaledExtent`, ordered low-to-high:
  *
- * - **Larger (zoomed in).** The offset is held in `[viewportExtent - scaledExtent, 0]`,
- *   i.e. the plan's leading edge can't move past the viewport's leading edge and
- *   its trailing edge can't move short of the trailing one. Every part of the
- *   plan stays reachable, but the viewport is always covered edge to edge, so
- *   there is never dead space beside the map.
- * - **Smaller or equal (fitted).** Centred. This is every axis at fit zoom —
- *   `getFitZoom` deliberately leaves a `FIT_MARGIN` border, so "cover the
- *   viewport" is unsatisfiable there and clamping to a range would just park a
- *   too-small plan against one edge. Centring also makes a pan at fit zoom a
- *   no-op rather than a slide into emptiness.
+ * - **Scaled plan larger than the viewport (zoomed in).** Slack is negative, so
+ *   the range is `[viewportExtent - scaledExtent, 0]`: the plan's leading edge
+ *   can't move past the viewport's leading edge and its trailing edge can't move
+ *   short of the trailing one. Every part of the plan stays reachable and the
+ *   viewport is always covered edge to edge.
+ * - **Smaller or equal (fitted).** Slack is positive, so the range is
+ *   `[0, viewportExtent - scaledExtent]`: the plan stays wholly inside the
+ *   viewport but may be slid anywhere within the margin.
+ *
+ * It deliberately does *not* hard-centre the fitted case. Returning a constant
+ * there makes a pan an unconditional no-op, which strands the user if the view
+ * is ever off: there is no gesture that moves the map, so an off-view plan can
+ * only be recovered with the fit button. Clamping to the slack range keeps the
+ * same guarantee — the plan cannot leave the viewport — while leaving panning
+ * live at every zoom level. `fitToView` still centres explicitly, and the
+ * centred offset sits inside this range, so the fit button is unaffected.
  */
 const clampOffsetAxis = (value: number, viewportExtent: number, scaledExtent: number): number => {
-  if (scaledExtent <= viewportExtent) return (viewportExtent - scaledExtent) / 2;
-  return Math.min(Math.max(value, viewportExtent - scaledExtent), 0);
+  const slack = viewportExtent - scaledExtent;
+  return Math.min(Math.max(value, Math.min(slack, 0)), Math.max(slack, 0));
 };
 
 interface FloorPlanMapProps {
@@ -343,7 +350,7 @@ export default function FloorPlanMap({
     <div className="relative h-full w-full overflow-hidden rounded-[var(--c3-style-border-radius-8)] border border-[var(--c3-style-basic-border-weak)] bg-[var(--c3-style-basic-bg-secondary)]">
       <div
         ref={viewportRef}
-        className="h-full w-full touch-none"
+        className="relative h-full w-full touch-none overflow-hidden"
         style={{ cursor: authorMode ? 'crosshair' : 'grab' }}
         onWheel={handleWheel}
         onPointerDown={beginPan}
@@ -351,9 +358,17 @@ export default function FloorPlanMap({
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
       >
+        {/* The stage is positioned absolutely so it takes part in painting but
+            not in layout. A CSS transform does not affect layout, so an in-flow
+            stage would contribute its full intrinsic size — 1980x1530 for these
+            plans — as the min-content width of every flex ancestor, forcing the
+            map panel far wider than the window and pushing the plan off screen
+            where the ancestor's overflow:hidden makes it unreachable. Out of
+            flow, the viewport measures the space actually available, which is
+            what getFitZoom and clampOffset need to be meaningful. */}
         <div
           ref={stageRef}
-          className="relative origin-top-left bg-white"
+          className="absolute left-0 top-0 origin-top-left bg-white"
           style={{
             width: floor.imageWidth,
             height: floor.imageHeight,
