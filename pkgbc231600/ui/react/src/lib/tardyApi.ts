@@ -6,10 +6,18 @@
  */
 
 import { c3Action } from '@/c3Action';
-import { Building, Floor, MapNode, NavGraphSnapshot, NavRoute } from '@/Interfaces';
+import {
+  Building,
+  Floor,
+  MapNode,
+  NavGraphSnapshot,
+  NavRoute,
+} from '@/Interfaces';
 import type { RouteLegWithSteps, RouteStep } from '@/lib/routeStepTypes';
 
-export const DEMO_MODE = import.meta.env.VITE_DATA_MODE === 'demo' || (!import.meta.env.VITE_C3_ENV && import.meta.env.VITE_DATA_MODE !== 'live');
+export const DEMO_MODE =
+  import.meta.env.VITE_DATA_MODE === 'demo' ||
+  (!import.meta.env.VITE_C3_ENV && import.meta.env.VITE_DATA_MODE !== 'live');
 const action: typeof c3Action = async (type, method, args) => {
   if (!DEMO_MODE) return c3Action(type, method, args);
   const { demoAction } = await import('virtual:tardy-demo');
@@ -18,6 +26,7 @@ const action: typeof c3Action = async (type, method, args) => {
 
 /** The building this build of the app demos. */
 export const DEMO_BUILDING_ID = 'grainger';
+const ROUTING_REVISION = 'grainger-access-v2';
 
 /**
  * Coerce a C3 collection into a real JS array.
@@ -30,7 +39,8 @@ export const DEMO_BUILDING_ID = 'grainger';
  */
 function toArray<T>(value: unknown): T[] {
   if (Array.isArray(value)) return value as T[];
-  if (value && typeof value === 'object') return Object.values(value as Record<string, T>);
+  if (value && typeof value === 'object')
+    return Object.values(value as Record<string, T>);
   return [];
 }
 
@@ -50,7 +60,9 @@ export function resolvePlanUrl(planImageUrl?: string | null): string | null {
 }
 
 /** Load the demo building record. Returns null when it has not been seeded. */
-export async function fetchBuilding(buildingId: string = DEMO_BUILDING_ID): Promise<Building | null> {
+export async function fetchBuilding(
+  buildingId: string = DEMO_BUILDING_ID,
+): Promise<Building | null> {
   const response = await action('Building', 'fetch', {
     filter: `id == '${buildingId}'`,
     include: 'this',
@@ -67,7 +79,9 @@ export async function fetchBuilding(buildingId: string = DEMO_BUILDING_ID): Prom
  * includes — without them the floor arrives with no control points and the GPS
  * suggestion silently disables itself.
  */
-export async function fetchFloors(buildingId: string = DEMO_BUILDING_ID): Promise<Floor[]> {
+export async function fetchFloors(
+  buildingId: string = DEMO_BUILDING_ID,
+): Promise<Floor[]> {
   const response = await action('Floor', 'fetch', {
     filter: `building.id == '${buildingId}'`,
     include:
@@ -82,13 +96,24 @@ export async function fetchFloors(buildingId: string = DEMO_BUILDING_ID): Promis
 /**
  * Load the whole navigation graph for a building in one call.
  *
- * Bounded deliberately: this is one mid-size building (626 nodes, 1260 edges),
+ * Bounded deliberately: this is one mid-size building (674 nodes, 1356 edges),
  * so a single bulk load makes floor switching and marker rendering instant with
  * no further network traffic. It does NOT scale to every building on campus —
  * at that point this becomes a per-building lazy load.
  */
-export async function fetchGraph(buildingId: string = DEMO_BUILDING_ID): Promise<NavGraphSnapshot> {
+export async function fetchGraph(
+  buildingId: string = DEMO_BUILDING_ID,
+): Promise<NavGraphSnapshot> {
   const snapshot = await action('NavRouter', 'graphForBuilding', [buildingId]);
+  if (
+    buildingId === DEMO_BUILDING_ID &&
+    (snapshot?.routingRevision !== ROUTING_REVISION ||
+      !toArray(snapshot?.nodes).length)
+  ) {
+    throw new Error(
+      'This building’s map needs an update before directions are available. Please contact the map administrator.',
+    );
+  }
   return {
     buildingId,
     nodes: toArray<MapNode>(snapshot?.nodes),
@@ -104,7 +129,11 @@ export async function searchRooms(
   buildingId: string = DEMO_BUILDING_ID,
   limit = 8,
 ): Promise<MapNode[]> {
-  const results = await action('NavRouter', 'searchRooms', [buildingId, query, limit]);
+  const results = await action('NavRouter', 'searchRooms', [
+    buildingId,
+    query,
+    limit,
+  ]);
   return toArray<MapNode>(results);
 }
 
@@ -120,7 +149,7 @@ function normalizeRoute(raw: unknown): NavRoute {
         points: toArray(leg.points),
         // Absent on an older server: keep it absent so the UI falls back to `instruction`.
         ...(leg.steps == null ? {} : { steps: toArray<RouteStep>(leg.steps) }),
-      })
+      }),
     ),
     totalSeconds: route.totalSeconds ?? 0,
     floorsTraversed: route.floorsTraversed ?? 0,
@@ -134,12 +163,33 @@ function normalizeRoute(raw: unknown): NavRoute {
  * An unroutable request resolves successfully with `found: false` — it does not
  * reject. Only a transport or server fault throws.
  */
-export async function findRoute(startNodeId: string, destNodeId: string, stepFree: boolean): Promise<NavRoute> {
-  return normalizeRoute(await action('NavRouter', 'findRoute', [startNodeId, destNodeId, stepFree]));
+export async function findRoute(
+  startNodeId: string,
+  destNodeId: string,
+  stepFree: boolean,
+): Promise<NavRoute> {
+  const route = await action('NavRouter', 'findRoute', [
+    startNodeId,
+    destNodeId,
+    stepFree,
+  ]);
+  if (route?.routingRevision !== ROUTING_REVISION)
+    throw new Error(
+      'The navigation service needs the updated routing geometry.',
+    );
+  return normalizeRoute(route);
 }
 
 /** Snap a dropped pin to the nearest graph node on a floor. Null when the floor has no nodes. */
-export async function nearestNode(floorId: string, imageX: number, imageY: number): Promise<MapNode | null> {
-  const node = await action('NavRouter', 'nearestNode', [floorId, imageX, imageY]);
+export async function nearestNode(
+  floorId: string,
+  imageX: number,
+  imageY: number,
+): Promise<MapNode | null> {
+  const node = await action('NavRouter', 'nearestNode', [
+    floorId,
+    imageX,
+    imageY,
+  ]);
   return (node as MapNode) ?? null;
 }

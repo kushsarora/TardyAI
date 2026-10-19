@@ -30,7 +30,7 @@ The header identifies demo mode. There is no silent fallback from a failed live 
 ```
 pkgbc231600/                  # the C3 package (name is fixed — do not rename)
   src/                        # C3 types (.c3typ) + NavRouter.js (the A* router, server-side JS)
-  data/                       # the Grainger Hall graph: 1 building, 3 floors, 626 nodes (254 rooms), 1260 edges
+  data/                       # the Grainger Hall graph: 1 building, 3 floors, 674 nodes (261 rooms), 1356 edges
   ui/react/                   # Vite + React 18 + TypeScript + Tailwind frontend
     public/plans/             # rasterized floor plans (1980×1530)
 tools/                        # offline helpers (PDF → PNG, graph authoring)
@@ -157,3 +157,33 @@ map the fourth floor and additional buildings, and account for locked doors, con
 opening hours. Current route times use authored walking costs and fixed elevator estimates; they
 do not incorporate live crowds or outages. Indoor GPS uncertainty is displayed, and selecting a floor
 is always the user’s responsibility. Saved rooms are local to the browser, not synced to an account.
+
+## Routing geometry revision: grainger-access-v2
+
+Routes now start/end at mapped access points. `MapNode.imageX/imageY` are walkable
+routing positions; `labelX/labelY` preserve the printed room label for map markers.
+The zero-length room/door membership edge adds a 3-second door allowance without
+inventing a walk across a classroom. A mapped access point is an approximate approach
+on the circulation network, not a surveyed doorway or a measured indoor location.
+
+The revised graph includes the Huber/Learning Commons internal circulation, its stairs
+and elevator, and rooms 3210B–3210H. Upper-floor suite access does not cross the solid
+south wall. The enclosed West Stairs now uses the south-west stairwell; the level-3
+hatched central opening is no longer treated as a stair landing. The public east-wing
+route may consequently choose an elevator even with step-free mode off.
+
+`test/node/geometry.test.js` samples every graph edge against independently transcribed
+interior rectangles for the reported classrooms, service blocks, and central openings.
+It checks both screenshot journeys in both directions, in regular and step-free modes.
+These obstacle fixtures cover specific problem areas; they do not certify every wall,
+entrance, lift, or access restriction in the real building. Plan-derived circulation and
+connector access still need an on-site check before production wayfinding.
+
+**Updating an existing C3 environment:** deploy the updated `MapNode`, `NavEdge`,
+`NavGraphSnapshot`, and `NavRoute` types and `NavRouter.js`, then upsert the regenerated
+MapNode/NavEdge seeds. Reload the generated Waypoint, AnnotatedPlan, and BuildingFacts
+data and annotated images if using the vision room finder. Deploy/rebuild the frontend
+as well. C3 upserts retain removed records, so routing filters nodes and edges to
+`routingRevision = grainger-access-v2`; obsolete shortcut records cannot rejoin the
+current graph. The frontend rejects an older graph/service instead of drawing it.
+The standalone demo packages the revised graph automatically at build time.

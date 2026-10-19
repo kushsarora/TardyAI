@@ -4,6 +4,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "entrance",
     "imageX": 165.0,
     "imageY": 725.0,
@@ -16,6 +17,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 250.0,
     "imageY": 725.0,
@@ -26,6 +28,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 126.0,
     "imageY": 786.0,
@@ -36,6 +39,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 250.0,
     "imageY": 786.0,
@@ -46,6 +50,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 400.0,
     "imageY": 786.0,
@@ -56,6 +61,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "elevator",
     "imageX": 400.0,
     "imageY": 748.0,
@@ -68,6 +74,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 453.0,
     "imageY": 786.0,
@@ -78,6 +85,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 512.0,
     "imageY": 786.0,
@@ -88,9 +96,10 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "stairs",
-    "imageX": 512.0,
-    "imageY": 828.0,
+    "imageX": 365.0,
+    "imageY": 1250.0,
     "stepFree": false,
     "connectorKey": "stair-west",
     "name": "West Stairs"
@@ -100,6 +109,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 567.0,
     "imageY": 786.0,
@@ -110,6 +120,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 615.0,
     "imageY": 786.0,
@@ -120,6 +131,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "elevator",
     "imageX": 615.0,
     "imageY": 748.0,
@@ -132,6 +144,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1140.0,
     "imageY": 786.0,
@@ -142,6 +155,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1320.0,
     "imageY": 786.0,
@@ -152,6 +166,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1390.0,
     "imageY": 786.0,
@@ -162,6 +177,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 512.0,
     "imageY": 660.0,
@@ -172,6 +188,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1140.0,
     "imageY": 660.0,
@@ -182,6 +199,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1180.0,
     "imageY": 660.0,
@@ -192,6 +210,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1180.0,
     "imageY": 300.0,
@@ -202,6 +221,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 512.0,
     "imageY": 462.0,
@@ -212,6 +232,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 440.0,
     "imageY": 462.0,
@@ -222,6 +243,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 585.0,
     "imageY": 462.0,
@@ -232,6 +254,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 512.0,
     "imageY": 350.0,
@@ -242,6 +265,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 100.0,
     "imageY": 350.0,
@@ -252,6 +276,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1320.0,
     "imageY": 728.0,
@@ -262,6 +287,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "elevator",
     "imageX": 1397.0,
     "imageY": 728.0,
@@ -274,6 +300,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1320.0,
     "imageY": 660.0,
@@ -284,6 +311,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1320.0,
     "imageY": 560.0,
@@ -294,6 +322,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1360.0,
     "imageY": 450.0,
@@ -304,6 +333,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1470.0,
     "imageY": 460.0,
@@ -314,6 +344,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1520.0,
     "imageY": 560.0,
@@ -324,6 +355,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 126.0,
     "imageY": 1216.0,
@@ -334,8 +366,20 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 453.0,
+    "imageY": 1216.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-stair-entry",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 365.0,
     "imageY": 1216.0,
     "stepFree": true
   },
@@ -344,6 +388,7 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 567.0,
     "imageY": 1205.0,
@@ -354,16 +399,121 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 700.0,
     "imageY": 1205.0,
     "stepFree": true
   },
   {
+    "id": "n-f1-lab-entry",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 650.0,
+    "imageY": 462.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-lab-west",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 700.0,
+    "imageY": 462.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-lab-nw",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 700.0,
+    "imageY": 350.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-lab-ne",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 900.0,
+    "imageY": 350.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-elev-commons",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "elevator",
+    "imageX": 900.0,
+    "imageY": 480.0,
+    "stepFree": true,
+    "connectorKey": "elev-commons",
+    "name": "Learning Commons Elevator"
+  },
+  {
+    "id": "n-f1-lab-east-s",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 900.0,
+    "imageY": 660.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-lab-south",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 700.0,
+    "imageY": 520.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-commons-landing",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 680.0,
+    "imageY": 520.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-stair-commons",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "stairs",
+    "imageX": 680.0,
+    "imageY": 550.0,
+    "stepFree": false,
+    "connectorKey": "stair-commons",
+    "name": "Learning Commons Stairs"
+  },
+  {
     "id": "n-f1-d1100",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 284.0,
     "imageY": 350.0,
@@ -374,19 +524,23 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 284.0,
-    "imageY": 215.0,
+    "imageY": 350.0,
     "stepFree": true,
     "roomNumber": "1100",
     "name": "Morgridge Auditorium",
-    "searchAliases": "auditorium,lecture"
+    "searchAliases": "auditorium,lecture",
+    "labelX": 284,
+    "labelY": 215
   },
   {
     "id": "n-f1-d1110",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 158.0,
     "imageY": 350.0,
@@ -397,17 +551,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 158.0,
-    "imageY": 298.0,
+    "imageY": 350.0,
     "stepFree": true,
-    "roomNumber": "1110"
+    "roomNumber": "1110",
+    "labelX": 158,
+    "labelY": 298
   },
   {
     "id": "n-f1-d1140",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 246.0,
     "imageY": 725.0,
@@ -418,18 +576,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 251.0,
-    "imageY": 570.0,
+    "imageX": 246.0,
+    "imageY": 725.0,
     "stepFree": true,
     "roomNumber": "1140",
-    "name": "Class Room 1140"
+    "name": "Class Room 1140",
+    "labelX": 251,
+    "labelY": 570
   },
   {
     "id": "n-f1-d1145",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 169.0,
     "imageY": 725.0,
@@ -440,17 +602,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 150.0,
-    "imageY": 560.0,
+    "imageX": 169.0,
+    "imageY": 725.0,
     "stepFree": true,
-    "roomNumber": "1145"
+    "roomNumber": "1145",
+    "labelX": 150,
+    "labelY": 560
   },
   {
     "id": "n-f1-d1149",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 173.0,
     "imageY": 725.0,
@@ -461,18 +627,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 120.0,
-    "imageY": 636.0,
+    "imageX": 173.0,
+    "imageY": 725.0,
     "stepFree": true,
     "roomNumber": "1149",
-    "name": "Multi-Media Center"
+    "name": "Multi-Media Center",
+    "labelX": 120,
+    "labelY": 636
   },
   {
     "id": "n-f1-d1170",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 126.0,
     "imageY": 872.0,
@@ -483,18 +653,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 210.0,
+    "imageX": 126.0,
     "imageY": 872.0,
     "stepFree": true,
     "roomNumber": "1170",
-    "name": "Class Room 1170"
+    "name": "Class Room 1170",
+    "labelX": 210,
+    "labelY": 872
   },
   {
     "id": "n-f1-d1175",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 349.0,
     "imageY": 786.0,
@@ -505,18 +679,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 349.0,
-    "imageY": 872.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "1175",
-    "name": "Class Room 1175"
+    "name": "Class Room 1175",
+    "labelX": 349,
+    "labelY": 872
   },
   {
     "id": "n-f1-d1180",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 126.0,
     "imageY": 1000.0,
@@ -527,18 +705,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 210.0,
+    "imageX": 126.0,
     "imageY": 1000.0,
     "stepFree": true,
     "roomNumber": "1180",
-    "name": "Class Room 1180"
+    "name": "Class Room 1180",
+    "labelX": 210,
+    "labelY": 1000
   },
   {
     "id": "n-f1-d1185",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 453.0,
     "imageY": 1000.0,
@@ -549,18 +731,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 349.0,
+    "imageX": 453.0,
     "imageY": 1000.0,
     "stepFree": true,
     "roomNumber": "1185",
-    "name": "Class Room 1185"
+    "name": "Class Room 1185",
+    "labelX": 349,
+    "labelY": 1000
   },
   {
     "id": "n-f1-d1190",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 126.0,
     "imageY": 1127.0,
@@ -571,18 +757,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 210.0,
+    "imageX": 126.0,
     "imageY": 1127.0,
     "stepFree": true,
     "roomNumber": "1190",
-    "name": "Class Room 1190"
+    "name": "Class Room 1190",
+    "labelX": 210,
+    "labelY": 1127
   },
   {
     "id": "n-f1-d1195",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 349.0,
     "imageY": 1216.0,
@@ -593,18 +783,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 349.0,
-    "imageY": 1127.0,
+    "imageY": 1216.0,
     "stepFree": true,
     "roomNumber": "1195",
-    "name": "Class Room 1195"
+    "name": "Class Room 1195",
+    "labelX": 349,
+    "labelY": 1127
   },
   {
     "id": "n-f1-d1070",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 453.0,
     "imageY": 993.0,
@@ -615,18 +809,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 510.0,
+    "imageX": 453.0,
     "imageY": 993.0,
     "stepFree": true,
     "roomNumber": "1070",
-    "name": "Class Room 1070"
+    "name": "Class Room 1070",
+    "labelX": 510,
+    "labelY": 993
   },
   {
     "id": "n-f1-d1080",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 453.0,
     "imageY": 1102.0,
@@ -637,21 +835,25 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 510.0,
+    "imageX": 453.0,
     "imageY": 1102.0,
     "stepFree": true,
     "roomNumber": "1080",
-    "name": "Class Room 1080"
+    "name": "Class Room 1080",
+    "labelX": 510,
+    "labelY": 1102
   },
   {
     "id": "n-f1-d1210",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 577.0,
-    "imageY": 462.0,
+    "imageX": 700.0,
+    "imageY": 354.0,
     "stepFree": true
   },
   {
@@ -659,22 +861,26 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 690.0,
-    "imageY": 350.0,
+    "imageX": 700.0,
+    "imageY": 354.0,
     "stepFree": true,
     "roomNumber": "1210",
     "name": "Huber Undergrad Computer Lab",
-    "searchAliases": "computer lab,huber"
+    "searchAliases": "computer lab,huber",
+    "labelX": 690,
+    "labelY": 350
   },
   {
     "id": "n-f1-d1210A",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 658.0,
-    "imageY": 660.0,
+    "imageX": 700.0,
+    "imageY": 516.0,
     "stepFree": true
   },
   {
@@ -682,21 +888,25 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 658.0,
-    "imageY": 600.0,
+    "imageX": 700.0,
+    "imageY": 516.0,
     "stepFree": true,
     "roomNumber": "1210A",
-    "name": "Huber Lab South"
+    "name": "Huber Lab South",
+    "labelX": 658,
+    "labelY": 600
   },
   {
     "id": "n-f1-d1210B",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 790.0,
-    "imageY": 660.0,
+    "imageX": 696.0,
+    "imageY": 462.0,
     "stepFree": true
   },
   {
@@ -704,18 +914,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 790.0,
-    "imageY": 500.0,
+    "imageX": 696.0,
+    "imageY": 462.0,
     "stepFree": true,
     "roomNumber": "1210B",
-    "name": "Finance & Analytics Lab"
+    "name": "Finance & Analytics Lab",
+    "labelX": 790,
+    "labelY": 500
   },
   {
     "id": "n-f1-d1210C",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 581.0,
     "imageY": 462.0,
@@ -726,17 +940,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 628.0,
-    "imageY": 420.0,
+    "imageX": 581.0,
+    "imageY": 462.0,
     "stepFree": true,
-    "roomNumber": "1210C"
+    "roomNumber": "1210C",
+    "labelX": 628,
+    "labelY": 420
   },
   {
     "id": "n-f1-d1230",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1048.0,
     "imageY": 660.0,
@@ -747,18 +965,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1048.0,
-    "imageY": 570.0,
+    "imageY": 660.0,
     "stepFree": true,
     "roomNumber": "1230",
-    "name": "MBA & Master's Lounge"
+    "name": "MBA & Master's Lounge",
+    "labelX": 1048,
+    "labelY": 570
   },
   {
     "id": "n-f1-d1238",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1132.0,
     "imageY": 660.0,
@@ -769,17 +991,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1132.0,
-    "imageY": 624.0,
+    "imageY": 660.0,
     "stepFree": true,
-    "roomNumber": "1238"
+    "roomNumber": "1238",
+    "labelX": 1132,
+    "labelY": 624
   },
   {
     "id": "n-f1-d1250",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 852.0,
     "imageY": 786.0,
@@ -790,19 +1016,23 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 852.0,
-    "imageY": 940.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "1250",
     "name": "Undergraduate Lounge",
-    "searchAliases": "lounge"
+    "searchAliases": "lounge",
+    "labelX": 852,
+    "labelY": 940
   },
   {
     "id": "n-f1-d1266",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1055.0,
     "imageY": 786.0,
@@ -813,21 +1043,25 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1055.0,
-    "imageY": 872.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "1266",
-    "name": "Private Dining"
+    "name": "Private Dining",
+    "labelX": 1055,
+    "labelY": 872
   },
   {
     "id": "n-f1-d1270",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 679.0,
-    "imageY": 786.0,
+    "imageX": 567.0,
+    "imageY": 825.0,
     "stepFree": true
   },
   {
@@ -835,21 +1069,25 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 679.0,
-    "imageY": 872.0,
+    "imageX": 567.0,
+    "imageY": 825.0,
     "stepFree": true,
     "roomNumber": "1270",
-    "name": "Class Room 1270"
+    "name": "Class Room 1270",
+    "labelX": 679,
+    "labelY": 872
   },
   {
     "id": "n-f1-d1280",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 567.0,
-    "imageY": 1001.0,
+    "imageY": 955.0,
     "stepFree": true
   },
   {
@@ -857,18 +1095,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 679.0,
-    "imageY": 1001.0,
+    "imageX": 567.0,
+    "imageY": 955.0,
     "stepFree": true,
     "roomNumber": "1280",
-    "name": "Class Room 1280"
+    "name": "Class Room 1280",
+    "labelX": 679,
+    "labelY": 1001
   },
   {
     "id": "n-f1-d1290",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 684.0,
     "imageY": 1205.0,
@@ -879,18 +1121,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 734.0,
-    "imageY": 1115.0,
+    "imageX": 684.0,
+    "imageY": 1205.0,
     "stepFree": true,
     "roomNumber": "1290",
-    "name": "Small Business Development Center"
+    "name": "Small Business Development Center",
+    "labelX": 734,
+    "labelY": 1115
   },
   {
     "id": "n-f1-d1290A",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 688.0,
     "imageY": 1205.0,
@@ -901,17 +1147,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 810.0,
-    "imageY": 1096.0,
+    "imageX": 688.0,
+    "imageY": 1205.0,
     "stepFree": true,
-    "roomNumber": "1290A"
+    "roomNumber": "1290A",
+    "labelX": 810,
+    "labelY": 1096
   },
   {
     "id": "n-f1-d1290B",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 692.0,
     "imageY": 1205.0,
@@ -922,17 +1172,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 810.0,
-    "imageY": 1155.0,
+    "imageX": 692.0,
+    "imageY": 1205.0,
     "stepFree": true,
-    "roomNumber": "1290B"
+    "roomNumber": "1290B",
+    "labelX": 810,
+    "labelY": 1155
   },
   {
     "id": "n-f1-d1290C",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 696.0,
     "imageY": 1205.0,
@@ -943,17 +1197,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 782.0,
-    "imageY": 1225.0,
+    "imageX": 696.0,
+    "imageY": 1205.0,
     "stepFree": true,
-    "roomNumber": "1290C"
+    "roomNumber": "1290C",
+    "labelX": 782,
+    "labelY": 1225
   },
   {
     "id": "n-f1-d1293",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 638.0,
     "imageY": 1205.0,
@@ -964,18 +1222,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 638.0,
-    "imageY": 1146.0,
+    "imageY": 1205.0,
     "stepFree": true,
     "roomNumber": "1293",
-    "name": "Lab 1293"
+    "name": "Lab 1293",
+    "labelX": 638,
+    "labelY": 1146
   },
   {
     "id": "n-f1-d1295",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 650.0,
     "imageY": 1205.0,
@@ -986,18 +1248,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 720.0,
-    "imageY": 1360.0,
+    "imageX": 650.0,
+    "imageY": 1205.0,
     "stepFree": true,
     "roomNumber": "1295",
-    "name": "Class Room 1295"
+    "name": "Class Room 1295",
+    "labelX": 720,
+    "labelY": 1360
   },
   {
     "id": "n-f1-d1301",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1466.0,
     "imageY": 459.6,
@@ -1008,17 +1274,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1508.0,
-    "imageY": 411.0,
+    "imageX": 1466.0,
+    "imageY": 459.6,
     "stepFree": true,
-    "roomNumber": "1301"
+    "roomNumber": "1301",
+    "labelX": 1508,
+    "labelY": 411
   },
   {
     "id": "n-f1-d1305",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1499.4,
     "imageY": 518.8,
@@ -1029,17 +1299,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1451.0,
-    "imageY": 543.0,
+    "imageX": 1499.4,
+    "imageY": 518.8,
     "stepFree": true,
-    "roomNumber": "1305"
+    "roomNumber": "1305",
+    "labelX": 1451,
+    "labelY": 543
   },
   {
     "id": "n-f1-d1310",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1358.6,
     "imageY": 453.8,
@@ -1050,19 +1324,23 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1358.0,
-    "imageY": 300.0,
+    "imageX": 1358.6,
+    "imageY": 453.8,
     "stepFree": true,
     "roomNumber": "1310",
     "name": "Plenary Room",
-    "searchAliases": "plenary"
+    "searchAliases": "plenary",
+    "labelX": 1358,
+    "labelY": 300
   },
   {
     "id": "n-f1-d1320",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1351.8,
     "imageY": 472.6,
@@ -1073,18 +1351,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1295.0,
-    "imageY": 452.0,
+    "imageX": 1351.8,
+    "imageY": 472.6,
     "stepFree": true,
     "roomNumber": "1320",
-    "name": "MBA&M Study"
+    "name": "MBA&M Study",
+    "labelX": 1295,
+    "labelY": 452
   },
   {
     "id": "n-f1-d1323",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1180.0,
     "imageY": 430.0,
@@ -1095,18 +1377,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1061.0,
+    "imageX": 1180.0,
     "imageY": 430.0,
     "stepFree": true,
     "roomNumber": "1323",
-    "name": "MBA&M Student Org Offices"
+    "name": "MBA&M Student Org Offices",
+    "labelX": 1061,
+    "labelY": 430
   },
   {
     "id": "n-f1-d1324",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1180.0,
     "imageY": 417.0,
@@ -1117,17 +1403,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1243.0,
+    "imageX": 1180.0,
     "imageY": 417.0,
     "stepFree": true,
-    "roomNumber": "1324"
+    "roomNumber": "1324",
+    "labelX": 1243,
+    "labelY": 417
   },
   {
     "id": "n-f1-d1325",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1180.0,
     "imageY": 315.0,
@@ -1138,18 +1428,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1061.0,
+    "imageX": 1180.0,
     "imageY": 315.0,
     "stepFree": true,
     "roomNumber": "1325",
-    "name": "MBA & Master's Club Room"
+    "name": "MBA & Master's Club Room",
+    "labelX": 1061,
+    "labelY": 315
   },
   {
     "id": "n-f1-d1327",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1180.0,
     "imageY": 451.0,
@@ -1160,17 +1454,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1131.0,
+    "imageX": 1180.0,
     "imageY": 451.0,
     "stepFree": true,
-    "roomNumber": "1327"
+    "roomNumber": "1327",
+    "labelX": 1131,
+    "labelY": 451
   },
   {
     "id": "n-f1-d1329",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1180.0,
     "imageY": 394.0,
@@ -1181,18 +1479,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1131.0,
+    "imageX": 1180.0,
     "imageY": 394.0,
     "stepFree": true,
     "roomNumber": "1329",
-    "name": "MBA&M Study"
+    "name": "MBA&M Study",
+    "labelX": 1131,
+    "labelY": 394
   },
   {
     "id": "n-f1-d1405",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1378.0,
     "imageY": 786.0,
@@ -1203,17 +1505,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1530.0,
-    "imageY": 740.0,
+    "imageX": 1378.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "1405"
+    "roomNumber": "1405",
+    "labelX": 1530,
+    "labelY": 740
   },
   {
     "id": "n-f1-d1411",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1514.6,
     "imageY": 549.3,
@@ -1224,18 +1530,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1592.0,
-    "imageY": 590.0,
+    "imageX": 1514.6,
+    "imageY": 549.3,
     "stepFree": true,
     "roomNumber": "1411",
-    "name": "Facilities Services"
+    "name": "Facilities Services",
+    "labelX": 1592,
+    "labelY": 590
   },
   {
     "id": "n-f1-d1413",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1516.4,
     "imageY": 552.8,
@@ -1246,17 +1556,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1552.0,
-    "imageY": 575.0,
+    "imageX": 1516.4,
+    "imageY": 552.8,
     "stepFree": true,
-    "roomNumber": "1413"
+    "roomNumber": "1413",
+    "labelX": 1552,
+    "labelY": 575
   },
   {
     "id": "n-f1-d1414",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1518.2,
     "imageY": 556.4,
@@ -1267,17 +1581,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1541.0,
-    "imageY": 612.0,
+    "imageX": 1518.2,
+    "imageY": 556.4,
     "stepFree": true,
-    "roomNumber": "1414"
+    "roomNumber": "1414",
+    "labelX": 1541,
+    "labelY": 612
   },
   {
     "id": "n-f1-d1424",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1382.0,
     "imageY": 786.0,
@@ -1288,17 +1606,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1425.0,
-    "imageY": 912.0,
+    "imageX": 1382.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "1424"
+    "roomNumber": "1424",
+    "labelX": 1425,
+    "labelY": 912
   },
   {
     "id": "n-f1-d1425",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1386.0,
     "imageY": 786.0,
@@ -1309,17 +1631,21 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1505.0,
-    "imageY": 890.0,
+    "imageX": 1386.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "1425"
+    "roomNumber": "1425",
+    "labelX": 1505,
+    "labelY": 890
   },
   {
     "id": "n-f1-d1450",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1296.0,
     "imageY": 786.0,
@@ -1330,19 +1656,23 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1296.0,
-    "imageY": 906.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "1450",
     "name": "Dining Commons",
-    "searchAliases": "dining,food"
+    "searchAliases": "dining,food",
+    "labelX": 1296,
+    "labelY": 906
   },
   {
     "id": "n-f1-d-wc1",
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 790.0,
     "imageY": 786.0,
@@ -1353,18 +1683,22 @@
     "floor": {
       "id": "grainger-f1"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "restroom",
     "imageX": 790.0,
-    "imageY": 725.0,
+    "imageY": 786.0,
     "stepFree": true,
     "name": "Restrooms",
-    "searchAliases": "bathroom,washroom,toilet"
+    "searchAliases": "bathroom,washroom,toilet",
+    "labelX": 790,
+    "labelY": 725
   },
   {
     "id": "n-f2-w118n",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 118.0,
     "imageY": 280.0,
@@ -1375,6 +1709,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 118.0,
     "imageY": 488.0,
@@ -1385,6 +1720,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 405.0,
     "imageY": 488.0,
@@ -1395,6 +1731,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 635.0,
     "imageY": 488.0,
@@ -1405,6 +1742,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 110.0,
     "imageY": 660.0,
@@ -1415,6 +1753,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 365.0,
     "imageY": 660.0,
@@ -1425,6 +1764,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 405.0,
     "imageY": 660.0,
@@ -1435,6 +1775,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 365.0,
     "imageY": 725.0,
@@ -1445,6 +1786,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "elevator",
     "imageX": 378.0,
     "imageY": 725.0,
@@ -1457,6 +1799,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 125.0,
     "imageY": 786.0,
@@ -1467,6 +1810,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 365.0,
     "imageY": 786.0,
@@ -1477,6 +1821,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 405.0,
     "imageY": 786.0,
@@ -1487,6 +1832,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 405.0,
     "imageY": 960.0,
@@ -1497,6 +1843,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 512.0,
     "imageY": 960.0,
@@ -1507,9 +1854,10 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "stairs",
-    "imageX": 512.0,
-    "imageY": 942.0,
+    "imageX": 365.0,
+    "imageY": 1250.0,
     "stepFree": false,
     "connectorKey": "stair-west",
     "name": "West Stairs"
@@ -1519,6 +1867,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 618.0,
     "imageY": 960.0,
@@ -1529,6 +1878,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 125.0,
     "imageY": 1215.0,
@@ -1539,8 +1889,20 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 405.0,
+    "imageY": 1215.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-stair-entry",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 365.0,
     "imageY": 1215.0,
     "stepFree": true
   },
@@ -1549,6 +1911,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 618.0,
     "imageY": 1215.0,
@@ -1559,6 +1922,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 618.0,
     "imageY": 1380.0,
@@ -1569,6 +1933,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 618.0,
     "imageY": 786.0,
@@ -1579,6 +1944,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 655.0,
     "imageY": 786.0,
@@ -1589,6 +1955,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "elevator",
     "imageX": 655.0,
     "imageY": 725.0,
@@ -1601,6 +1968,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1300.0,
     "imageY": 786.0,
@@ -1611,6 +1979,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 786.0,
@@ -1621,6 +1990,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1170.0,
     "imageY": 520.0,
@@ -1631,6 +2001,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1300.0,
     "imageY": 520.0,
@@ -1641,6 +2012,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1360.0,
     "imageY": 200.0,
@@ -1651,6 +2023,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1380.0,
     "imageY": 250.0,
@@ -1661,6 +2034,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1370.0,
     "imageY": 330.0,
@@ -1671,6 +2045,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 520.0,
@@ -1681,6 +2056,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 645.0,
@@ -1691,6 +2067,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 728.0,
@@ -1701,6 +2078,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "elevator",
     "imageX": 1380.0,
     "imageY": 728.0,
@@ -1713,6 +2091,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 1060.0,
@@ -1723,6 +2102,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 1258.0,
@@ -1733,6 +2113,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 1430.0,
@@ -1743,6 +2124,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1450.0,
     "imageY": 643.0,
@@ -1753,6 +2135,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1510.0,
     "imageY": 628.0,
@@ -1763,6 +2146,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1540.0,
     "imageY": 615.0,
@@ -1773,6 +2157,7 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1540.0,
     "imageY": 780.0,
@@ -1783,16 +2168,121 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1540.0,
     "imageY": 1060.0,
     "stepFree": true
   },
   {
+    "id": "n-f2-commons-west-s",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 690.0,
+    "imageY": 520.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-commons-west-n",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 690.0,
+    "imageY": 300.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-commons-north-e",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 1080.0,
+    "imageY": 300.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-commons-ne",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 1080.0,
+    "imageY": 250.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-commons-south",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 820.0,
+    "imageY": 520.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-commons-south-e",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 1080.0,
+    "imageY": 580.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-commons-office-w",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 820.0,
+    "imageY": 580.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-elev-commons",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "elevator",
+    "imageX": 870.0,
+    "imageY": 520.0,
+    "stepFree": true,
+    "connectorKey": "elev-commons",
+    "name": "Learning Commons Elevator"
+  },
+  {
+    "id": "n-f2-stair-commons",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "stairs",
+    "imageX": 680.0,
+    "imageY": 550.0,
+    "stepFree": false,
+    "connectorKey": "stair-commons",
+    "name": "Learning Commons Stairs"
+  },
+  {
     "id": "n-f2-d2111",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 118.0,
     "imageY": 284.0,
@@ -1803,17 +2293,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 165.0,
-    "imageY": 282.0,
+    "imageX": 118.0,
+    "imageY": 284.0,
     "stepFree": true,
-    "roomNumber": "2111"
+    "roomNumber": "2111",
+    "labelX": 165,
+    "labelY": 282
   },
   {
     "id": "n-f2-d2113",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 118.0,
     "imageY": 327.0,
@@ -1824,17 +2318,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 167.0,
+    "imageX": 118.0,
     "imageY": 327.0,
     "stepFree": true,
-    "roomNumber": "2113"
+    "roomNumber": "2113",
+    "labelX": 167,
+    "labelY": 327
   },
   {
     "id": "n-f2-d2115",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 118.0,
     "imageY": 383.0,
@@ -1845,17 +2343,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 167.0,
+    "imageX": 118.0,
     "imageY": 383.0,
     "stepFree": true,
-    "roomNumber": "2115"
+    "roomNumber": "2115",
+    "labelX": 167,
+    "labelY": 383
   },
   {
     "id": "n-f2-d2117",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 118.0,
     "imageY": 440.0,
@@ -1866,17 +2368,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 165.0,
+    "imageX": 118.0,
     "imageY": 440.0,
     "stepFree": true,
-    "roomNumber": "2117"
+    "roomNumber": "2117",
+    "labelX": 165,
+    "labelY": 440
   },
   {
     "id": "n-f2-d2120",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 308.0,
     "imageY": 488.0,
@@ -1887,19 +2393,23 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 308.0,
-    "imageY": 420.0,
+    "imageY": 488.0,
     "stepFree": true,
     "roomNumber": "2120",
     "name": "Jack F Keller Lecture Hall",
-    "searchAliases": "lecture hall,keller"
+    "searchAliases": "lecture hall,keller",
+    "labelX": 308,
+    "labelY": 420
   },
   {
     "id": "n-f2-d2020",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 510.0,
     "imageY": 488.0,
@@ -1910,19 +2420,23 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 510.0,
-    "imageY": 360.0,
+    "imageY": 488.0,
     "stepFree": true,
     "roomNumber": "2020",
     "name": "Undergraduate Admissions",
-    "searchAliases": "admissions"
+    "searchAliases": "admissions",
+    "labelX": 510,
+    "labelY": 360
   },
   {
     "id": "n-f2-d2020B",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 577.0,
     "imageY": 488.0,
@@ -1933,17 +2447,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 577.0,
-    "imageY": 440.0,
+    "imageY": 488.0,
     "stepFree": true,
-    "roomNumber": "2020B"
+    "roomNumber": "2020B",
+    "labelX": 577,
+    "labelY": 440
   },
   {
     "id": "n-f2-d2020C",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 581.0,
     "imageY": 488.0,
@@ -1954,20 +2472,24 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 577.0,
-    "imageY": 404.0,
+    "imageX": 581.0,
+    "imageY": 488.0,
     "stepFree": true,
-    "roomNumber": "2020C"
+    "roomNumber": "2020C",
+    "labelX": 577,
+    "labelY": 404
   },
   {
     "id": "n-f2-d2020D",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 585.0,
-    "imageY": 488.0,
+    "imageX": 690.0,
+    "imageY": 355.0,
     "stepFree": true
   },
   {
@@ -1975,17 +2497,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 577.0,
+    "imageX": 690.0,
     "imageY": 355.0,
     "stepFree": true,
-    "roomNumber": "2020D"
+    "roomNumber": "2020D",
+    "labelX": 577,
+    "labelY": 355
   },
   {
     "id": "n-f2-d2020H",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 444.0,
     "imageY": 488.0,
@@ -1996,17 +2522,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 444.0,
-    "imageY": 341.0,
+    "imageY": 488.0,
     "stepFree": true,
-    "roomNumber": "2020H"
+    "roomNumber": "2020H",
+    "labelX": 444,
+    "labelY": 341
   },
   {
     "id": "n-f2-d2020I",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 448.0,
     "imageY": 488.0,
@@ -2017,17 +2547,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 444.0,
-    "imageY": 388.0,
+    "imageX": 448.0,
+    "imageY": 488.0,
     "stepFree": true,
-    "roomNumber": "2020I"
+    "roomNumber": "2020I",
+    "labelX": 444,
+    "labelY": 388
   },
   {
     "id": "n-f2-d2020J",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 452.0,
     "imageY": 488.0,
@@ -2038,17 +2572,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 450.0,
-    "imageY": 434.0,
+    "imageX": 452.0,
+    "imageY": 488.0,
     "stepFree": true,
-    "roomNumber": "2020J"
+    "roomNumber": "2020J",
+    "labelX": 450,
+    "labelY": 434
   },
   {
     "id": "n-f2-d2130",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 350.0,
     "imageY": 488.0,
@@ -2059,17 +2597,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 350.0,
-    "imageY": 527.0,
+    "imageY": 488.0,
     "stepFree": true,
-    "roomNumber": "2130"
+    "roomNumber": "2130",
+    "labelX": 350,
+    "labelY": 527
   },
   {
     "id": "n-f2-d2132",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 405.0,
     "imageY": 566.0,
@@ -2080,17 +2622,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 350.0,
+    "imageX": 405.0,
     "imageY": 566.0,
     "stepFree": true,
-    "roomNumber": "2132"
+    "roomNumber": "2132",
+    "labelX": 350,
+    "labelY": 566
   },
   {
     "id": "n-f2-d2131",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 175.0,
     "imageY": 488.0,
@@ -2101,17 +2647,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 175.0,
-    "imageY": 533.0,
+    "imageY": 488.0,
     "stepFree": true,
-    "roomNumber": "2131"
+    "roomNumber": "2131",
+    "labelX": 175,
+    "labelY": 533
   },
   {
     "id": "n-f2-d2133",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 172.0,
     "imageY": 660.0,
@@ -2122,17 +2672,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 175.0,
-    "imageY": 575.0,
+    "imageX": 172.0,
+    "imageY": 660.0,
     "stepFree": true,
-    "roomNumber": "2133"
+    "roomNumber": "2133",
+    "labelX": 175,
+    "labelY": 575
   },
   {
     "id": "n-f2-d2135",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 176.0,
     "imageY": 660.0,
@@ -2143,17 +2697,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 176.0,
-    "imageY": 620.0,
+    "imageY": 660.0,
     "stepFree": true,
-    "roomNumber": "2135"
+    "roomNumber": "2135",
+    "labelX": 176,
+    "labelY": 620
   },
   {
     "id": "n-f2-d2165",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 286.0,
     "imageY": 786.0,
@@ -2164,18 +2722,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 286.0,
-    "imageY": 725.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "2165",
-    "name": "Class Room 2165"
+    "name": "Class Room 2165",
+    "labelX": 286,
+    "labelY": 725
   },
   {
     "id": "n-f2-d2167",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 162.0,
     "imageY": 786.0,
@@ -2186,18 +2748,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 162.0,
-    "imageY": 725.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "2167",
-    "name": "TA Space"
+    "name": "TA Space",
+    "labelX": 162,
+    "labelY": 725
   },
   {
     "id": "n-f2-d2170",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 222.0,
     "imageY": 786.0,
@@ -2208,18 +2774,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 222.0,
-    "imageY": 870.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "2170",
-    "name": "Class Room 2170"
+    "name": "Class Room 2170",
+    "labelX": 222,
+    "labelY": 870
   },
   {
     "id": "n-f2-d2175",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 405.0,
     "imageY": 870.0,
@@ -2230,18 +2800,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 333.0,
+    "imageX": 405.0,
     "imageY": 870.0,
     "stepFree": true,
     "roomNumber": "2175",
-    "name": "Class Room 2175"
+    "name": "Class Room 2175",
+    "labelX": 333,
+    "labelY": 870
   },
   {
     "id": "n-f2-d2180",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 125.0,
     "imageY": 1000.0,
@@ -2252,18 +2826,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 222.0,
+    "imageX": 125.0,
     "imageY": 1000.0,
     "stepFree": true,
     "roomNumber": "2180",
-    "name": "Class Room 2180"
+    "name": "Class Room 2180",
+    "labelX": 222,
+    "labelY": 1000
   },
   {
     "id": "n-f2-d2185",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 405.0,
     "imageY": 1000.0,
@@ -2274,18 +2852,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 333.0,
+    "imageX": 405.0,
     "imageY": 1000.0,
     "stepFree": true,
     "roomNumber": "2185",
-    "name": "Class Room 2185"
+    "name": "Class Room 2185",
+    "labelX": 333,
+    "labelY": 1000
   },
   {
     "id": "n-f2-d2190",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 222.0,
     "imageY": 1215.0,
@@ -2296,18 +2878,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 222.0,
-    "imageY": 1127.0,
+    "imageY": 1215.0,
     "stepFree": true,
     "roomNumber": "2190",
-    "name": "Class Room 2190"
+    "name": "Class Room 2190",
+    "labelX": 222,
+    "labelY": 1127
   },
   {
     "id": "n-f2-d2195",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 405.0,
     "imageY": 1127.0,
@@ -2318,18 +2904,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 333.0,
+    "imageX": 405.0,
     "imageY": 1127.0,
     "stepFree": true,
     "roomNumber": "2195",
-    "name": "Class Room 2195"
+    "name": "Class Room 2195",
+    "labelX": 333,
+    "labelY": 1127
   },
   {
     "id": "n-f2-d2080",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 405.0,
     "imageY": 1080.0,
@@ -2340,21 +2930,25 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 510.0,
+    "imageX": 405.0,
     "imageY": 1080.0,
     "stepFree": true,
     "roomNumber": "2080",
     "name": "Nicholas Lecture Hall",
-    "searchAliases": "lecture hall,nicholas"
+    "searchAliases": "lecture hall,nicholas",
+    "labelX": 510,
+    "labelY": 1080
   },
   {
     "id": "n-f2-d2210",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 600.0,
+    "imageX": 690.0,
     "imageY": 488.0,
     "stepFree": true
   },
@@ -2363,22 +2957,26 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 690.0,
     "imageY": 488.0,
     "stepFree": true,
     "roomNumber": "2210",
     "name": "Learning Commons",
-    "searchAliases": "library,study,commons"
+    "searchAliases": "library,study,commons",
+    "labelX": 690,
+    "labelY": 488
   },
   {
     "id": "n-f2-d2210A",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 631.0,
-    "imageY": 488.0,
+    "imageX": 690.0,
+    "imageY": 397.0,
     "stepFree": true
   },
   {
@@ -2386,20 +2984,24 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 708.0,
+    "imageX": 690.0,
     "imageY": 397.0,
     "stepFree": true,
-    "roomNumber": "2210A"
+    "roomNumber": "2210A",
+    "labelX": 708,
+    "labelY": 397
   },
   {
     "id": "n-f2-d2210N",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 1174.0,
-    "imageY": 520.0,
+    "imageX": 1076.0,
+    "imageY": 580.0,
     "stepFree": true
   },
   {
@@ -2407,21 +3009,25 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1085.0,
-    "imageY": 467.0,
+    "imageX": 1076.0,
+    "imageY": 580.0,
     "stepFree": true,
     "roomNumber": "2210N",
-    "name": "Class Room 2210N"
+    "name": "Class Room 2210N",
+    "labelX": 1085,
+    "labelY": 467
   },
   {
     "id": "n-f2-d2210R",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1020.0,
-    "imageY": 786.0,
+    "imageY": 580.0,
     "stepFree": true
   },
   {
@@ -2429,21 +3035,25 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1020.0,
-    "imageY": 700.0,
+    "imageY": 580.0,
     "stepFree": true,
     "roomNumber": "2210R",
-    "name": "Class Room 2210R"
+    "name": "Class Room 2210R",
+    "labelX": 1020,
+    "labelY": 700
   },
   {
     "id": "n-f2-d2210S",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 920.0,
-    "imageY": 786.0,
+    "imageY": 580.0,
     "stepFree": true
   },
   {
@@ -2451,21 +3061,25 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 920.0,
-    "imageY": 700.0,
+    "imageY": 580.0,
     "stepFree": true,
     "roomNumber": "2210S",
-    "name": "Class Room 2210S"
+    "name": "Class Room 2210S",
+    "labelX": 920,
+    "labelY": 700
   },
   {
     "id": "n-f2-d2210U",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 767.0,
-    "imageY": 786.0,
+    "imageX": 690.0,
+    "imageY": 516.0,
     "stepFree": true
   },
   {
@@ -2473,21 +3087,25 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 767.0,
-    "imageY": 625.0,
+    "imageX": 690.0,
+    "imageY": 516.0,
     "stepFree": true,
     "roomNumber": "2210U",
-    "name": "Class Room 2210U"
+    "name": "Class Room 2210U",
+    "labelX": 767,
+    "labelY": 625
   },
   {
     "id": "n-f2-d2200K",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 625.0,
-    "imageY": 488.0,
+    "imageX": 690.0,
+    "imageY": 512.0,
     "stepFree": true
   },
   {
@@ -2495,17 +3113,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 640.0,
-    "imageY": 615.0,
+    "imageX": 690.0,
+    "imageY": 512.0,
     "stepFree": true,
-    "roomNumber": "2200K"
+    "roomNumber": "2200K",
+    "labelX": 640,
+    "labelY": 615
   },
   {
     "id": "n-f2-d2250",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 840.0,
     "imageY": 786.0,
@@ -2516,18 +3138,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 840.0,
-    "imageY": 900.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "2250",
-    "name": "Multicultural Center Lounge"
+    "name": "Multicultural Center Lounge",
+    "labelX": 840,
+    "labelY": 900
   },
   {
     "id": "n-f2-d2256",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 943.0,
     "imageY": 786.0,
@@ -2538,18 +3164,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 943.0,
-    "imageY": 868.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "2256",
-    "name": "Multicultural Center"
+    "name": "Multicultural Center",
+    "labelX": 943,
+    "labelY": 868
   },
   {
     "id": "n-f2-d2266",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1100.0,
     "imageY": 786.0,
@@ -2560,18 +3190,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1100.0,
-    "imageY": 852.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "2266",
-    "name": "FES/FMO Services"
+    "name": "FES/FMO Services",
+    "labelX": 1100,
+    "labelY": 852
   },
   {
     "id": "n-f2-d2266A",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1188.0,
     "imageY": 786.0,
@@ -2582,17 +3216,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1188.0,
-    "imageY": 832.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "2266A"
+    "roomNumber": "2266A",
+    "labelX": 1188,
+    "labelY": 832
   },
   {
     "id": "n-f2-d2266B",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1175.0,
     "imageY": 786.0,
@@ -2603,17 +3241,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1175.0,
-    "imageY": 913.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "2266B"
+    "roomNumber": "2266B",
+    "labelX": 1175,
+    "labelY": 913
   },
   {
     "id": "n-f2-d2266C",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1110.0,
     "imageY": 786.0,
@@ -2624,17 +3266,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1110.0,
-    "imageY": 913.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "2266C"
+    "roomNumber": "2266C",
+    "labelX": 1110,
+    "labelY": 913
   },
   {
     "id": "n-f2-d2266D",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1058.0,
     "imageY": 786.0,
@@ -2645,17 +3291,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1058.0,
-    "imageY": 913.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "2266D"
+    "roomNumber": "2266D",
+    "labelX": 1058,
+    "labelY": 913
   },
   {
     "id": "n-f2-d2270",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 715.0,
     "imageY": 786.0,
@@ -2666,18 +3316,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 715.0,
-    "imageY": 870.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "2270",
-    "name": "Class Room 2270"
+    "name": "Class Room 2270",
+    "labelX": 715,
+    "labelY": 870
   },
   {
     "id": "n-f2-d2280",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 618.0,
     "imageY": 1000.0,
@@ -2688,18 +3342,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 715.0,
+    "imageX": 618.0,
     "imageY": 1000.0,
     "stepFree": true,
     "roomNumber": "2280",
-    "name": "Class Room 2280"
+    "name": "Class Room 2280",
+    "labelX": 715,
+    "labelY": 1000
   },
   {
     "id": "n-f2-d2290",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 618.0,
     "imageY": 1125.0,
@@ -2710,18 +3368,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 745.0,
+    "imageX": 618.0,
     "imageY": 1125.0,
     "stepFree": true,
     "roomNumber": "2290",
-    "name": "Computer Classroom 2290"
+    "name": "Computer Classroom 2290",
+    "labelX": 745,
+    "labelY": 1125
   },
   {
     "id": "n-f2-d2294",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 618.0,
     "imageY": 1270.0,
@@ -2732,18 +3394,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 745.0,
+    "imageX": 618.0,
     "imageY": 1270.0,
     "stepFree": true,
     "roomNumber": "2294",
-    "name": "Computer Classroom 2294"
+    "name": "Computer Classroom 2294",
+    "labelX": 745,
+    "labelY": 1270
   },
   {
     "id": "n-f2-d2296",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 618.0,
     "imageY": 1376.0,
@@ -2754,17 +3420,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 760.0,
-    "imageY": 1440.0,
+    "imageX": 618.0,
+    "imageY": 1376.0,
     "stepFree": true,
-    "roomNumber": "2296"
+    "roomNumber": "2296",
+    "labelX": 760,
+    "labelY": 1440
   },
   {
     "id": "n-f2-d2310",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1368.2,
     "imageY": 400.0,
@@ -2775,18 +3445,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1240.0,
-    "imageY": 395.0,
+    "imageX": 1368.2,
+    "imageY": 400.0,
     "stepFree": true,
     "roomNumber": "2310",
-    "name": "Eve/Exec/Prof MBA"
+    "name": "Eve/Exec/Prof MBA",
+    "labelX": 1240,
+    "labelY": 395
   },
   {
     "id": "n-f2-d2311",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1369.9,
     "imageY": 334.0,
@@ -2797,17 +3471,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1283.0,
-    "imageY": 331.0,
+    "imageX": 1369.9,
+    "imageY": 334.0,
     "stepFree": true,
-    "roomNumber": "2311"
+    "roomNumber": "2311",
+    "labelX": 1283,
+    "labelY": 331
   },
   {
     "id": "n-f2-d2312",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1369.6,
     "imageY": 343.4,
@@ -2818,20 +3496,24 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1240.0,
-    "imageY": 340.0,
+    "imageX": 1369.6,
+    "imageY": 343.4,
     "stepFree": true,
-    "roomNumber": "2312"
+    "roomNumber": "2312",
+    "labelX": 1240,
+    "labelY": 340
   },
   {
     "id": "n-f2-d2313",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 1369.8,
-    "imageY": 339.3,
+    "imageX": 1076.0,
+    "imageY": 300.0,
     "stepFree": true
   },
   {
@@ -2839,17 +3521,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1205.0,
-    "imageY": 335.0,
+    "imageX": 1076.0,
+    "imageY": 300.0,
     "stepFree": true,
-    "roomNumber": "2313"
+    "roomNumber": "2313",
+    "labelX": 1205,
+    "labelY": 335
   },
   {
     "id": "n-f2-d2315",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1180.0,
     "imageY": 520.0,
@@ -2860,17 +3546,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1180.0,
-    "imageY": 466.0,
+    "imageY": 520.0,
     "stepFree": true,
-    "roomNumber": "2315"
+    "roomNumber": "2315",
+    "labelX": 1180,
+    "labelY": 466
   },
   {
     "id": "n-f2-d2316",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1227.0,
     "imageY": 520.0,
@@ -2881,17 +3571,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1227.0,
-    "imageY": 466.0,
+    "imageY": 520.0,
     "stepFree": true,
-    "roomNumber": "2316"
+    "roomNumber": "2316",
+    "labelX": 1227,
+    "labelY": 466
   },
   {
     "id": "n-f2-d2317",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1268.0,
     "imageY": 520.0,
@@ -2902,17 +3596,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1268.0,
-    "imageY": 466.0,
+    "imageY": 520.0,
     "stepFree": true,
-    "roomNumber": "2317"
+    "roomNumber": "2317",
+    "labelX": 1268,
+    "labelY": 466
   },
   {
     "id": "n-f2-d2318",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1312.0,
     "imageY": 520.0,
@@ -2923,17 +3621,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1312.0,
-    "imageY": 466.0,
+    "imageY": 520.0,
     "stepFree": true,
-    "roomNumber": "2318"
+    "roomNumber": "2318",
+    "labelX": 1312,
+    "labelY": 466
   },
   {
     "id": "n-f2-d2325",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1361.5,
     "imageY": 203.7,
@@ -2944,18 +3646,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1258.0,
-    "imageY": 210.0,
+    "imageX": 1361.5,
+    "imageY": 203.7,
     "stepFree": true,
     "roomNumber": "2325",
-    "name": "Eve/Exec/Prof MBA Study"
+    "name": "Eve/Exec/Prof MBA Study",
+    "labelX": 1258,
+    "labelY": 210
   },
   {
     "id": "n-f2-d2327",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1363.0,
     "imageY": 207.4,
@@ -2966,17 +3672,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1330.0,
-    "imageY": 178.0,
+    "imageX": 1363.0,
+    "imageY": 207.4,
     "stepFree": true,
-    "roomNumber": "2327"
+    "roomNumber": "2327",
+    "labelX": 1330,
+    "labelY": 178
   },
   {
     "id": "n-f2-d2329",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1364.5,
     "imageY": 211.1,
@@ -2987,17 +3697,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1316.0,
-    "imageY": 142.0,
+    "imageX": 1364.5,
+    "imageY": 211.1,
     "stepFree": true,
-    "roomNumber": "2329"
+    "roomNumber": "2329",
+    "labelX": 1316,
+    "labelY": 142
   },
   {
     "id": "n-f2-d2335",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1370.6,
     "imageY": 226.6,
@@ -3008,18 +3722,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1487.0,
-    "imageY": 180.0,
+    "imageX": 1370.6,
+    "imageY": 226.6,
     "stepFree": true,
     "roomNumber": "2335",
-    "name": "Class Room 2335"
+    "name": "Class Room 2335",
+    "labelX": 1487,
+    "labelY": 180
   },
   {
     "id": "n-f2-d2339",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1368.8,
     "imageY": 376.9,
@@ -3030,18 +3748,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1487.0,
-    "imageY": 380.0,
+    "imageX": 1368.8,
+    "imageY": 376.9,
     "stepFree": true,
     "roomNumber": "2339",
-    "name": "Class Room 2339"
+    "name": "Class Room 2339",
+    "labelX": 1487,
+    "labelY": 380
   },
   {
     "id": "n-f2-d2401",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1400.6,
     "imageY": 644.2,
@@ -3052,17 +3774,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1400.0,
-    "imageY": 620.0,
+    "imageX": 1400.6,
+    "imageY": 644.2,
     "stepFree": true,
-    "roomNumber": "2401"
+    "roomNumber": "2401",
+    "labelX": 1400,
+    "labelY": 620
   },
   {
     "id": "n-f2-d2402",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1405.3,
     "imageY": 644.1,
@@ -3073,17 +3799,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1406.0,
-    "imageY": 672.0,
+    "imageX": 1405.3,
+    "imageY": 644.1,
     "stepFree": true,
-    "roomNumber": "2402"
+    "roomNumber": "2402",
+    "labelX": 1406,
+    "labelY": 672
   },
   {
     "id": "n-f2-d2403",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1438.7,
     "imageY": 643.3,
@@ -3094,17 +3824,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1438.0,
-    "imageY": 613.0,
+    "imageX": 1438.7,
+    "imageY": 643.3,
     "stepFree": true,
-    "roomNumber": "2403"
+    "roomNumber": "2403",
+    "labelX": 1438,
+    "labelY": 613
   },
   {
     "id": "n-f2-d2404",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1442.7,
     "imageY": 643.2,
@@ -3115,17 +3849,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1440.0,
-    "imageY": 672.0,
+    "imageX": 1442.7,
+    "imageY": 643.2,
     "stepFree": true,
-    "roomNumber": "2404"
+    "roomNumber": "2404",
+    "labelX": 1440,
+    "labelY": 672
   },
   {
     "id": "n-f2-d2405",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1478.9,
     "imageY": 635.8,
@@ -3136,17 +3874,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1472.0,
-    "imageY": 608.0,
+    "imageX": 1478.9,
+    "imageY": 635.8,
     "stepFree": true,
-    "roomNumber": "2405"
+    "roomNumber": "2405",
+    "labelX": 1472,
+    "labelY": 608
   },
   {
     "id": "n-f2-d2406",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1468.6,
     "imageY": 638.4,
@@ -3157,17 +3899,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1476.0,
-    "imageY": 668.0,
+    "imageX": 1468.6,
+    "imageY": 638.4,
     "stepFree": true,
-    "roomNumber": "2406"
+    "roomNumber": "2406",
+    "labelX": 1476,
+    "labelY": 668
   },
   {
     "id": "n-f2-d2407",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1519.1,
     "imageY": 624.0,
@@ -3178,17 +3924,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1507.0,
-    "imageY": 596.0,
+    "imageX": 1519.1,
+    "imageY": 624.0,
     "stepFree": true,
-    "roomNumber": "2407"
+    "roomNumber": "2407",
+    "labelX": 1507,
+    "labelY": 596
   },
   {
     "id": "n-f2-d2408",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 664.0,
@@ -3199,17 +3949,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1513.0,
+    "imageX": 1540.0,
     "imageY": 664.0,
     "stepFree": true,
-    "roomNumber": "2408"
+    "roomNumber": "2408",
+    "labelX": 1513,
+    "labelY": 664
   },
   {
     "id": "n-f2-d2411",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1536.3,
     "imageY": 616.6,
@@ -3220,17 +3974,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1567.0,
-    "imageY": 575.0,
+    "imageX": 1536.3,
+    "imageY": 616.6,
     "stepFree": true,
-    "roomNumber": "2411"
+    "roomNumber": "2411",
+    "labelX": 1567,
+    "labelY": 575
   },
   {
     "id": "n-f2-d2415",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 619.0,
@@ -3241,17 +3999,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1585.0,
-    "imageY": 618.0,
+    "imageX": 1540.0,
+    "imageY": 619.0,
     "stepFree": true,
-    "roomNumber": "2415"
+    "roomNumber": "2415",
+    "labelX": 1585,
+    "labelY": 618
   },
   {
     "id": "n-f2-d2417",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 660.0,
@@ -3262,17 +4024,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1585.0,
+    "imageX": 1540.0,
     "imageY": 660.0,
     "stepFree": true,
-    "roomNumber": "2417"
+    "roomNumber": "2417",
+    "labelX": 1585,
+    "labelY": 660
   },
   {
     "id": "n-f2-d2419",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 703.0,
@@ -3283,17 +4049,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1585.0,
+    "imageX": 1540.0,
     "imageY": 703.0,
     "stepFree": true,
-    "roomNumber": "2419"
+    "roomNumber": "2419",
+    "labelX": 1585,
+    "labelY": 703
   },
   {
     "id": "n-f2-d2421",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 722.0,
@@ -3304,17 +4074,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1508.0,
+    "imageX": 1540.0,
     "imageY": 722.0,
     "stepFree": true,
-    "roomNumber": "2421"
+    "roomNumber": "2421",
+    "labelX": 1508,
+    "labelY": 722
   },
   {
     "id": "n-f2-d2423",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 745.0,
@@ -3325,17 +4099,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1585.0,
+    "imageX": 1540.0,
     "imageY": 745.0,
     "stepFree": true,
-    "roomNumber": "2423"
+    "roomNumber": "2423",
+    "labelX": 1585,
+    "labelY": 745
   },
   {
     "id": "n-f2-d2425",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 808.0,
@@ -3346,17 +4124,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1585.0,
+    "imageX": 1540.0,
     "imageY": 808.0,
     "stepFree": true,
-    "roomNumber": "2425"
+    "roomNumber": "2425",
+    "labelX": 1585,
+    "labelY": 808
   },
   {
     "id": "n-f2-d2427",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 872.0,
@@ -3367,17 +4149,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1585.0,
+    "imageX": 1540.0,
     "imageY": 872.0,
     "stepFree": true,
-    "roomNumber": "2427"
+    "roomNumber": "2427",
+    "labelX": 1585,
+    "labelY": 872
   },
   {
     "id": "n-f2-d2429",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 914.0,
@@ -3388,17 +4174,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1585.0,
+    "imageX": 1540.0,
     "imageY": 914.0,
     "stepFree": true,
-    "roomNumber": "2429"
+    "roomNumber": "2429",
+    "labelX": 1585,
+    "labelY": 914
   },
   {
     "id": "n-f2-d2431",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 957.0,
@@ -3409,17 +4199,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1585.0,
+    "imageX": 1540.0,
     "imageY": 957.0,
     "stepFree": true,
-    "roomNumber": "2431"
+    "roomNumber": "2431",
+    "labelX": 1585,
+    "labelY": 957
   },
   {
     "id": "n-f2-d2434",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 977.0,
@@ -3430,17 +4224,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1490.0,
+    "imageX": 1540.0,
     "imageY": 977.0,
     "stepFree": true,
-    "roomNumber": "2434"
+    "roomNumber": "2434",
+    "labelX": 1490,
+    "labelY": 977
   },
   {
     "id": "n-f2-d2435",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 999.0,
@@ -3451,17 +4249,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1585.0,
+    "imageX": 1540.0,
     "imageY": 999.0,
     "stepFree": true,
-    "roomNumber": "2435"
+    "roomNumber": "2435",
+    "labelX": 1585,
+    "labelY": 999
   },
   {
     "id": "n-f2-d2436",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1017.0,
@@ -3472,17 +4274,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1410.0,
+    "imageX": 1365.0,
     "imageY": 1017.0,
     "stepFree": true,
-    "roomNumber": "2436"
+    "roomNumber": "2436",
+    "labelX": 1410,
+    "labelY": 1017
   },
   {
     "id": "n-f2-d2437",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 1043.0,
@@ -3493,17 +4299,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1585.0,
+    "imageX": 1540.0,
     "imageY": 1043.0,
     "stepFree": true,
-    "roomNumber": "2437"
+    "roomNumber": "2437",
+    "labelX": 1585,
+    "labelY": 1043
   },
   {
     "id": "n-f2-d2450",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 776.0,
@@ -3514,19 +4324,23 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1460.0,
-    "imageY": 780.0,
+    "imageX": 1540.0,
+    "imageY": 776.0,
     "stepFree": true,
     "roomNumber": "2450",
     "name": "MBA & Master's Programs",
-    "searchAliases": "mba"
+    "searchAliases": "mba",
+    "labelX": 1460,
+    "labelY": 780
   },
   {
     "id": "n-f2-d2451",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1372.0,
     "imageY": 728.0,
@@ -3537,17 +4351,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1450.0,
-    "imageY": 750.0,
+    "imageX": 1372.0,
+    "imageY": 728.0,
     "stepFree": true,
-    "roomNumber": "2451"
+    "roomNumber": "2451",
+    "labelX": 1450,
+    "labelY": 750
   },
   {
     "id": "n-f2-d2455",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1376.0,
     "imageY": 728.0,
@@ -3558,17 +4376,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1445.0,
-    "imageY": 712.0,
+    "imageX": 1376.0,
+    "imageY": 728.0,
     "stepFree": true,
-    "roomNumber": "2455"
+    "roomNumber": "2455",
+    "labelX": 1445,
+    "labelY": 712
   },
   {
     "id": "n-f2-d2456",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 812.0,
@@ -3579,17 +4401,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1510.0,
-    "imageY": 810.0,
+    "imageX": 1540.0,
+    "imageY": 812.0,
     "stepFree": true,
-    "roomNumber": "2456"
+    "roomNumber": "2456",
+    "labelX": 1510,
+    "labelY": 810
   },
   {
     "id": "n-f2-d2462",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 872.0,
@@ -3600,17 +4426,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1410.0,
+    "imageX": 1365.0,
     "imageY": 872.0,
     "stepFree": true,
-    "roomNumber": "2462"
+    "roomNumber": "2462",
+    "labelX": 1410,
+    "labelY": 872
   },
   {
     "id": "n-f2-d2471",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 968.0,
@@ -3621,17 +4451,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1312.0,
+    "imageX": 1365.0,
     "imageY": 968.0,
     "stepFree": true,
-    "roomNumber": "2471"
+    "roomNumber": "2471",
+    "labelX": 1312,
+    "labelY": 968
   },
   {
     "id": "n-f2-d2473",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 972.0,
@@ -3642,17 +4476,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1240.0,
-    "imageY": 970.0,
+    "imageX": 1365.0,
+    "imageY": 972.0,
     "stepFree": true,
-    "roomNumber": "2473"
+    "roomNumber": "2473",
+    "labelX": 1240,
+    "labelY": 970
   },
   {
     "id": "n-f2-d2475",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1012.0,
@@ -3663,17 +4501,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1265.0,
+    "imageX": 1365.0,
     "imageY": 1012.0,
     "stepFree": true,
-    "roomNumber": "2475"
+    "roomNumber": "2475",
+    "labelX": 1265,
+    "labelY": 1012
   },
   {
     "id": "n-f2-d2477",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1037.0,
@@ -3684,17 +4526,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1312.0,
+    "imageX": 1365.0,
     "imageY": 1037.0,
     "stepFree": true,
-    "roomNumber": "2477"
+    "roomNumber": "2477",
+    "labelX": 1312,
+    "labelY": 1037
   },
   {
     "id": "n-f2-d2510",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1540.0,
     "imageY": 1056.0,
@@ -3705,18 +4551,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1487.0,
-    "imageY": 1158.0,
+    "imageX": 1540.0,
+    "imageY": 1056.0,
     "stepFree": true,
     "roomNumber": "2510",
-    "name": "Class Room 2510"
+    "name": "Class Room 2510",
+    "labelX": 1487,
+    "labelY": 1158
   },
   {
     "id": "n-f2-d2515",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1253.0,
@@ -3727,17 +4577,21 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1385.0,
+    "imageX": 1365.0,
     "imageY": 1253.0,
     "stepFree": true,
-    "roomNumber": "2515"
+    "roomNumber": "2515",
+    "labelX": 1385,
+    "labelY": 1253
   },
   {
     "id": "n-f2-d2520",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1368.0,
@@ -3748,18 +4602,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1487.0,
+    "imageX": 1365.0,
     "imageY": 1368.0,
     "stepFree": true,
     "roomNumber": "2520",
-    "name": "Class Room 2520"
+    "name": "Class Room 2520",
+    "labelX": 1487,
+    "labelY": 1368
   },
   {
     "id": "n-f2-d2525",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1426.0,
@@ -3770,18 +4628,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1362.0,
-    "imageY": 1463.0,
+    "imageX": 1365.0,
+    "imageY": 1426.0,
     "stepFree": true,
     "roomNumber": "2525",
-    "name": "MBA&M Study"
+    "name": "MBA&M Study",
+    "labelX": 1362,
+    "labelY": 1463
   },
   {
     "id": "n-f2-d-wc2",
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 760.0,
     "imageY": 786.0,
@@ -3792,18 +4654,22 @@
     "floor": {
       "id": "grainger-f2"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "restroom",
     "imageX": 760.0,
-    "imageY": 725.0,
+    "imageY": 786.0,
     "stepFree": true,
     "name": "Restrooms",
-    "searchAliases": "bathroom,washroom,toilet"
+    "searchAliases": "bathroom,washroom,toilet",
+    "labelX": 760,
+    "labelY": 725
   },
   {
     "id": "n-f3-a200",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 200.0,
     "imageY": 130.0,
@@ -3814,6 +4680,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 240.0,
     "imageY": 135.0,
@@ -3824,6 +4691,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 280.0,
     "imageY": 145.0,
@@ -3834,6 +4702,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 310.0,
     "imageY": 165.0,
@@ -3844,6 +4713,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 330.0,
     "imageY": 200.0,
@@ -3854,6 +4724,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 335.0,
     "imageY": 250.0,
@@ -3864,6 +4735,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 335.0,
     "imageY": 640.0,
@@ -3874,6 +4746,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 365.0,
     "imageY": 660.0,
@@ -3884,6 +4757,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 365.0,
     "imageY": 786.0,
@@ -3894,6 +4768,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 405.0,
     "imageY": 786.0,
@@ -3904,6 +4779,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "elevator",
     "imageX": 405.0,
     "imageY": 772.0,
@@ -3916,6 +4792,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 512.0,
     "imageY": 786.0,
@@ -3926,9 +4803,10 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "stairs",
-    "imageX": 512.0,
-    "imageY": 772.0,
+    "imageX": 365.0,
+    "imageY": 1250.0,
     "stepFree": false,
     "connectorKey": "stair-west",
     "name": "West Stairs"
@@ -3938,6 +4816,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 618.0,
     "imageY": 786.0,
@@ -3948,6 +4827,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "elevator",
     "imageX": 618.0,
     "imageY": 772.0,
@@ -3960,8 +4840,9 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
-    "imageX": 1250.0,
+    "imageX": 1320.0,
     "imageY": 786.0,
     "stepFree": true
   },
@@ -3970,6 +4851,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 786.0,
@@ -3980,6 +4862,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1455.0,
     "imageY": 786.0,
@@ -3990,6 +4873,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 405.0,
     "imageY": 995.0,
@@ -4000,8 +4884,20 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 405.0,
+    "imageY": 1230.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-stair-entry",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 365.0,
     "imageY": 1230.0,
     "stepFree": true
   },
@@ -4010,6 +4906,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 618.0,
     "imageY": 995.0,
@@ -4020,6 +4917,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 618.0,
     "imageY": 1105.0,
@@ -4030,8 +4928,9 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
-    "imageX": 1250.0,
+    "imageX": 1320.0,
     "imageY": 628.0,
     "stepFree": true
   },
@@ -4040,6 +4939,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 660.0,
     "imageY": 628.0,
@@ -4050,6 +4950,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 725.0,
@@ -4060,6 +4961,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "elevator",
     "imageX": 1380.0,
     "imageY": 725.0,
@@ -4072,6 +4974,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 300.0,
@@ -4082,6 +4985,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 230.0,
@@ -4092,6 +4996,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1425.0,
     "imageY": 240.0,
@@ -4102,6 +5007,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1325.0,
     "imageY": 245.0,
@@ -4112,6 +5018,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1440.0,
     "imageY": 305.0,
@@ -4122,6 +5029,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1300.0,
     "imageY": 320.0,
@@ -4132,6 +5040,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 1030.0,
@@ -4142,6 +5051,7 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 1320.0,
@@ -4152,16 +5062,165 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "hallway",
     "imageX": 1365.0,
     "imageY": 1420.0,
     "stepFree": true
   },
   {
+    "id": "n-f3-commons-west-s",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 690.0,
+    "imageY": 520.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-commons-west-n",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 690.0,
+    "imageY": 300.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-commons-north-e",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 1080.0,
+    "imageY": 300.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-commons-ne",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 1080.0,
+    "imageY": 250.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-commons-south",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 820.0,
+    "imageY": 520.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-commons-south-e",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 980.0,
+    "imageY": 520.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-commons-office-w",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 820.0,
+    "imageY": 455.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-commons-office-e",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 980.0,
+    "imageY": 455.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-commons-office-nw",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 820.0,
+    "imageY": 315.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-commons-office-ne",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 980.0,
+    "imageY": 315.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-commons-office-h",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "hallway",
+    "imageX": 925.0,
+    "imageY": 455.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-elev-commons",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "elevator",
+    "imageX": 870.0,
+    "imageY": 520.0,
+    "stepFree": true,
+    "connectorKey": "elev-commons",
+    "name": "Learning Commons Elevator"
+  },
+  {
+    "id": "n-f3-stair-commons",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "stairs",
+    "imageX": 680.0,
+    "imageY": 550.0,
+    "stepFree": false,
+    "connectorKey": "stair-commons",
+    "name": "Learning Commons Stairs"
+  },
+  {
     "id": "n-f3-d3102",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 204.0,
     "imageY": 130.5,
@@ -4172,17 +5231,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 210.0,
-    "imageY": 80.0,
+    "imageX": 204.0,
+    "imageY": 130.5,
     "stepFree": true,
-    "roomNumber": "3102"
+    "roomNumber": "3102",
+    "labelX": 210,
+    "labelY": 80
   },
   {
     "id": "n-f3-d3104",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 236.0,
     "imageY": 134.5,
@@ -4193,17 +5256,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 250.0,
-    "imageY": 90.0,
+    "imageX": 236.0,
+    "imageY": 134.5,
     "stepFree": true,
-    "roomNumber": "3104"
+    "roomNumber": "3104",
+    "labelX": 250,
+    "labelY": 90
   },
   {
     "id": "n-f3-d3106",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 276.1,
     "imageY": 144.0,
@@ -4214,17 +5281,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 292.0,
-    "imageY": 110.0,
+    "imageX": 276.1,
+    "imageY": 144.0,
     "stepFree": true,
-    "roomNumber": "3106"
+    "roomNumber": "3106",
+    "labelX": 292,
+    "labelY": 110
   },
   {
     "id": "n-f3-d3108",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 306.7,
     "imageY": 162.8,
@@ -4235,17 +5306,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 337.0,
-    "imageY": 138.0,
+    "imageX": 306.7,
+    "imageY": 162.8,
     "stepFree": true,
-    "roomNumber": "3108"
+    "roomNumber": "3108",
+    "labelX": 337,
+    "labelY": 138
   },
   {
     "id": "n-f3-d3110",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 328.0,
     "imageY": 196.5,
@@ -4256,17 +5331,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 367.0,
-    "imageY": 178.0,
+    "imageX": 328.0,
+    "imageY": 196.5,
     "stepFree": true,
-    "roomNumber": "3110"
+    "roomNumber": "3110",
+    "labelX": 367,
+    "labelY": 178
   },
   {
     "id": "n-f3-d3111",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 259.1,
     "imageY": 139.8,
@@ -4277,18 +5356,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 242.0,
-    "imageY": 208.0,
+    "imageX": 259.1,
+    "imageY": 139.8,
     "stepFree": true,
     "roomNumber": "3111",
-    "name": "Conference Room 3111"
+    "name": "Conference Room 3111",
+    "labelX": 242,
+    "labelY": 208
   },
   {
     "id": "n-f3-d3112",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 334.0,
     "imageY": 240.4,
@@ -4299,17 +5382,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 388.0,
-    "imageY": 235.0,
+    "imageX": 334.0,
+    "imageY": 240.4,
     "stepFree": true,
-    "roomNumber": "3112"
+    "roomNumber": "3112",
+    "labelX": 388,
+    "labelY": 235
   },
   {
     "id": "n-f3-d3114",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 286.0,
@@ -4320,17 +5407,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 395.0,
-    "imageY": 282.0,
+    "imageX": 335.0,
+    "imageY": 286.0,
     "stepFree": true,
-    "roomNumber": "3114"
+    "roomNumber": "3114",
+    "labelX": 395,
+    "labelY": 282
   },
   {
     "id": "n-f3-d3116",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 322.0,
@@ -4341,17 +5432,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 395.0,
+    "imageX": 335.0,
     "imageY": 322.0,
     "stepFree": true,
-    "roomNumber": "3116"
+    "roomNumber": "3116",
+    "labelX": 395,
+    "labelY": 322
   },
   {
     "id": "n-f3-d3118",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 362.0,
@@ -4362,17 +5457,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 395.0,
+    "imageX": 335.0,
     "imageY": 362.0,
     "stepFree": true,
-    "roomNumber": "3118"
+    "roomNumber": "3118",
+    "labelX": 395,
+    "labelY": 362
   },
   {
     "id": "n-f3-d3120",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 406.0,
@@ -4383,17 +5482,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 388.0,
+    "imageX": 335.0,
     "imageY": 406.0,
     "stepFree": true,
-    "roomNumber": "3120"
+    "roomNumber": "3120",
+    "labelX": 388,
+    "labelY": 406
   },
   {
     "id": "n-f3-d3122",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 447.0,
@@ -4404,17 +5507,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 388.0,
+    "imageX": 335.0,
     "imageY": 447.0,
     "stepFree": true,
-    "roomNumber": "3122"
+    "roomNumber": "3122",
+    "labelX": 388,
+    "labelY": 447
   },
   {
     "id": "n-f3-d3124",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 484.0,
@@ -4425,17 +5532,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 388.0,
+    "imageX": 335.0,
     "imageY": 484.0,
     "stepFree": true,
-    "roomNumber": "3124"
+    "roomNumber": "3124",
+    "labelX": 388,
+    "labelY": 484
   },
   {
     "id": "n-f3-d3115",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 366.0,
@@ -4446,17 +5557,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 250.0,
+    "imageX": 335.0,
     "imageY": 366.0,
     "stepFree": true,
-    "roomNumber": "3115"
+    "roomNumber": "3115",
+    "labelX": 250,
+    "labelY": 366
   },
   {
     "id": "n-f3-d3115A",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 278.0,
@@ -4467,17 +5582,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 215.0,
+    "imageX": 335.0,
     "imageY": 278.0,
     "stepFree": true,
-    "roomNumber": "3115A"
+    "roomNumber": "3115A",
+    "labelX": 215,
+    "labelY": 278
   },
   {
     "id": "n-f3-d3115B",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 282.0,
@@ -4488,17 +5607,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 280.0,
-    "imageY": 278.0,
+    "imageX": 335.0,
+    "imageY": 282.0,
     "stepFree": true,
-    "roomNumber": "3115B"
+    "roomNumber": "3115B",
+    "labelX": 280,
+    "labelY": 278
   },
   {
     "id": "n-f3-d3150",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 365.0,
     "imageY": 718.0,
@@ -4509,18 +5632,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 258.0,
+    "imageX": 365.0,
     "imageY": 718.0,
     "stepFree": true,
     "roomNumber": "3150",
-    "name": "Undergraduate Program Office"
+    "name": "Undergraduate Program Office",
+    "labelX": 258,
+    "labelY": 718
   },
   {
     "id": "n-f3-d3150E",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 365.0,
     "imageY": 770.0,
@@ -4531,17 +5658,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 200.0,
-    "imageY": 778.0,
+    "imageX": 365.0,
+    "imageY": 770.0,
     "stepFree": true,
-    "roomNumber": "3150E"
+    "roomNumber": "3150E",
+    "labelX": 200,
+    "labelY": 778
   },
   {
     "id": "n-f3-d3150F",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 634.0,
@@ -4552,17 +5683,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 290.0,
+    "imageX": 335.0,
     "imageY": 634.0,
     "stepFree": true,
-    "roomNumber": "3150F"
+    "roomNumber": "3150F",
+    "labelX": 290,
+    "labelY": 634
   },
   {
     "id": "n-f3-d3150G",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 619.0,
@@ -4573,17 +5708,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 215.0,
+    "imageX": 335.0,
     "imageY": 619.0,
     "stepFree": true,
-    "roomNumber": "3150G"
+    "roomNumber": "3150G",
+    "labelX": 215,
+    "labelY": 619
   },
   {
     "id": "n-f3-d3150H",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 594.0,
@@ -4594,17 +5733,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 290.0,
+    "imageX": 335.0,
     "imageY": 594.0,
     "stepFree": true,
-    "roomNumber": "3150H"
+    "roomNumber": "3150H",
+    "labelX": 290,
+    "labelY": 594
   },
   {
     "id": "n-f3-d3150J",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 575.0,
@@ -4615,17 +5758,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 215.0,
+    "imageX": 335.0,
     "imageY": 575.0,
     "stepFree": true,
-    "roomNumber": "3150J"
+    "roomNumber": "3150J",
+    "labelX": 215,
+    "labelY": 575
   },
   {
     "id": "n-f3-d3150K",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 553.0,
@@ -4636,17 +5783,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 290.0,
+    "imageX": 335.0,
     "imageY": 553.0,
     "stepFree": true,
-    "roomNumber": "3150K"
+    "roomNumber": "3150K",
+    "labelX": 290,
+    "labelY": 553
   },
   {
     "id": "n-f3-d3150L",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 533.0,
@@ -4657,17 +5808,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 215.0,
+    "imageX": 335.0,
     "imageY": 533.0,
     "stepFree": true,
-    "roomNumber": "3150L"
+    "roomNumber": "3150L",
+    "labelX": 215,
+    "labelY": 533
   },
   {
     "id": "n-f3-d3150M",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 511.0,
@@ -4678,17 +5833,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 290.0,
+    "imageX": 335.0,
     "imageY": 511.0,
     "stepFree": true,
-    "roomNumber": "3150M"
+    "roomNumber": "3150M",
+    "labelX": 290,
+    "labelY": 511
   },
   {
     "id": "n-f3-d3150N",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 490.0,
@@ -4699,17 +5858,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 215.0,
+    "imageX": 335.0,
     "imageY": 490.0,
     "stepFree": true,
-    "roomNumber": "3150N"
+    "roomNumber": "3150N",
+    "labelX": 215,
+    "labelY": 490
   },
   {
     "id": "n-f3-d3150P",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 467.0,
@@ -4720,17 +5883,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 290.0,
+    "imageX": 335.0,
     "imageY": 467.0,
     "stepFree": true,
-    "roomNumber": "3150P"
+    "roomNumber": "3150P",
+    "labelX": 290,
+    "labelY": 467
   },
   {
     "id": "n-f3-d3150Q",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 335.0,
     "imageY": 451.0,
@@ -4741,17 +5908,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 215.0,
-    "imageY": 448.0,
+    "imageX": 335.0,
+    "imageY": 451.0,
     "stepFree": true,
-    "roomNumber": "3150Q"
+    "roomNumber": "3150Q",
+    "labelX": 215,
+    "labelY": 448
   },
   {
     "id": "n-f3-d3160",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 365.0,
     "imageY": 774.0,
@@ -4762,17 +5933,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 290.0,
-    "imageY": 815.0,
+    "imageX": 365.0,
+    "imageY": 774.0,
     "stepFree": true,
-    "roomNumber": "3160"
+    "roomNumber": "3160",
+    "labelX": 290,
+    "labelY": 815
   },
   {
     "id": "n-f3-d3161",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 365.0,
     "imageY": 778.0,
@@ -4783,17 +5958,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 216.0,
-    "imageY": 826.0,
+    "imageX": 365.0,
+    "imageY": 778.0,
     "stepFree": true,
-    "roomNumber": "3161"
+    "roomNumber": "3161",
+    "labelX": 216,
+    "labelY": 826
   },
   {
     "id": "n-f3-d3162",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 405.0,
     "imageY": 863.0,
@@ -4804,17 +5983,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 322.0,
+    "imageX": 405.0,
     "imageY": 863.0,
     "stepFree": true,
-    "roomNumber": "3162"
+    "roomNumber": "3162",
+    "labelX": 322,
+    "labelY": 863
   },
   {
     "id": "n-f3-d3163",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 365.0,
     "imageY": 782.0,
@@ -4825,17 +6008,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 217.0,
-    "imageY": 877.0,
+    "imageX": 365.0,
+    "imageY": 782.0,
     "stepFree": true,
-    "roomNumber": "3163"
+    "roomNumber": "3163",
+    "labelX": 217,
+    "labelY": 877
   },
   {
     "id": "n-f3-d3164",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 405.0,
     "imageY": 911.0,
@@ -4846,17 +6033,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 322.0,
+    "imageX": 405.0,
     "imageY": 911.0,
     "stepFree": true,
-    "roomNumber": "3164"
+    "roomNumber": "3164",
+    "labelX": 322,
+    "labelY": 911
   },
   {
     "id": "n-f3-d3165",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 405.0,
     "imageY": 916.0,
@@ -4867,17 +6058,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 232.0,
+    "imageX": 405.0,
     "imageY": 916.0,
     "stepFree": true,
-    "roomNumber": "3165"
+    "roomNumber": "3165",
+    "labelX": 232,
+    "labelY": 916
   },
   {
     "id": "n-f3-d3180",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 405.0,
     "imageY": 999.0,
@@ -4888,18 +6083,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 279.0,
-    "imageY": 996.0,
+    "imageX": 405.0,
+    "imageY": 999.0,
     "stepFree": true,
     "roomNumber": "3180",
-    "name": "Conference Room 3180"
+    "name": "Conference Room 3180",
+    "labelX": 279,
+    "labelY": 996
   },
   {
     "id": "n-f3-d3190",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 405.0,
     "imageY": 1125.0,
@@ -4910,18 +6109,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 279.0,
+    "imageX": 405.0,
     "imageY": 1125.0,
     "stepFree": true,
     "roomNumber": "3190",
-    "name": "Conference Room 3190"
+    "name": "Conference Room 3190",
+    "labelX": 279,
+    "labelY": 1125
   },
   {
     "id": "n-f3-d3070",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 508.0,
     "imageY": 786.0,
@@ -4932,18 +6135,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 511.0,
-    "imageY": 872.0,
+    "imageX": 508.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "3070",
-    "name": "Conference Room 3070"
+    "name": "Conference Room 3070",
+    "labelX": 511,
+    "labelY": 872
   },
   {
     "id": "n-f3-d3081",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 452.0,
     "imageY": 995.0,
@@ -4954,17 +6161,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 452.0,
-    "imageY": 965.0,
+    "imageY": 995.0,
     "stepFree": true,
-    "roomNumber": "3081"
+    "roomNumber": "3081",
+    "labelX": 452,
+    "labelY": 965
   },
   {
     "id": "n-f3-d3083",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 511.0,
     "imageY": 995.0,
@@ -4975,17 +6186,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 511.0,
-    "imageY": 965.0,
+    "imageY": 995.0,
     "stepFree": true,
-    "roomNumber": "3083"
+    "roomNumber": "3083",
+    "labelX": 511,
+    "labelY": 965
   },
   {
     "id": "n-f3-d3085",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 571.0,
     "imageY": 995.0,
@@ -4996,20 +6211,24 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 571.0,
-    "imageY": 965.0,
+    "imageY": 995.0,
     "stepFree": true,
-    "roomNumber": "3085"
+    "roomNumber": "3085",
+    "labelX": 571,
+    "labelY": 965
   },
   {
     "id": "n-f3-d3210",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 900.0,
-    "imageY": 628.0,
+    "imageX": 816.0,
+    "imageY": 520.0,
     "stepFree": true
   },
   {
@@ -5017,22 +6236,26 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 900.0,
-    "imageY": 560.0,
+    "imageX": 816.0,
+    "imageY": 520.0,
     "stepFree": true,
     "roomNumber": "3210",
     "name": "Learning Commons",
-    "searchAliases": "library,study,commons"
+    "searchAliases": "library,study,commons",
+    "labelX": 900,
+    "labelY": 560
   },
   {
     "id": "n-f3-d3210A",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 664.0,
-    "imageY": 628.0,
+    "imageX": 690.0,
+    "imageY": 516.0,
     "stepFree": true
   },
   {
@@ -5040,17 +6263,196 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 617.0,
-    "imageY": 545.0,
+    "imageX": 690.0,
+    "imageY": 516.0,
     "stepFree": true,
-    "roomNumber": "3210A"
+    "roomNumber": "3210A",
+    "labelX": 617,
+    "labelY": 545
+  },
+  {
+    "id": "n-f3-d3210B",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "door",
+    "imageX": 690.0,
+    "imageY": 380.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-r3210B",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "room",
+    "imageX": 690.0,
+    "imageY": 380.0,
+    "stepFree": true,
+    "roomNumber": "3210B",
+    "labelX": 637,
+    "labelY": 380
+  },
+  {
+    "id": "n-f3-d3210C",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "door",
+    "imageX": 690.0,
+    "imageY": 330.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-r3210C",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "room",
+    "imageX": 690.0,
+    "imageY": 330.0,
+    "stepFree": true,
+    "roomNumber": "3210C",
+    "labelX": 637,
+    "labelY": 330
+  },
+  {
+    "id": "n-f3-d3210D",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "door",
+    "imageX": 1080.0,
+    "imageY": 254.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-r3210D",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "room",
+    "imageX": 1080.0,
+    "imageY": 254.0,
+    "stepFree": true,
+    "roomNumber": "3210D",
+    "labelX": 1120,
+    "labelY": 225
+  },
+  {
+    "id": "n-f3-d3210E",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "door",
+    "imageX": 925.0,
+    "imageY": 315.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-r3210E",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "room",
+    "imageX": 925.0,
+    "imageY": 315.0,
+    "stepFree": true,
+    "roomNumber": "3210E",
+    "labelX": 925,
+    "labelY": 370
+  },
+  {
+    "id": "n-f3-d3210F",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "door",
+    "imageX": 870.0,
+    "imageY": 315.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-r3210F",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "room",
+    "imageX": 870.0,
+    "imageY": 315.0,
+    "stepFree": true,
+    "roomNumber": "3210F",
+    "labelX": 870,
+    "labelY": 370
+  },
+  {
+    "id": "n-f3-d3210G",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "door",
+    "imageX": 870.0,
+    "imageY": 455.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-r3210G",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "room",
+    "imageX": 870.0,
+    "imageY": 455.0,
+    "stepFree": true,
+    "roomNumber": "3210G",
+    "labelX": 870,
+    "labelY": 420
+  },
+  {
+    "id": "n-f3-d3210H",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "door",
+    "imageX": 929.0,
+    "imageY": 455.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-r3210H",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "routingRevision": "grainger-access-v2",
+    "kind": "room",
+    "imageX": 929.0,
+    "imageY": 455.0,
+    "stepFree": true,
+    "roomNumber": "3210H",
+    "labelX": 925,
+    "labelY": 420
   },
   {
     "id": "n-f3-d3251",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 910.0,
     "imageY": 786.0,
@@ -5061,17 +6463,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 910.0,
-    "imageY": 728.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3251"
+    "roomNumber": "3251",
+    "labelX": 910,
+    "labelY": 728
   },
   {
     "id": "n-f3-d3253",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 993.0,
     "imageY": 786.0,
@@ -5082,17 +6488,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 993.0,
-    "imageY": 728.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3253"
+    "roomNumber": "3253",
+    "labelX": 993,
+    "labelY": 728
   },
   {
     "id": "n-f3-d3259",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1117.0,
     "imageY": 786.0,
@@ -5103,20 +6513,24 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1117.0,
-    "imageY": 737.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3259"
+    "roomNumber": "3259",
+    "labelX": 1117,
+    "labelY": 737
   },
   {
     "id": "n-f3-d3259A",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 1250.0,
-    "imageY": 710.0,
+    "imageX": 1175.0,
+    "imageY": 786.0,
     "stepFree": true
   },
   {
@@ -5124,17 +6538,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1175.0,
-    "imageY": 710.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3259A"
+    "roomNumber": "3259A",
+    "labelX": 1175,
+    "labelY": 710
   },
   {
     "id": "n-f3-d3259B",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1065.0,
     "imageY": 786.0,
@@ -5145,17 +6563,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1065.0,
-    "imageY": 710.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3259B"
+    "roomNumber": "3259B",
+    "labelX": 1065,
+    "labelY": 710
   },
   {
     "id": "n-f3-d3260",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1130.0,
     "imageY": 786.0,
@@ -5166,18 +6588,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1130.0,
-    "imageY": 880.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "3260",
-    "name": "Alumni Relations"
+    "name": "Alumni Relations",
+    "labelX": 1130,
+    "labelY": 880
   },
   {
     "id": "n-f3-d3260A",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1179.0,
     "imageY": 786.0,
@@ -5188,17 +6614,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1179.0,
-    "imageY": 832.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3260A"
+    "roomNumber": "3260A",
+    "labelX": 1179,
+    "labelY": 832
   },
   {
     "id": "n-f3-d3260B",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1190.0,
     "imageY": 786.0,
@@ -5209,17 +6639,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1190.0,
-    "imageY": 910.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3260B"
+    "roomNumber": "3260B",
+    "labelX": 1190,
+    "labelY": 910
   },
   {
     "id": "n-f3-d3260C",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1075.0,
     "imageY": 786.0,
@@ -5230,17 +6664,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1075.0,
-    "imageY": 911.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3260C"
+    "roomNumber": "3260C",
+    "labelX": 1075,
+    "labelY": 911
   },
   {
     "id": "n-f3-d3260D",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1069.0,
     "imageY": 786.0,
@@ -5251,17 +6689,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1067.0,
-    "imageY": 838.0,
+    "imageX": 1069.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3260D"
+    "roomNumber": "3260D",
+    "labelX": 1067,
+    "labelY": 838
   },
   {
     "id": "n-f3-d3260E",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1023.0,
     "imageY": 786.0,
@@ -5272,17 +6714,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1023.0,
-    "imageY": 911.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3260E"
+    "roomNumber": "3260E",
+    "labelX": 1023,
+    "labelY": 911
   },
   {
     "id": "n-f3-d3260F",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1013.0,
     "imageY": 786.0,
@@ -5293,17 +6739,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1013.0,
-    "imageY": 838.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3260F"
+    "roomNumber": "3260F",
+    "labelX": 1013,
+    "labelY": 838
   },
   {
     "id": "n-f3-d3260G",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 974.0,
     "imageY": 786.0,
@@ -5314,17 +6764,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 972.0,
-    "imageY": 911.0,
+    "imageX": 974.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3260G"
+    "roomNumber": "3260G",
+    "labelX": 972,
+    "labelY": 911
   },
   {
     "id": "n-f3-d3260H",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 970.0,
     "imageY": 786.0,
@@ -5335,17 +6789,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 970.0,
-    "imageY": 848.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3260H"
+    "roomNumber": "3260H",
+    "labelX": 970,
+    "labelY": 848
   },
   {
     "id": "n-f3-d3260I",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 919.0,
     "imageY": 786.0,
@@ -5356,17 +6814,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 919.0,
-    "imageY": 898.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3260I"
+    "roomNumber": "3260I",
+    "labelX": 919,
+    "labelY": 898
   },
   {
     "id": "n-f3-d3260J",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 923.0,
     "imageY": 786.0,
@@ -5377,17 +6839,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 922.0,
-    "imageY": 833.0,
+    "imageX": 923.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3260J"
+    "roomNumber": "3260J",
+    "labelX": 922,
+    "labelY": 833
   },
   {
     "id": "n-f3-d3262",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 880.0,
     "imageY": 786.0,
@@ -5398,17 +6864,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 880.0,
-    "imageY": 835.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3262"
+    "roomNumber": "3262",
+    "labelX": 880,
+    "labelY": 835
   },
   {
     "id": "n-f3-d3264",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 765.0,
     "imageY": 786.0,
@@ -5419,17 +6889,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 765.0,
-    "imageY": 877.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3264"
+    "roomNumber": "3264",
+    "labelX": 765,
+    "labelY": 877
   },
   {
     "id": "n-f3-d3264A",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 848.0,
     "imageY": 786.0,
@@ -5440,17 +6914,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 848.0,
-    "imageY": 911.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3264A"
+    "roomNumber": "3264A",
+    "labelX": 848,
+    "labelY": 911
   },
   {
     "id": "n-f3-d3264B",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 836.0,
     "imageY": 786.0,
@@ -5461,17 +6939,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 836.0,
-    "imageY": 872.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3264B"
+    "roomNumber": "3264B",
+    "labelX": 836,
+    "labelY": 872
   },
   {
     "id": "n-f3-d3270",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 618.0,
     "imageY": 865.0,
@@ -5482,18 +6964,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 681.0,
+    "imageX": 618.0,
     "imageY": 865.0,
     "stepFree": true,
     "roomNumber": "3270",
-    "name": "Conference Room 3270"
+    "name": "Conference Room 3270",
+    "labelX": 681,
+    "labelY": 865
   },
   {
     "id": "n-f3-d3290",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 618.0,
     "imageY": 975.0,
@@ -5504,18 +6990,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 757.0,
+    "imageX": 618.0,
     "imageY": 975.0,
     "stepFree": true,
     "roomNumber": "3290",
-    "name": "Undergraduate Program Office"
+    "name": "Undergraduate Program Office",
+    "labelX": 757,
+    "labelY": 975
   },
   {
     "id": "n-f3-d3290A",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 618.0,
     "imageY": 1055.0,
@@ -5526,17 +7016,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 674.0,
+    "imageX": 618.0,
     "imageY": 1055.0,
     "stepFree": true,
-    "roomNumber": "3290A"
+    "roomNumber": "3290A",
+    "labelX": 674,
+    "labelY": 1055
   },
   {
     "id": "n-f3-d3295",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 618.0,
     "imageY": 1101.0,
@@ -5547,20 +7041,24 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 632.0,
-    "imageY": 1180.0,
+    "imageX": 618.0,
+    "imageY": 1101.0,
     "stepFree": true,
     "roomNumber": "3295",
-    "name": "Undergraduate Interview Center"
+    "name": "Undergraduate Interview Center",
+    "labelX": 632,
+    "labelY": 1180
   },
   {
     "id": "n-f3-d3301",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 1365.0,
+    "imageX": 1320.0,
     "imageY": 654.0,
     "stepFree": true
   },
@@ -5569,20 +7067,24 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1315.0,
+    "imageX": 1320.0,
     "imageY": 654.0,
     "stepFree": true,
-    "roomNumber": "3301"
+    "roomNumber": "3301",
+    "labelX": 1315,
+    "labelY": 654
   },
   {
     "id": "n-f3-d3303",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
-    "imageX": 1365.0,
-    "imageY": 613.0,
+    "imageX": 1315.0,
+    "imageY": 628.0,
     "stepFree": true
   },
   {
@@ -5590,17 +7092,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
     "imageX": 1315.0,
-    "imageY": 613.0,
+    "imageY": 628.0,
     "stepFree": true,
-    "roomNumber": "3303"
+    "roomNumber": "3303",
+    "labelX": 1315,
+    "labelY": 613
   },
   {
     "id": "n-f3-d3305",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 573.0,
@@ -5611,17 +7117,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1315.0,
+    "imageX": 1365.0,
     "imageY": 573.0,
     "stepFree": true,
-    "roomNumber": "3305"
+    "roomNumber": "3305",
+    "labelX": 1315,
+    "labelY": 573
   },
   {
     "id": "n-f3-d3307",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 531.0,
@@ -5632,17 +7142,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1315.0,
+    "imageX": 1365.0,
     "imageY": 531.0,
     "stepFree": true,
-    "roomNumber": "3307"
+    "roomNumber": "3307",
+    "labelX": 1315,
+    "labelY": 531
   },
   {
     "id": "n-f3-d3309",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 488.0,
@@ -5653,17 +7167,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1315.0,
+    "imageX": 1365.0,
     "imageY": 488.0,
     "stepFree": true,
-    "roomNumber": "3309"
+    "roomNumber": "3309",
+    "labelX": 1315,
+    "labelY": 488
   },
   {
     "id": "n-f3-d3311",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 444.0,
@@ -5674,17 +7192,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1315.0,
-    "imageY": 446.0,
+    "imageX": 1365.0,
+    "imageY": 444.0,
     "stepFree": true,
-    "roomNumber": "3311"
+    "roomNumber": "3311",
+    "labelX": 1315,
+    "labelY": 446
   },
   {
     "id": "n-f3-d3315",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 405.0,
@@ -5695,17 +7217,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1318.0,
+    "imageX": 1365.0,
     "imageY": 405.0,
     "stepFree": true,
-    "roomNumber": "3315"
+    "roomNumber": "3315",
+    "labelX": 1318,
+    "labelY": 405
   },
   {
     "id": "n-f3-d3317",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1307.6,
     "imageY": 317.6,
@@ -5716,17 +7242,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1281.0,
-    "imageY": 380.0,
+    "imageX": 1307.6,
+    "imageY": 317.6,
     "stepFree": true,
-    "roomNumber": "3317"
+    "roomNumber": "3317",
+    "labelX": 1281,
+    "labelY": 380
   },
   {
     "id": "n-f3-d3319",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1303.8,
     "imageY": 318.8,
@@ -5737,17 +7267,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1257.0,
-    "imageY": 345.0,
+    "imageX": 1303.8,
+    "imageY": 318.8,
     "stepFree": true,
-    "roomNumber": "3319"
+    "roomNumber": "3319",
+    "labelX": 1257,
+    "labelY": 345
   },
   {
     "id": "n-f3-d3325",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1327.4,
     "imageY": 248.2,
@@ -5758,18 +7292,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1317.0,
-    "imageY": 175.0,
+    "imageX": 1327.4,
+    "imageY": 248.2,
     "stepFree": true,
     "roomNumber": "3325",
-    "name": "Class Room 3325"
+    "name": "Class Room 3325",
+    "labelX": 1317,
+    "labelY": 175
   },
   {
     "id": "n-f3-d3335",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1421.1,
     "imageY": 239.3,
@@ -5780,18 +7318,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1478.0,
-    "imageY": 180.0,
+    "imageX": 1421.1,
+    "imageY": 239.3,
     "stepFree": true,
     "roomNumber": "3335",
-    "name": "Class Room 3335"
+    "name": "Class Room 3335",
+    "labelX": 1478,
+    "labelY": 180
   },
   {
     "id": "n-f3-d3337",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1428.0,
     "imageY": 304.2,
@@ -5802,18 +7344,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1570.0,
-    "imageY": 250.0,
+    "imageX": 1428.0,
+    "imageY": 304.2,
     "stepFree": true,
     "roomNumber": "3337",
-    "name": "MBA&M Study"
+    "name": "MBA&M Study",
+    "labelX": 1570,
+    "labelY": 250
   },
   {
     "id": "n-f3-d3339",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1432.0,
     "imageY": 304.5,
@@ -5824,18 +7370,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1538.0,
-    "imageY": 325.0,
+    "imageX": 1432.0,
+    "imageY": 304.5,
     "stepFree": true,
     "roomNumber": "3339",
-    "name": "Class Room 3339"
+    "name": "Class Room 3339",
+    "labelX": 1538,
+    "labelY": 325
   },
   {
     "id": "n-f3-d3340",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 448.0,
@@ -5846,18 +7396,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1405.0,
-    "imageY": 450.0,
+    "imageX": 1365.0,
+    "imageY": 448.0,
     "stepFree": true,
     "roomNumber": "3340",
-    "name": "Bolz Center for Arts Admin"
+    "name": "Bolz Center for Arts Admin",
+    "labelX": 1405,
+    "labelY": 450
   },
   {
     "id": "n-f3-d3341",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 425.0,
@@ -5868,17 +7422,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1465.0,
+    "imageX": 1365.0,
     "imageY": 425.0,
     "stepFree": true,
-    "roomNumber": "3341"
+    "roomNumber": "3341",
+    "labelX": 1465,
+    "labelY": 425
   },
   {
     "id": "n-f3-d3342",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 492.0,
@@ -5889,17 +7447,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1433.0,
+    "imageX": 1365.0,
     "imageY": 492.0,
     "stepFree": true,
-    "roomNumber": "3342"
+    "roomNumber": "3342",
+    "labelX": 1433,
+    "labelY": 492
   },
   {
     "id": "n-f3-d3343",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 452.0,
@@ -5910,17 +7472,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1487.0,
+    "imageX": 1365.0,
     "imageY": 452.0,
     "stepFree": true,
-    "roomNumber": "3343"
+    "roomNumber": "3343",
+    "labelX": 1487,
+    "labelY": 452
   },
   {
     "id": "n-f3-d3344",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1436.0,
     "imageY": 304.7,
@@ -5931,17 +7497,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1520.0,
-    "imageY": 400.0,
+    "imageX": 1436.0,
+    "imageY": 304.7,
     "stepFree": true,
-    "roomNumber": "3344"
+    "roomNumber": "3344",
+    "labelX": 1520,
+    "labelY": 400
   },
   {
     "id": "n-f3-d3346",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 368.0,
@@ -5952,17 +7522,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1418.0,
+    "imageX": 1365.0,
     "imageY": 368.0,
     "stepFree": true,
-    "roomNumber": "3346"
+    "roomNumber": "3346",
+    "labelX": 1418,
+    "labelY": 368
   },
   {
     "id": "n-f3-d3350",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 547.0,
@@ -5973,17 +7547,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1475.0,
+    "imageX": 1365.0,
     "imageY": 547.0,
     "stepFree": true,
-    "roomNumber": "3350"
+    "roomNumber": "3350",
+    "labelX": 1475,
+    "labelY": 547
   },
   {
     "id": "n-f3-d3410",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 622.0,
@@ -5994,18 +7572,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1413.0,
+    "imageX": 1365.0,
     "imageY": 622.0,
     "stepFree": true,
     "roomNumber": "3410",
-    "name": "Center for Brand & Product Management"
+    "name": "Center for Brand & Product Management",
+    "labelX": 1413,
+    "labelY": 622
   },
   {
     "id": "n-f3-d3412",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 634.0,
@@ -6016,17 +7598,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1457.0,
+    "imageX": 1365.0,
     "imageY": 634.0,
     "stepFree": true,
-    "roomNumber": "3412"
+    "roomNumber": "3412",
+    "labelX": 1457,
+    "labelY": 634
   },
   {
     "id": "n-f3-d3413",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 601.0,
@@ -6037,17 +7623,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1470.0,
+    "imageX": 1365.0,
     "imageY": 601.0,
     "stepFree": true,
-    "roomNumber": "3413"
+    "roomNumber": "3413",
+    "labelX": 1470,
+    "labelY": 601
   },
   {
     "id": "n-f3-d3414",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 630.0,
@@ -6058,17 +7648,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1508.0,
-    "imageY": 632.0,
+    "imageX": 1365.0,
+    "imageY": 630.0,
     "stepFree": true,
-    "roomNumber": "3414"
+    "roomNumber": "3414",
+    "labelX": 1508,
+    "labelY": 632
   },
   {
     "id": "n-f3-d3420",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 671.0,
@@ -6079,18 +7673,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1447.0,
+    "imageX": 1365.0,
     "imageY": 671.0,
     "stepFree": true,
     "roomNumber": "3420",
-    "name": "A. C. Nielsen Marketing Analytics & Insights"
+    "name": "A. C. Nielsen Marketing Analytics & Insights",
+    "labelX": 1447,
+    "labelY": 671
   },
   {
     "id": "n-f3-d3422",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1376.0,
     "imageY": 725.0,
@@ -6101,17 +7699,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1449.0,
-    "imageY": 705.0,
+    "imageX": 1376.0,
+    "imageY": 725.0,
     "stepFree": true,
-    "roomNumber": "3422"
+    "roomNumber": "3422",
+    "labelX": 1449,
+    "labelY": 705
   },
   {
     "id": "n-f3-d3423",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1431.0,
     "imageY": 786.0,
@@ -6122,17 +7724,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1515.0,
-    "imageY": 668.0,
+    "imageX": 1431.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3423"
+    "roomNumber": "3423",
+    "labelX": 1515,
+    "labelY": 668
   },
   {
     "id": "n-f3-d3424",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1435.0,
     "imageY": 786.0,
@@ -6143,17 +7749,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1500.0,
-    "imageY": 703.0,
+    "imageX": 1435.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3424"
+    "roomNumber": "3424",
+    "labelX": 1500,
+    "labelY": 703
   },
   {
     "id": "n-f3-d3427",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1439.0,
     "imageY": 786.0,
@@ -6164,17 +7774,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1585.0,
-    "imageY": 703.0,
+    "imageX": 1439.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3427"
+    "roomNumber": "3427",
+    "labelX": 1585,
+    "labelY": 703
   },
   {
     "id": "n-f3-d3432",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1443.0,
     "imageY": 786.0,
@@ -6185,17 +7799,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1527.0,
-    "imageY": 754.0,
+    "imageX": 1443.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3432"
+    "roomNumber": "3432",
+    "labelX": 1527,
+    "labelY": 754
   },
   {
     "id": "n-f3-d3434",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1447.0,
     "imageY": 786.0,
@@ -6206,18 +7824,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1583.0,
-    "imageY": 851.0,
+    "imageX": 1447.0,
+    "imageY": 786.0,
     "stepFree": true,
     "roomNumber": "3434",
-    "name": "MBA & Master's Student Lounge Areas"
+    "name": "MBA & Master's Student Lounge Areas",
+    "labelX": 1583,
+    "labelY": 851
   },
   {
     "id": "n-f3-d3442",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 872.0,
@@ -6228,17 +7850,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1410.0,
+    "imageX": 1365.0,
     "imageY": 872.0,
     "stepFree": true,
-    "roomNumber": "3442"
+    "roomNumber": "3442",
+    "labelX": 1410,
+    "labelY": 872
   },
   {
     "id": "n-f3-d3447",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 990.0,
@@ -6249,17 +7875,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1300.0,
+    "imageX": 1365.0,
     "imageY": 990.0,
     "stepFree": true,
-    "roomNumber": "3447"
+    "roomNumber": "3447",
+    "labelX": 1300,
+    "labelY": 990
   },
   {
     "id": "n-f3-d3450",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 959.0,
@@ -6270,17 +7900,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1438.0,
+    "imageX": 1365.0,
     "imageY": 959.0,
     "stepFree": true,
-    "roomNumber": "3450"
+    "roomNumber": "3450",
+    "labelX": 1438,
+    "labelY": 959
   },
   {
     "id": "n-f3-d3452",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 913.0,
@@ -6291,17 +7925,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1475.0,
+    "imageX": 1365.0,
     "imageY": 913.0,
     "stepFree": true,
-    "roomNumber": "3452"
+    "roomNumber": "3452",
+    "labelX": 1475,
+    "labelY": 913
   },
   {
     "id": "n-f3-d3453",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1451.0,
     "imageY": 786.0,
@@ -6312,17 +7950,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1465.0,
-    "imageY": 880.0,
+    "imageX": 1451.0,
+    "imageY": 786.0,
     "stepFree": true,
-    "roomNumber": "3453"
+    "roomNumber": "3453",
+    "labelX": 1465,
+    "labelY": 880
   },
   {
     "id": "n-f3-d3460",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1013.0,
@@ -6333,18 +7975,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1413.0,
+    "imageX": 1365.0,
     "imageY": 1013.0,
     "stepFree": true,
     "roomNumber": "3460",
-    "name": "Strategic Human Resource Management"
+    "name": "Strategic Human Resource Management",
+    "labelX": 1413,
+    "labelY": 1013
   },
   {
     "id": "n-f3-d3462",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1045.0,
@@ -6355,17 +8001,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1408.0,
+    "imageX": 1365.0,
     "imageY": 1045.0,
     "stepFree": true,
-    "roomNumber": "3462"
+    "roomNumber": "3462",
+    "labelX": 1408,
+    "labelY": 1045
   },
   {
     "id": "n-f3-d3464",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1049.0,
@@ -6376,17 +8026,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1457.0,
-    "imageY": 1045.0,
+    "imageX": 1365.0,
+    "imageY": 1049.0,
     "stepFree": true,
-    "roomNumber": "3464"
+    "roomNumber": "3464",
+    "labelX": 1457,
+    "labelY": 1045
   },
   {
     "id": "n-f3-d3468",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1026.0,
@@ -6397,17 +8051,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1507.0,
-    "imageY": 1030.0,
+    "imageX": 1365.0,
+    "imageY": 1026.0,
     "stepFree": true,
-    "roomNumber": "3468"
+    "roomNumber": "3468",
+    "labelX": 1507,
+    "labelY": 1030
   },
   {
     "id": "n-f3-d3510",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1098.0,
@@ -6418,18 +8076,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1415.0,
+    "imageX": 1365.0,
     "imageY": 1098.0,
     "stepFree": true,
     "roomNumber": "3510",
-    "name": "Erdman Center for Ops & Tech Management"
+    "name": "Erdman Center for Ops & Tech Management",
+    "labelX": 1415,
+    "labelY": 1098
   },
   {
     "id": "n-f3-d3512",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1154.0,
@@ -6440,17 +8102,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1408.0,
+    "imageX": 1365.0,
     "imageY": 1154.0,
     "stepFree": true,
-    "roomNumber": "3512"
+    "roomNumber": "3512",
+    "labelX": 1408,
+    "labelY": 1154
   },
   {
     "id": "n-f3-d3514",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1142.0,
@@ -6461,17 +8127,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1475.0,
+    "imageX": 1365.0,
     "imageY": 1142.0,
     "stepFree": true,
-    "roomNumber": "3514"
+    "roomNumber": "3514",
+    "labelX": 1475,
+    "labelY": 1142
   },
   {
     "id": "n-f3-d3515",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1076.0,
@@ -6482,17 +8152,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1503.0,
+    "imageX": 1365.0,
     "imageY": 1076.0,
     "stepFree": true,
-    "roomNumber": "3515"
+    "roomNumber": "3515",
+    "labelX": 1503,
+    "labelY": 1076
   },
   {
     "id": "n-f3-d3540",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1305.0,
@@ -6503,17 +8177,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1455.0,
+    "imageX": 1365.0,
     "imageY": 1305.0,
     "stepFree": true,
-    "roomNumber": "3540"
+    "roomNumber": "3540",
+    "labelX": 1455,
+    "labelY": 1305
   },
   {
     "id": "n-f3-d3541",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1210.0,
@@ -6524,18 +8202,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1456.0,
+    "imageX": 1365.0,
     "imageY": 1210.0,
     "stepFree": true,
     "roomNumber": "3541",
-    "name": "MBA&M Student Lounge"
+    "name": "MBA&M Student Lounge",
+    "labelX": 1456,
+    "labelY": 1210
   },
   {
     "id": "n-f3-d3549",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1357.0,
@@ -6546,17 +8228,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1543.0,
+    "imageX": 1365.0,
     "imageY": 1357.0,
     "stepFree": true,
-    "roomNumber": "3549"
+    "roomNumber": "3549",
+    "labelX": 1543,
+    "labelY": 1357
   },
   {
     "id": "n-f3-d3550",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1328.0,
@@ -6567,17 +8253,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1380.0,
+    "imageX": 1365.0,
     "imageY": 1328.0,
     "stepFree": true,
-    "roomNumber": "3550"
+    "roomNumber": "3550",
+    "labelX": 1380,
+    "labelY": 1328
   },
   {
     "id": "n-f3-d3560",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1412.0,
@@ -6588,18 +8278,22 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1456.0,
-    "imageY": 1413.0,
+    "imageX": 1365.0,
+    "imageY": 1412.0,
     "stepFree": true,
     "roomNumber": "3560",
-    "name": "Seminar Room 3560"
+    "name": "Seminar Room 3560",
+    "labelX": 1456,
+    "labelY": 1413
   },
   {
     "id": "n-f3-d3565",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 1365.0,
     "imageY": 1416.0,
@@ -6610,17 +8304,21 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "room",
-    "imageX": 1363.0,
-    "imageY": 1463.0,
+    "imageX": 1365.0,
+    "imageY": 1416.0,
     "stepFree": true,
-    "roomNumber": "3565"
+    "roomNumber": "3565",
+    "labelX": 1363,
+    "labelY": 1463
   },
   {
     "id": "n-f3-d-wc3",
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "door",
     "imageX": 770.0,
     "imageY": 786.0,
@@ -6631,11 +8329,14 @@
     "floor": {
       "id": "grainger-f3"
     },
+    "routingRevision": "grainger-access-v2",
     "kind": "restroom",
     "imageX": 770.0,
-    "imageY": 725.0,
+    "imageY": 786.0,
     "stepFree": true,
     "name": "Restrooms",
-    "searchAliases": "bathroom,washroom,toilet"
+    "searchAliases": "bathroom,washroom,toilet",
+    "labelX": 770,
+    "labelY": 725
   }
 ]

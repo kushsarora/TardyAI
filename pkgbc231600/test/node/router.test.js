@@ -8,7 +8,6 @@ const { seed, loadRouter } = require('./harness.js');
 
 const BUILDING = 'grainger';
 const ROOM_3335 = 'n-f3-r3335';
-const WEST_STAIRS_F1 = 'n-f1-stair-w';
 const ELEVATOR_C_F1 = 'n-f1-elev-e';
 
 /** The seed node named "West Entrance" — looked up, not hardcoded, so the test follows the data. */
@@ -42,26 +41,25 @@ test('West Entrance (L1) to 3335 is found in ~3 min over 2 legs on 2 floors', ()
   assert.equal(route.legs[1].floorLevel, 3);
 });
 
-test('default route climbs the West Stairs', () => {
+test('public east-wing route uses the actual elevator lobby rather than an atrium landing', () => {
   const route = loadRouter().findRoute(westEntranceId(), ROOM_3335, false);
-  assert.ok(pointIds(route).includes(WEST_STAIRS_F1), 'default route should pass n-f1-stair-w');
-  assert.match(route.legs[0].instruction, /West Stairs/);
+  assert.ok(pointIds(route).includes(ELEVATOR_C_F1));
+  assert.match(route.legs[0].instruction, /Elevator C/);
   assert.match(route.legs[1].instruction, /3335/);
 });
 
-test('step-free swaps West Stairs for Elevator C, with a different ETA', () => {
+test('Learning Commons step-free route swaps its stairs for its elevator, with a different ETA', () => {
   const router = loadRouter();
-  const start = westEntranceId();
-  const normal = router.findRoute(start, ROOM_3335, false);
-  const stepFree = router.findRoute(start, ROOM_3335, true);
-
+  const start = 'n-f1-r1270', dest = 'n-f3-r3210H';
+  const normal = router.findRoute(start, dest, false);
+  const stepFree = router.findRoute(start, dest, true);
+  assert.equal(normal.found, true, normal.message);
   assert.equal(stepFree.found, true, stepFree.message);
   assert.equal(stepFree.stepFree, true);
-  const kinds = stepFree.legs.flatMap((leg) => leg.points.map((p) => p.kind));
-  assert.ok(!kinds.includes('stairs'), `step-free route passes stairs: ${kinds.join(',')}`);
-  assert.ok(!pointIds(stepFree).includes(WEST_STAIRS_F1));
-  assert.ok(pointIds(stepFree).includes(ELEVATOR_C_F1), 'step-free route should board Elevator C on L1');
-  assert.match(stepFree.legs[0].instruction, /Elevator C \(east\)/);
+  assert.ok(pointIds(normal).includes('n-f1-stair-commons'));
+  assert.ok(pointIds(stepFree).includes('n-f1-elev-commons'));
+  assert.ok(!stepFree.legs.flatMap(leg => leg.points).some(p => p.kind === 'stairs'));
+  assert.match(stepFree.legs[0].instruction, /Learning Commons Elevator/);
   assert.notEqual(stepFree.totalSeconds, normal.totalSeconds);
 });
 
@@ -93,6 +91,7 @@ test('a room with no walkable edges fails the route instead of throwing', () => 
   const data = seed();
   data.nodes.push({
     id: 'n-test-isolated',
+    routingRevision: data.nodes[0].routingRevision,
     floor: structuredClone(data.nodes.find((n) => n.id === ROOM_3335).floor),
     kind: 'room',
     imageX: 10,

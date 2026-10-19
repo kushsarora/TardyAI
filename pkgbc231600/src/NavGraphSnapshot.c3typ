@@ -20,6 +20,9 @@
  */
 type NavGraphSnapshot {
 
+  /** Version of the authored graph, used to detect stale deployments. */
+  routingRevision: string
+
   /**
    * Id of the {@link Building} this snapshot describes.
    */

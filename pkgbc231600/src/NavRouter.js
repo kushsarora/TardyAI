@@ -6,6 +6,14 @@
 
 /** Typical indoor walking pace, meters per second. */
 var WALK_SPEED_MPS = 1.3;
+var ROUTING_REVISION = 'grainger-access-v2';
+
+// C3 upserts do not delete removed edges. Never mix the old wall-crossing
+// graph with the replacement geometry. Other buildings retain their own data.
+function currentGeometry(rows, buildingId) {
+  if (buildingId !== 'grainger') return rows;
+  return rows.filter(function (row) { return row.routingRevision === ROUTING_REVISION; });
+}
 
 /** Fallback image scale when a Floor does not declare pixelsPerMeter. */
 var DEFAULT_PIXELS_PER_METER = 14.0;
@@ -171,14 +179,14 @@ function buildGraph(buildingId, stepFree) {
     include: NODE_INCLUDE,
     limit: -1,
   });
-  var nodes = nodeRes.objs || [];
+  var nodes = currentGeometry(nodeRes.objs || [], buildingId);
 
   var edgeRes = NavEdge.fetch({
     filter: Filter.eq('fromNode.floor.building.id', buildingId),
     include: 'this, fromNode.id, toNode.id',
     limit: -1,
   });
-  var edges = edgeRes.objs || [];
+  var edges = currentGeometry(edgeRes.objs || [], buildingId);
 
   var nodesById = {};
   var i;
@@ -257,6 +265,7 @@ function heuristic(a, b) {
 /** Empty failure route carrying an explanation for the user. */
 function failedRoute(message, startNodeId, destNodeId, stepFree) {
   return {
+    routingRevision: ROUTING_REVISION,
     found: false,
     message: message,
     legs: [],
@@ -438,7 +447,9 @@ function buildSteps(leg, hops, nodesById, arrivedFromNode, destNode) {
   if (destNode) {
     var destText = destinationLabel(destNode);
     var arrive = { kind: STEP_ARRIVE, text: '', meters: 0, seconds: 0, pointIndex: lastIndex };
-    if (doorway) {
+    if (destNode.labelX !== undefined && destNode.labelX !== null) {
+      arrive.text = 'You have reached the mapped access point for ' + destText;
+    } else if (doorway) {
       arrive.text = destText + ' is on your ' + doorway.side + (doorLandmark ? ' at ' + doorLandmark : '');
       arrive.meters = doorway.meters;
       arrive.seconds = doorway.seconds;
@@ -693,6 +704,7 @@ function findRoute(startNodeId, destNodeId, stepFree) {
   }
 
   return {
+    routingRevision: ROUTING_REVISION,
     found: true,
     message: null,
     legs: assembled.legs,
@@ -717,7 +729,7 @@ function searchRooms(buildingId, query, limit) {
     include: NODE_INCLUDE,
     limit: -1,
   });
-  var nodes = res.objs || [];
+  var nodes = currentGeometry(res.objs || [], buildingId);
 
   // Rank so that a typed room number beats a name that merely contains it.
   var scored = [];
@@ -767,7 +779,9 @@ function nearestNode(floorId, imageX, imageY) {
     include: NODE_INCLUDE,
     limit: -1,
   });
-  var nodes = res.objs || [];
+  var nodes = (res.objs || []).filter(function (node) {
+    return !node.floor || !node.floor.building || node.floor.building.id !== 'grainger' || node.routingRevision === ROUTING_REVISION;
+  });
   if (nodes.length === 0) return null;
 
   var best = null;
@@ -790,16 +804,17 @@ function graphForBuilding(buildingId) {
     include: NODE_INCLUDE,
     limit: -1,
   });
-  var nodes = nodeRes.objs || [];
+  var nodes = currentGeometry(nodeRes.objs || [], buildingId);
 
   var edgeRes = NavEdge.fetch({
     filter: Filter.eq('fromNode.floor.building.id', buildingId),
     include: 'this, fromNode.id, toNode.id',
     limit: -1,
   });
-  var edges = edgeRes.objs || [];
+  var edges = currentGeometry(edgeRes.objs || [], buildingId);
 
   return {
+    routingRevision: ROUTING_REVISION,
     buildingId: buildingId,
     nodes: nodes,
     edges: edges,

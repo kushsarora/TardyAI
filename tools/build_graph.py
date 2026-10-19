@@ -5,8 +5,8 @@ TardyAI navigation-graph generator.
 Turns the hand-authored corridor plan in `tools/grainger_corridors.py` into the
 C3 `data/` JSON files for Grainger Hall. Edge costs (meters and seconds) are
 COMPUTED from pixel geometry, so they can never drift out of sync with node
-positions, and every room's door is COMPUTED by projecting the room onto its
-nearest corridor, so nobody hand-places hundreds of door nodes.
+positions, and room access points are projected onto the authored circulation. Door hints
+select the appropriate approach when a room is inside a suite or across a wall.
 
 Usage:
     python3 tools/build_graph.py
@@ -22,11 +22,13 @@ Per floor:
 - Corridor nodes (`hallway`, plus the stair/elevator/entrance nodes that sit on
   a corridor) linked in the order `grainger_corridors` lists them. Corridors
   are drawn along the open floor of the plan, so every corridor edge stays on
-  open floor (`checks/walkability.py` in agentlab enforces this).
+  open floor. Independent obstacle regressions cover the reported problem areas
+  in test/node/geometry.test.js; this is not an automated survey of every wall.
 - One `door` node per room, on the corridor segment nearest the room (or
   nearest the room's door hint), splitting that segment in two.
-- One `room` (or `restroom`) node per room, linked ONLY to its own door by a
-  short `door` edge (at most 15 m).
+- One `room` (or `restroom`) node per room at its mapped access point, linked
+  ONLY to its own door by a zero-length membership edge with a 3 s door allowance.
+  labelX/labelY preserve the printed room position without making it walkable.
 
 Cross-floor links are not edges: NavRouter synthesises them from connectorKey.
 
@@ -73,6 +75,7 @@ from grainger_corridors import FLOOR_PLANS, FloorPlan, Point, RoomRow  # noqa: E
 # --------------------------------------------------------------------------
 
 BUILDING_ID = "grainger"
+ROUTING_REVISION = "grainger-access-v2"
 PKG_DATA = os.path.join(os.path.dirname(__file__), "..", "pkgbc231600", "data")
 
 # Rendered plan dimensions (tools/render_plans.py, scale=2.5).
@@ -86,10 +89,6 @@ PIXELS_PER_METER = 12.0
 
 WALK_SPEED_MPS = 1.3
 DOOR_PENALTY_SECONDS = 3.0
-
-# A room's door edge is the last few steps through its doorway. Longer than
-# this and it is a diagonal across other rooms, standing in for a corridor.
-MAX_ROOM_EDGE_METERS = 15.0
 
 # Doors never sit closer than this to a corridor node or to another door on
 # the same segment, so no edge is so short that its rounded cost is 0 s.
@@ -119,6 +118,8 @@ CONNECTORS = {
     "elev-wa": ("elevator", "elev-west-a", "Elevator A (west)"),
     "elev-wb": ("elevator", "elev-west-b", "Elevator B (west)"),
     "elev-e": ("elevator", "elev-east", "Elevator C (east)"),
+    "elev-commons": ("elevator", "elev-commons", "Learning Commons Elevator"),
+    "stair-commons": ("stairs", "stair-commons", "Learning Commons Stairs"),
     "stair-w": ("stairs", "stair-west", "West Stairs"),
 }
 
@@ -213,6 +214,7 @@ def _edge_rows(level: int, a: str, b: str, coords: dict[str, Point], edge_type: 
         "id": "e-f%d-%s-%s" % (level, src, dst),
         "fromNode": {"id": node_id(level, src)},
         "toNode": {"id": node_id(level, dst)},
+        "routingRevision": ROUTING_REVISION,
         "edgeType": edge_type,
         "seconds": round(seconds, 1),
         "meters": round(meters, 1),
@@ -224,6 +226,7 @@ def _node_row(level: int, local_id: str, xy: Point, kind: str, **extra) -> dict:
     row = {
         "id": node_id(level, local_id),
         "floor": {"id": floor_id(level)},
+        "routingRevision": ROUTING_REVISION,
         "kind": kind,
         "imageX": float(round(xy[0], 1)),
         "imageY": float(round(xy[1], 1)),
@@ -249,10 +252,8 @@ def build_floor(level: int, plan: FloorPlan) -> tuple[list[dict], list[dict]]:
 
     Raises ValueError, naming the offender, when the plan is inconsistent:
     a corridor names an unknown point, a point is on no corridor, a link is
-    listed twice, a room number repeats, a corridor segment is too short for
-    the doors that land on it, or a room's door edge would exceed
-    MAX_ROOM_EDGE_METERS (all such rooms are named in one error). Nothing is
-    returned on failure.
+    listed twice, a room number repeats, or a corridor segment is too short
+    for the access points that land on it. Nothing is returned on failure.
     """
     where = "floor %d" % level
     coords: dict[str, Point] = dict(plan.points)
@@ -326,24 +327,18 @@ def build_floor(level: int, plan: FloorPlan) -> tuple[list[dict], list[dict]]:
         stairs = any(CONNECTORS.get(p, ("",))[0] == "stairs" for p in (a, b))
         edges += _edge_rows(level, a, b, coords, "stair" if stairs else "hallway")
 
-    too_far = []
     for local_id, door_id, room in targets:
-        coords[local_id] = (room.x, room.y)
-        meters = math.dist(coords[local_id], coords[door_id]) / PIXELS_PER_METER
-        if meters > MAX_ROOM_EDGE_METERS:
-            too_far.append("%s is %.1f m from its door at (%.0f, %.0f)" % (local_id, meters, *coords[door_id]))
-            continue
+        # A room label is not a walkable position. Route to its mapped access
+        # point and preserve the printed label independently for the map marker.
+        coords[local_id] = coords[door_id]
         nodes.append(_node_row(level, door_id, coords[door_id], "door"))
         if local_id.startswith("wc"):
             nodes.append(_node_row(level, local_id, coords[local_id], "restroom",
-                                   name=RESTROOM_NAME, searchAliases=RESTROOM_ALIASES))
+                                   name=RESTROOM_NAME, searchAliases=RESTROOM_ALIASES, labelX=room.x, labelY=room.y))
         else:
             nodes.append(_node_row(level, local_id, coords[local_id], "room", roomNumber=room.number,
-                                   name=room.name, searchAliases=room.aliases))
+                                   name=room.name, searchAliases=room.aliases, labelX=room.x, labelY=room.y))
         edges += _edge_rows(level, door_id, local_id, coords, "door")
-    if too_far:
-        raise ValueError("%s: room door edges over %.0f m (add a corridor nearer the room or a door hint): %s"
-                         % (where, MAX_ROOM_EDGE_METERS, "; ".join(too_far)))
     return nodes, edges
 
 
