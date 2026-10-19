@@ -1,14 +1,20 @@
 /**
  * Typed wrappers over the TardyAI backend.
  *
- * Every call here goes through `c3Action` to a method on the `NavRouter` C3 type
- * or to a built-in `fetch`. Keeping them in one module means the FetchSpec shapes
+ * Calls use `c3Action` in connected mode and the same router with seed data in demo mode. Keeping them in one module means the FetchSpec shapes
  * are written once and the pages stay free of transport concerns.
  */
 
 import { c3Action } from '@/c3Action';
 import { Building, Floor, MapNode, NavGraphSnapshot, NavRoute } from '@/Interfaces';
 import type { RouteLegWithSteps, RouteStep } from '@/lib/routeStepTypes';
+
+export const DEMO_MODE = import.meta.env.VITE_DATA_MODE === 'demo' || (!import.meta.env.VITE_C3_ENV && import.meta.env.VITE_DATA_MODE !== 'live');
+const action: typeof c3Action = async (type, method, args) => {
+  if (!DEMO_MODE) return c3Action(type, method, args);
+  const { demoAction } = await import('virtual:tardy-demo');
+  return demoAction(type, method, args);
+};
 
 /** The building this build of the app demos. */
 export const DEMO_BUILDING_ID = 'grainger';
@@ -45,7 +51,7 @@ export function resolvePlanUrl(planImageUrl?: string | null): string | null {
 
 /** Load the demo building record. Returns null when it has not been seeded. */
 export async function fetchBuilding(buildingId: string = DEMO_BUILDING_ID): Promise<Building | null> {
-  const response = await c3Action('Building', 'fetch', {
+  const response = await action('Building', 'fetch', {
     filter: `id == '${buildingId}'`,
     include: 'this',
     limit: 1,
@@ -62,7 +68,7 @@ export async function fetchBuilding(buildingId: string = DEMO_BUILDING_ID): Prom
  * suggestion silently disables itself.
  */
 export async function fetchFloors(buildingId: string = DEMO_BUILDING_ID): Promise<Floor[]> {
-  const response = await c3Action('Floor', 'fetch', {
+  const response = await action('Floor', 'fetch', {
     filter: `building.id == '${buildingId}'`,
     include:
       'this, building.id, calibration.points.lat, calibration.points.lon, ' +
@@ -76,13 +82,13 @@ export async function fetchFloors(buildingId: string = DEMO_BUILDING_ID): Promis
 /**
  * Load the whole navigation graph for a building in one call.
  *
- * Bounded deliberately: this is one mid-size building (~75 nodes, ~156 edges),
+ * Bounded deliberately: this is one mid-size building (626 nodes, 1260 edges),
  * so a single bulk load makes floor switching and marker rendering instant with
  * no further network traffic. It does NOT scale to every building on campus —
  * at that point this becomes a per-building lazy load.
  */
 export async function fetchGraph(buildingId: string = DEMO_BUILDING_ID): Promise<NavGraphSnapshot> {
-  const snapshot = await c3Action('NavRouter', 'graphForBuilding', [buildingId]);
+  const snapshot = await action('NavRouter', 'graphForBuilding', [buildingId]);
   return {
     buildingId,
     nodes: toArray<MapNode>(snapshot?.nodes),
@@ -98,7 +104,7 @@ export async function searchRooms(
   buildingId: string = DEMO_BUILDING_ID,
   limit = 8,
 ): Promise<MapNode[]> {
-  const results = await c3Action('NavRouter', 'searchRooms', [buildingId, query, limit]);
+  const results = await action('NavRouter', 'searchRooms', [buildingId, query, limit]);
   return toArray<MapNode>(results);
 }
 
@@ -129,11 +135,11 @@ function normalizeRoute(raw: unknown): NavRoute {
  * reject. Only a transport or server fault throws.
  */
 export async function findRoute(startNodeId: string, destNodeId: string, stepFree: boolean): Promise<NavRoute> {
-  return normalizeRoute(await c3Action('NavRouter', 'findRoute', [startNodeId, destNodeId, stepFree]));
+  return normalizeRoute(await action('NavRouter', 'findRoute', [startNodeId, destNodeId, stepFree]));
 }
 
 /** Snap a dropped pin to the nearest graph node on a floor. Null when the floor has no nodes. */
 export async function nearestNode(floorId: string, imageX: number, imageY: number): Promise<MapNode | null> {
-  const node = await c3Action('NavRouter', 'nearestNode', [floorId, imageX, imageY]);
+  const node = await action('NavRouter', 'nearestNode', [floorId, imageX, imageY]);
   return (node as MapNode) ?? null;
 }

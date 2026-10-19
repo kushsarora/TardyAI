@@ -15,42 +15,31 @@ import SideNav from './components/SideNav/SideNav';
 import TopNav from './components/TopNav/TopNav';
 import ErrorReporterProvider from './components/ErrorBoundary/ErrorBoundary';
 
-/**
- * Application shell.
- *
- * The chrome — {@link TopNav} across the top and {@link SideNav} down the left —
- * is rendered here, OUTSIDE `<Routes>`, so it is present on **every** page. The
- * router only ever swaps the `<main>` content; the top bar and side nav are part
- * of the shell and cannot be dropped by an individual page. Per the C3 Design
- * System, the TopNavBar is expected on every screen — keep it mounted here and
- * do not move it inside a route.
- */
+/** Persistent application header and navigation, with a responsive map workspace. */
 export default function App() {
   return (
     <ErrorReporterProvider>
-      <div className="h-screen flex flex-col max-w-full overflow-hidden">
+      <div className="tardy-app">
         <TopNav title="TardyAI" />
-        <div className="flex flex-1 min-h-0">
+        <div className="app-body">
           <SideNav />
-          <div className="flex-1 flex flex-col min-w-0">
-            <main className="flex-1 overflow-auto bg-[var(--c3-style-basic-bg-page)]">
+          <div className="app-content">
+            <main className="app-main">
               <Routes>
                 {/* Add page routes here */}
                 <Route path="/" element={<Navigate />} />
                 <Route path="/navigate" element={<Navigate />} />
                 <Route path="/room-finder" element={<RoomFinder />} />
+                <Route path="/directory" element={<Navigate />} />
+                <Route path="/saved" element={<Navigate />} />
+                <Route path="/help" element={<Navigate />} />
                 <Route
                   path="*"
                   element={
-                    import.meta.env.MODE === 'development' ? (
-                      <div className="flex h-full items-center justify-center p-8 text-center text-[var(--c3-style-basic-fg-neutral)]">
-                        <p>No route matched. Add routes in App.tsx.</p>
-                      </div>
-                    ) : (
-                      <div className="flex h-full items-center justify-center p-8 text-center text-[var(--c3-style-basic-fg-neutral)]">
-                        <p>Page not found.</p>
-                      </div>
-                    )
+                    <div className="empty-page">
+                      <h1>Page not found</h1>
+                      <a href="#/">Back to the map</a>
+                    </div>
                   }
                 />
               </Routes>

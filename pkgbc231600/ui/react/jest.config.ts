@@ -29,6 +29,7 @@ const jestConfig = {
   },
   testEnvironment: 'jsdom',
   moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
     '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/tests/__mocks__/fileMocks.js',
     '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
   },

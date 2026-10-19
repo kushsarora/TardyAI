@@ -22,8 +22,10 @@ answer to the only question that matters: *am I going to be late?*
 
 ## Architecture
 
-This is a **C3 AI application**, not a standalone web app. All domain data lives in C3 entity types
-and is fetched over `c3Action`; there is no hardcoded data in the frontend.
+The app supports both a **connected C3 AI environment** and a **standalone building demo**.
+Connected mode fetches domain data over `c3Action`. Demo mode packages the existing JSON seed data
+and the **same `NavRouter.js` implementation** through a Vite virtual module; there is no second routing algorithm.
+The header identifies demo mode. There is no silent fallback from a failed live API to demo data.
 
 ```
 pkgbc231600/                  # the C3 package (name is fixed — do not rename)
@@ -60,14 +62,30 @@ never guesses the floor: you tap it. The floor selector auto-advances as a route
 
 ## Running it
 
-The frontend dev server and the sync to the C3 environment are managed for you by C3 Code. To
-type-check, lint and bundle:
+For a standalone local demo (no credentials required):
 
 ```bash
 cd pkgbc231600/ui/react
-npm install
-VITE_C3_PKG=pkgbc231600 npm run build
+npm ci
+npm run dev
 ```
+
+Open `http://localhost:9000`. To type-check, lint and bundle:
+
+```bash
+cd pkgbc231600/ui/react
+npm ci
+npm run build
+```
+
+The default is demo mode when `VITE_C3_ENV` is absent. Set `VITE_DATA_MODE=live` to force live mode,
+or `VITE_DATA_MODE=demo` to force the standalone demo. For live C3 development, configure
+`VITE_C3_PKG`, `VITE_C3_BASE_URL`, `VITE_C3_ENV`, and `VITE_C3_APP` through your environment;
+C3 Code manages the dev server and deployment sync. Authentication remains in C3 settings.
+A deployed live bundle must be built with the live environment variables; do not deploy a demo build as a live client.
+
+The standalone demo includes only the graph-based navigation flow. The legacy `/room-finder`
+vision assistant requires its C3 backend and model configuration.
 
 `npm run build` runs ESLint at error level, then `tsc`, then Vite. All three must pass.
 
@@ -91,8 +109,8 @@ Credentials are configured through the C3 Code **Settings** page, never in this 
 Being explicit so nobody trusts these further than they deserve:
 
 - **Node pixel coordinates were eyeballed** off the plan renders. They are the most likely visible
-  flaw. Turn on **Author mode** in the UI, click a point on the plan, and paste the coordinate it
-  reports into `tools/build_graph.py`.
+  flaw. Correct node positions in `tools/build_graph.py`, regenerate the seed graph, and rebuild.
+  The student interface keeps coordinate-authoring tools out of the navigation flow.
 - `pixelsPerMeter = 12.0` is an estimate. It affects only the A\* heuristic, never the returned
   route or its ETA.
 - The two GPS calibration points are approximate building corners.
@@ -100,3 +118,42 @@ Being explicit so nobody trusts these further than they deserve:
 - Floor-plan extraction is **not** automated. `tools/build_graph.py` has a clearly marked
   `extract_nodes_from_plan()` stub documenting the intended vision pipeline; it raises
   `NotImplementedError` by design.
+
+## Updated navigation experience
+
+- Responsive green and ivory interface with a compact desktop rail and mobile bottom navigation.
+- Choose a start by room/entrance search or by placing a draggable map pin. GPS is a suggestion,
+  never a floor detector. Search a destination or select a labeled room on the floor plan.
+- Keyboard suggestions (arrows, Enter, Escape), empty/error states, and stale-response protection.
+- Searchable directory of mapped rooms, restrooms, and entrances; saved rooms persist in local storage.
+- Swap endpoints, reset a journey, toggle step-free routing, and inspect each floor’s directions.
+- Start directions for a user-controlled floor-by-floor walkthrough. This does **not** track your
+  real indoor position. Finishing directions is a manual action, not proof of physical arrival.
+- Today’s class time gives an arrival estimate, updates every 15 seconds, and conservatively rounds lateness.
+- Wheel and pinch zoom, pan, fit-to-view, and keyboard map controls (`+`, `-`, arrows, `0`).
+- Visible load/search/route errors, retry, image-failure notice, and application error recovery.
+
+## Validation
+
+```bash
+node --test pkgbc231600/test/node/*.test.js
+cd pkgbc231600/ui/react
+npm test -- --runInBand --coverage=false
+npm run build
+```
+
+The backend tests cover routing every mapped room from the entrance in default and step-free modes,
+room/door integrity, cross-floor connectors, turn directions, and disconnected graph handling.
+Frontend regressions cover room search races and keyboard selection, request failures, time-sensitive
+arrival verdicts, and route step rendering. Browser checks additionally cover the full entrance-to-3335
+journey, elevator routing, manual floor guidance, persistent favorites, zoom and pin interactions,
+and desktop/mobile layouts.
+
+## What still needs real-world work
+
+The application is a functional wayfinding demo, not a surveyed indoor positioning system. Before
+campus-wide use, verify corridor geometry and accessible entrances on site, calibrate plan scales,
+map the fourth floor and additional buildings, and account for locked doors, construction, and
+opening hours. Current route times use authored walking costs and fixed elevator estimates; they
+do not incorporate live crowds or outages. Indoor GPS uncertainty is displayed, and selecting a floor
+is always the user’s responsibility. Saved rooms are local to the browser, not synced to an account.
