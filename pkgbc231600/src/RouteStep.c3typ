@@ -1,0 +1,57 @@
+/**
+ * One followable direction within a {@link RouteLeg}, e.g. "Turn right at 3110,
+ * then walk 12 m" or "3335 (Class Room 3335) is on your left".
+ *
+ * Plain value type with no identity, returned inside {@link RouteLeg#steps}.
+ * Steps are computed server-side from the same graph edges that price the leg,
+ * so the {@link RouteStep#meters} of a leg's steps add up to
+ * {@link RouteLeg#meters}.
+ *
+ * ### Kinds
+ *
+ * {@link RouteStep#kind} is one of five values:
+ *
+ * - `start` — first step of the first leg: where you begin and how far to walk.
+ * - `straight` — first walk after a `connector` step, before any turn.
+ * - `turn` — a bearing change of more than 30 degrees: "Turn left", "Turn
+ *   right", or (over 150 degrees) "Turn around", optionally naming a room or
+ *   connector at the turn, then the distance to the next step.
+ * - `connector` — first step of every later leg: "Take West Stairs up to
+ *   Level 3". Zero meters and seconds; the ride time is part of
+ *   {@link NavRoute#totalSeconds}, not of the leg.
+ * - `arrive` — last step of the last leg, saying which side the destination is
+ *   on ("3335 is on your left at Elevator C (east)"). When the last hop bends
+ *   off the hallway into the room, the arrive step carries that hop's meters
+ *   and seconds; otherwise zero.
+ */
+type RouteStep {
+
+  /**
+   * One of `start`, `straight`, `turn`, `connector`, `arrive` (see the
+   * type-level note).
+   */
+  kind: !string
+
+  /**
+   * The direction phrased for a student, ready to display verbatim.
+   */
+  text: !string
+
+  /**
+   * Distance walked during this step, in meters, from the authored
+   * {@link NavEdge#meters} of the hops it covers.
+   */
+  meters: !double
+
+  /**
+   * Walking time for this step, in seconds, from the authored
+   * {@link NavEdge#seconds} of the hops it covers.
+   */
+  seconds: !double
+
+  /**
+   * Index into the leg's {@link RouteLeg#points} of the point where this step
+   * begins, so the UI can highlight it on the map.
+   */
+  pointIndex: !int
+}

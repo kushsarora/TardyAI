@@ -68,6 +68,18 @@ type RouteLeg {
   instruction: !string
 
   /**
+   * Turn-by-turn directions for this leg, in travel order.
+   *
+   * Collinear hallway hops are merged into one step, so this is never one step
+   * per graph node. The first step is `start` (first leg) or `connector`
+   * (every later leg); the last leg ends with an `arrive` step. Additive to
+   * {@link RouteLeg#instruction}, which stays the one-line summary; clients
+   * that predate this field, or a tenant not yet re-provisioned, see it null
+   * and fall back to the instruction.
+   */
+  steps: [RouteStep]
+
+  /**
    * When this leg ends at a vertical connector, the
    * {@link MapNode#connectorKey} of the stair or elevator to board.
    *

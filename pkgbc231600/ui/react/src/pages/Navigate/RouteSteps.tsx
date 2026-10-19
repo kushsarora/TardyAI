@@ -1,5 +1,7 @@
 /**
- * Turn-by-turn panel: one row per floor the route passes through.
+ * Turn-by-turn panel: one row per floor the route passes through, each with
+ * its numbered steps ("Turn right at 3110, then walk 12 m") when the server
+ * sends them, and just the leg's one-line instruction when it does not.
  *
  * Clicking a step switches the map to that floor, which is the main way a
  * multi-floor route stays comprehensible — you cannot draw a line between two
@@ -10,7 +12,8 @@
 import React from 'react';
 import { ArrowDown, Footprints } from 'lucide-react';
 
-import { NavRoute } from '@/Interfaces';
+import type { NavRoute } from '@/Interfaces';
+import type { RouteLegWithSteps, RouteStep } from '@/lib/routeStepTypes';
 
 interface RouteStepsProps {
   route: NavRoute;
@@ -23,6 +26,37 @@ interface RouteStepsProps {
 export function formatDuration(seconds: number): string {
   if (seconds < 60) return `${Math.round(seconds)} sec`;
   return `${Math.max(1, Math.round(seconds / 60))} min`;
+}
+
+/** Render a step distance in whole meters; any real walk shows at least 1 m. */
+function formatMeters(meters: number): string {
+  return `${Math.max(1, Math.round(meters))} m`;
+}
+
+/** The leg's turn-by-turn steps; empty when the server predates `RouteStep`. */
+function stepsOf(leg: RouteLegWithSteps): RouteStep[] {
+  return leg.steps ?? [];
+}
+
+/** Numbered turn-by-turn list for one leg, with each step's distance. */
+function LegStepList({ steps, label }: { steps: RouteStep[]; label: string }) {
+  return (
+    <ol aria-label={label} className="ml-11 list-decimal space-y-1 pb-2 pr-3 marker:text-[var(--c3-style-basic-fg-neutral)]">
+      {steps.map((step, index) => (
+        <li
+          key={`${step.kind}-${step.pointIndex}-${index}`}
+          className="text-c3-regular-body-p3 text-[var(--c3-style-basic-fg-primary)]"
+        >
+          <span>{step.text}</span>
+          {step.meters > 0 && (
+            <span className="ml-2 whitespace-nowrap text-[var(--c3-style-basic-fg-neutral)]">
+              {formatMeters(step.meters)}
+            </span>
+          )}
+        </li>
+      ))}
+    </ol>
+  );
 }
 
 export default function RouteSteps({ route, activeFloorId, onFocusFloor }: RouteStepsProps) {
@@ -52,7 +86,7 @@ export default function RouteSteps({ route, activeFloorId, onFocusFloor }: Route
       </div>
 
       <ol className="divide-y divide-[var(--c3-style-basic-border-weak)]">
-        {route.legs.map((leg, index) => (
+        {route.legs.map((leg: RouteLegWithSteps, index) => (
           <li key={`${leg.floorId}-${index}`}>
             <button
               type="button"
@@ -77,6 +111,12 @@ export default function RouteSteps({ route, activeFloorId, onFocusFloor }: Route
                 <ArrowDown className="mt-1 size-4 shrink-0 text-[var(--c3-style-basic-fg-neutral)]" aria-hidden />
               )}
             </button>
+            {stepsOf(leg).length > 0 && (
+              <LegStepList
+                steps={stepsOf(leg)}
+                label={`Directions on ${leg.floorName ?? `Level ${leg.floorLevel}`}`}
+              />
+            )}
           </li>
         ))}
       </ol>
