@@ -1,0 +1,847 @@
+[
+  {
+    "id": "n-f1-hall-w",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "hallway",
+    "imageX": 300.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-elev-wa",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "elevator",
+    "imageX": 400.0,
+    "imageY": 712.0,
+    "stepFree": true,
+    "connectorKey": "elev-west-a",
+    "name": "Elevator A (west)"
+  },
+  {
+    "id": "n-f1-hall-wmid",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "hallway",
+    "imageX": 520.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-elev-wb",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "elevator",
+    "imageX": 615.0,
+    "imageY": 712.0,
+    "stepFree": true,
+    "connectorKey": "elev-west-b",
+    "name": "Elevator B (west)"
+  },
+  {
+    "id": "n-f1-stair-w",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "stairs",
+    "imageX": 520.0,
+    "imageY": 772.0,
+    "stepFree": false,
+    "connectorKey": "stair-west",
+    "name": "West Stairs"
+  },
+  {
+    "id": "n-f1-hall-c1",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "hallway",
+    "imageX": 760.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-hall-c2",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "hallway",
+    "imageX": 1000.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-hall-c3",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "hallway",
+    "imageX": 1200.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-hall-e",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "hallway",
+    "imageX": 1330.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-elev-e",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "elevator",
+    "imageX": 1410.0,
+    "imageY": 712.0,
+    "stepFree": true,
+    "connectorKey": "elev-east",
+    "name": "Elevator C (east)"
+  },
+  {
+    "id": "n-f1-hall-s1",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "hallway",
+    "imageX": 520.0,
+    "imageY": 862.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-hall-s2",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "hallway",
+    "imageX": 760.0,
+    "imageY": 862.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-hall-s3",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "hallway",
+    "imageX": 1000.0,
+    "imageY": 862.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-hall-s4",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "hallway",
+    "imageX": 1200.0,
+    "imageY": 862.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-entrance-w",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "entrance",
+    "imageX": 250.0,
+    "imageY": 1300.0,
+    "stepFree": true,
+    "name": "West Entrance",
+    "searchAliases": "door,entry,outside"
+  },
+  {
+    "id": "n-f1-nw1",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "hallway",
+    "imageX": 330.0,
+    "imageY": 300.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f1-r1100",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "room",
+    "imageX": 285.0,
+    "imageY": 215.0,
+    "stepFree": true,
+    "roomNumber": "1100",
+    "name": "Morgridge Auditorium",
+    "searchAliases": "auditorium,lecture"
+  },
+  {
+    "id": "n-f1-r1140",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "room",
+    "imageX": 250.0,
+    "imageY": 560.0,
+    "stepFree": true,
+    "roomNumber": "1140",
+    "name": "Class Room 1140"
+  },
+  {
+    "id": "n-f1-r1170",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "room",
+    "imageX": 215.0,
+    "imageY": 862.0,
+    "stepFree": true,
+    "roomNumber": "1170",
+    "name": "Class Room 1170"
+  },
+  {
+    "id": "n-f1-r1180",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "room",
+    "imageX": 215.0,
+    "imageY": 1000.0,
+    "stepFree": true,
+    "roomNumber": "1180",
+    "name": "Class Room 1180"
+  },
+  {
+    "id": "n-f1-r1210",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "room",
+    "imageX": 775.0,
+    "imageY": 310.0,
+    "stepFree": true,
+    "roomNumber": "1210",
+    "name": "Huber Undergrad Computer Lab",
+    "searchAliases": "computer lab,huber"
+  },
+  {
+    "id": "n-f1-r1310",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "room",
+    "imageX": 1365.0,
+    "imageY": 285.0,
+    "stepFree": true,
+    "roomNumber": "1310",
+    "name": "Plenary Room",
+    "searchAliases": "plenary"
+  },
+  {
+    "id": "n-f1-r1250",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "room",
+    "imageX": 850.0,
+    "imageY": 940.0,
+    "stepFree": true,
+    "roomNumber": "1250",
+    "name": "Undergraduate Lounge",
+    "searchAliases": "lounge"
+  },
+  {
+    "id": "n-f1-wc1",
+    "floor": {
+      "id": "grainger-f1"
+    },
+    "kind": "restroom",
+    "imageX": 760.0,
+    "imageY": 735.0,
+    "stepFree": true,
+    "name": "Restrooms",
+    "searchAliases": "bathroom,washroom,toilet"
+  },
+  {
+    "id": "n-f2-hall-w",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "hallway",
+    "imageX": 300.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-elev-wa",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "elevator",
+    "imageX": 400.0,
+    "imageY": 712.0,
+    "stepFree": true,
+    "connectorKey": "elev-west-a",
+    "name": "Elevator A (west)"
+  },
+  {
+    "id": "n-f2-hall-wmid",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "hallway",
+    "imageX": 520.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-elev-wb",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "elevator",
+    "imageX": 615.0,
+    "imageY": 712.0,
+    "stepFree": true,
+    "connectorKey": "elev-west-b",
+    "name": "Elevator B (west)"
+  },
+  {
+    "id": "n-f2-stair-w",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "stairs",
+    "imageX": 520.0,
+    "imageY": 772.0,
+    "stepFree": false,
+    "connectorKey": "stair-west",
+    "name": "West Stairs"
+  },
+  {
+    "id": "n-f2-hall-c1",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "hallway",
+    "imageX": 760.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-hall-c2",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "hallway",
+    "imageX": 1000.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-hall-c3",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "hallway",
+    "imageX": 1200.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-hall-e",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "hallway",
+    "imageX": 1330.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-elev-e",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "elevator",
+    "imageX": 1410.0,
+    "imageY": 712.0,
+    "stepFree": true,
+    "connectorKey": "elev-east",
+    "name": "Elevator C (east)"
+  },
+  {
+    "id": "n-f2-hall-s1",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "hallway",
+    "imageX": 520.0,
+    "imageY": 862.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-hall-s2",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "hallway",
+    "imageX": 760.0,
+    "imageY": 862.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-hall-s3",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "hallway",
+    "imageX": 1000.0,
+    "imageY": 862.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-hall-s4",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "hallway",
+    "imageX": 1200.0,
+    "imageY": 862.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-nw1",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "hallway",
+    "imageX": 330.0,
+    "imageY": 300.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f2-r2120",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "room",
+    "imageX": 305.0,
+    "imageY": 370.0,
+    "stepFree": true,
+    "roomNumber": "2120",
+    "name": "Jack F Keller Lecture Hall",
+    "searchAliases": "keller,lecture hall"
+  },
+  {
+    "id": "n-f2-r2210",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "room",
+    "imageX": 820.0,
+    "imageY": 385.0,
+    "stepFree": true,
+    "roomNumber": "2210",
+    "name": "Learning Commons",
+    "searchAliases": "learning commons,study"
+  },
+  {
+    "id": "n-f2-r2170",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "room",
+    "imageX": 225.0,
+    "imageY": 862.0,
+    "stepFree": true,
+    "roomNumber": "2170",
+    "name": "Class Room 2170"
+  },
+  {
+    "id": "n-f2-r2180",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "room",
+    "imageX": 225.0,
+    "imageY": 1000.0,
+    "stepFree": true,
+    "roomNumber": "2180",
+    "name": "Class Room 2180"
+  },
+  {
+    "id": "n-f2-r2310",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "room",
+    "imageX": 1245.0,
+    "imageY": 400.0,
+    "stepFree": true,
+    "roomNumber": "2310",
+    "name": "Eve/Exec/Prof MBA Suite",
+    "searchAliases": "mba,executive"
+  },
+  {
+    "id": "n-f2-r2335",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "room",
+    "imageX": 1478.0,
+    "imageY": 180.0,
+    "stepFree": true,
+    "roomNumber": "2335",
+    "name": "Class Room 2335"
+  },
+  {
+    "id": "n-f2-r2290",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "room",
+    "imageX": 745.0,
+    "imageY": 1130.0,
+    "stepFree": true,
+    "roomNumber": "2290",
+    "name": "Computer Classroom 2290",
+    "searchAliases": "computer"
+  },
+  {
+    "id": "n-f2-r2080",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "room",
+    "imageX": 510.0,
+    "imageY": 1090.0,
+    "stepFree": true,
+    "roomNumber": "2080",
+    "name": "Nicholas Lecture Hall",
+    "searchAliases": "nicholas,lecture hall"
+  },
+  {
+    "id": "n-f2-wc2",
+    "floor": {
+      "id": "grainger-f2"
+    },
+    "kind": "restroom",
+    "imageX": 760.0,
+    "imageY": 735.0,
+    "stepFree": true,
+    "name": "Restrooms",
+    "searchAliases": "bathroom,washroom,toilet"
+  },
+  {
+    "id": "n-f3-hall-w",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 300.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-elev-wa",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "elevator",
+    "imageX": 400.0,
+    "imageY": 712.0,
+    "stepFree": true,
+    "connectorKey": "elev-west-a",
+    "name": "Elevator A (west)"
+  },
+  {
+    "id": "n-f3-hall-wmid",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 520.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-elev-wb",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "elevator",
+    "imageX": 615.0,
+    "imageY": 712.0,
+    "stepFree": true,
+    "connectorKey": "elev-west-b",
+    "name": "Elevator B (west)"
+  },
+  {
+    "id": "n-f3-stair-w",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "stairs",
+    "imageX": 520.0,
+    "imageY": 772.0,
+    "stepFree": false,
+    "connectorKey": "stair-west",
+    "name": "West Stairs"
+  },
+  {
+    "id": "n-f3-hall-c1",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 760.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-hall-c2",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 1000.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-hall-c3",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 1200.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-hall-e",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 1330.0,
+    "imageY": 712.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-elev-e",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "elevator",
+    "imageX": 1410.0,
+    "imageY": 712.0,
+    "stepFree": true,
+    "connectorKey": "elev-east",
+    "name": "Elevator C (east)"
+  },
+  {
+    "id": "n-f3-hall-s1",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 520.0,
+    "imageY": 862.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-hall-s2",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 760.0,
+    "imageY": 862.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-hall-s3",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 1000.0,
+    "imageY": 862.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-hall-s4",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 1200.0,
+    "imageY": 862.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-nw1",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 330.0,
+    "imageY": 300.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-nw2",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 350.0,
+    "imageY": 480.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-nw3",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "hallway",
+    "imageX": 330.0,
+    "imageY": 620.0,
+    "stepFree": true
+  },
+  {
+    "id": "n-f3-r3112",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "room",
+    "imageX": 390.0,
+    "imageY": 237.0,
+    "stepFree": true,
+    "roomNumber": "3112",
+    "name": "Office 3112"
+  },
+  {
+    "id": "n-f3-r3111",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "room",
+    "imageX": 240.0,
+    "imageY": 205.0,
+    "stepFree": true,
+    "roomNumber": "3111",
+    "name": "Conference Room 3111",
+    "searchAliases": "conference"
+  },
+  {
+    "id": "n-f3-r3115",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "room",
+    "imageX": 245.0,
+    "imageY": 365.0,
+    "stepFree": true,
+    "roomNumber": "3115",
+    "name": "Office Suite 3115"
+  },
+  {
+    "id": "n-f3-r3150",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "room",
+    "imageX": 258.0,
+    "imageY": 740.0,
+    "stepFree": true,
+    "roomNumber": "3150",
+    "name": "Undergraduate Program Office",
+    "searchAliases": "advising,undergrad office"
+  },
+  {
+    "id": "n-f3-r3210",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "room",
+    "imageX": 755.0,
+    "imageY": 385.0,
+    "stepFree": true,
+    "roomNumber": "3210",
+    "name": "Learning Commons",
+    "searchAliases": "learning commons,study"
+  },
+  {
+    "id": "n-f3-r3290",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "room",
+    "imageX": 760.0,
+    "imageY": 990.0,
+    "stepFree": true,
+    "roomNumber": "3290",
+    "name": "Undergraduate Program Office",
+    "searchAliases": "advising"
+  },
+  {
+    "id": "n-f3-r3335",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "room",
+    "imageX": 1478.0,
+    "imageY": 180.0,
+    "stepFree": true,
+    "roomNumber": "3335",
+    "name": "Class Room 3335"
+  },
+  {
+    "id": "n-f3-r3340",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "room",
+    "imageX": 1450.0,
+    "imageY": 390.0,
+    "stepFree": true,
+    "roomNumber": "3340",
+    "name": "Bolz Center for Arts Admin",
+    "searchAliases": "bolz,arts"
+  },
+  {
+    "id": "n-f3-r3560",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "room",
+    "imageX": 1455.0,
+    "imageY": 1420.0,
+    "stepFree": true,
+    "roomNumber": "3560",
+    "name": "Seminar Room 3560",
+    "searchAliases": "seminar"
+  },
+  {
+    "id": "n-f3-wc3",
+    "floor": {
+      "id": "grainger-f3"
+    },
+    "kind": "restroom",
+    "imageX": 760.0,
+    "imageY": 735.0,
+    "stepFree": true,
+    "name": "Restrooms",
+    "searchAliases": "bathroom,washroom,toilet"
+  }
+]

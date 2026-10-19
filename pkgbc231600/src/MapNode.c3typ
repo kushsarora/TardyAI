@@ -1,0 +1,130 @@
+/**
+ * A vertex in the walkable indoor navigation graph.
+ *
+ * A `MapNode` is any point a route can pass through or terminate at: a
+ * classroom door, a hallway junction, a stairwell landing, an elevator lobby,
+ * or a building entrance. Nodes are connected by {@link NavEdge} records and
+ * searched by {@link NavRouter#findRoute}.
+ *
+ * ### Geometry
+ *
+ * Position is stored in the pixel space of the owning {@link Floor} — see that
+ * type for the coordinate convention (origin top-left, +Y down). Pixel space is
+ * authoritative; there is no lat/lon on a node, because the floor plan is what
+ * the user actually interacts with.
+ *
+ * ### Vertical movement
+ *
+ * Nodes do not link across floors through {@link NavEdge}. Instead, a stair or
+ * elevator that serves several floors is modeled as **one node per floor, all
+ * sharing the same {@link MapNode#connectorKey}**. {@link NavRouter} treats
+ * same-key nodes on different floors as connected and synthesizes the traversal
+ * cost from the level difference. This keeps the seed data simple (no
+ * hand-authored cross-floor edges) and means adding a floor does not require
+ * re-authoring the connectors below it.
+ */
+entity type MapNode {
+
+  /**
+   * The floor this node sits on; inverse of {@link Floor#nodes}.
+   *
+   * Also determines the pixel space that {@link MapNode#imageX} and
+   * {@link MapNode#imageY} are measured in.
+   */
+  floor: !Floor
+
+  /**
+   * What kind of place this node represents. One of:
+   *
+   * - `room` — a destination a student searches for; should have a
+   *   {@link MapNode#roomNumber}.
+   * - `hallway` — a corridor junction or waypoint; pure routing geometry, not
+   *   a destination, and normally has no room number.
+   * - `door` — a doorway or threshold, useful where passage is restricted.
+   * - `stairs` — a stairwell landing; carries a {@link MapNode#connectorKey}
+   *   and is excluded in step-free mode.
+   * - `elevator` — an elevator lobby; carries a {@link MapNode#connectorKey}
+   *   and is the preferred vertical connector in step-free mode.
+   * - `entrance` — a building entrance from outside; the natural start node
+   *   when a device fix places the user at the perimeter.
+   * - `restroom` — a restroom, searchable but not usually a class destination.
+   *
+   * Stored as a string rather than an enum so that seed data and a future
+   * plan-extraction pipeline can introduce new kinds without a schema
+   * migration. The UI switches marker styling on this value.
+   */
+  kind: !string
+
+  /**
+   * Official room number as printed on the door and in the course timetable,
+   * e.g. "3112".
+   *
+   * This is the primary search key — a late student types a room number, not a
+   * name. Null for `hallway`, `door` and most connector nodes. In Grainger Hall
+   * the first digit encodes the floor and the second the wing, which is why
+   * {@link NavRouter#searchRooms} can usefully prefix-match on it.
+   */
+  roomNumber: string
+
+  /**
+   * Descriptive name of the space, e.g. "Morgridge Auditorium" or
+   * "Huber Undergrad Computer Lab".
+   *
+   * Searched alongside {@link MapNode#roomNumber} so a student can find a place
+   * they only know by name. Null when the plan gives no name for the space.
+   */
+  name: string
+
+  /**
+   * X position in the owning floor's pixel space, in pixels from the left edge.
+   *
+   * Valid range is 0 to {@link Floor#imageWidth}.
+   */
+  imageX: !double
+
+  /**
+   * Y position in the owning floor's pixel space, in pixels from the TOP edge
+   * (+Y points down).
+   *
+   * Valid range is 0 to {@link Floor#imageHeight}.
+   */
+  imageY: !double
+
+  /**
+   * Shared identifier linking one physical vertical connector across every
+   * floor it serves, e.g. "elev-west" present on levels 1, 2, 3 and 4.
+   *
+   * Null for everything that is not a stair or elevator. Two nodes with the
+   * same key on the same floor is a data error and will make the router treat a
+   * single shaft as two. See the type-level notes on vertical movement.
+   */
+  connectorKey: string
+
+  /**
+   * Whether this node itself can be reached and used without stairs.
+   *
+   * True for elevators, ramps and level corridors; false for stairwell
+   * landings. Accessibility mode drops false nodes from the search entirely, in
+   * addition to filtering {@link NavEdge#stepFree}.
+   */
+  stepFree: boolean
+
+  /**
+   * Extra comma-separated search terms, e.g. "bathroom,washroom,toilet" on a
+   * restroom or "career center,CSC" on an office.
+   *
+   * Lets {@link NavRouter#searchRooms} match colloquial names that appear
+   * nowhere on the official plan. Null when there are no aliases.
+   */
+  searchAliases: string
+
+  /**
+   * Edges leaving this node; inverse of {@link NavEdge#fromNode}.
+   */
+  outgoingEdges: [NavEdge](fromNode)
+
+  /**
+   * Edges arriving at this node; inverse of {@link NavEdge#toNode}.
+   */
+  incomingEdges: [NavEdge](toNode)
+}

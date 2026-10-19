@@ -1,0 +1,147 @@
+/**
+ * Indoor wayfinding engine for TardyAI — the backend API the React client calls
+ * to search for rooms and compute routes.
+ *
+ * `NavRouter` holds no state of its own; it exists purely as a home for static
+ * server-side methods that read the {@link MapNode} / {@link NavEdge} graph.
+ * Every method is callable from the frontend via `c3Action`, for example
+ * `c3Action('NavRouter', 'findRoute', [startId, destId, true])`.
+ *
+ * ### Routing model
+ *
+ * Shortest-path search is A* minimizing total {@link NavEdge#seconds}. The
+ * heuristic is straight-line pixel distance converted to seconds via the floor's
+ * scale, which is admissible (it never overestimates) because no path between
+ * two points can be shorter than the straight line between them — so A* is
+ * guaranteed to return a genuine optimum, not merely a good guess.
+ *
+ * Vertical movement is **not** read from edges. Nodes that share a
+ * {@link MapNode#connectorKey} across floors are implicitly connected, and the
+ * traversal cost is synthesized from the level difference: an elevator charges a
+ * fixed wait plus a per-floor ride, stairs charge a per-floor climb. This is why
+ * seed data never contains a cross-floor edge. See {@link MapNode} for the full
+ * rationale.
+ *
+ * ### Accessibility
+ *
+ * When `stepFree` is true the search excludes every {@link NavEdge} with
+ * {@link NavEdge#stepFree} false, excludes every {@link MapNode} with
+ * {@link MapNode#stepFree} false, and refuses stair connectors — leaving
+ * elevators and ramps. This can make a destination genuinely unreachable, which
+ * is reported honestly via {@link NavRoute#found} rather than quietly falling
+ * back to a route containing stairs.
+ *
+ * ### Two distinct failure channels — the client must handle both
+ *
+ * Every `!string` parameter here is validated by the **platform**, not by this
+ * type, and that check runs before the method body. Passing null, `""` or a
+ * whitespace-only string raises `Err.InvalidCall` and the call fails outright —
+ * it does **not** come back as a {@link NavRoute} with
+ * {@link NavRoute#found} false. So a `c3Action` caller sees:
+ *
+ * - **a rejected promise** when a required id or query was blank — i.e. a bug in
+ *   the caller, which should be prevented by guarding before the call rather
+ *   than caught after it; and
+ * - **a resolved {@link NavRoute} with `found` false** for every genuine
+ *   routing outcome (unknown id, same start and destination, no step-free path).
+ *
+ * Practically: never fire a request off an empty search box or an unset "I'm
+ * here" pin, and still check {@link NavRoute#found} on everything that does
+ * come back.
+ */
+@js(env='server')
+type NavRouter {
+
+  /**
+   * Compute the fastest route between two known graph nodes.
+   *
+   * @param startNodeId id of the origin {@link MapNode}, normally obtained from
+   *        {@link NavRouter#nearestNode} for the user's dropped pin.
+   * @param destNodeId id of the destination {@link MapNode}.
+   * @param stepFree when true, restrict the search to step-free passage as
+   *        described on the type. Treated as false when null.
+   * @return a {@link NavRoute}. On success {@link NavRoute#found} is true and
+   *         {@link NavRoute#legs} holds one leg per floor in travel order. If
+   *         either id does not resolve, if start and destination are the same
+   *         node, or if no path exists under the requested accessibility mode,
+   *         {@link NavRoute#found} is false and {@link NavRoute#message}
+   *         explains which of those happened. Never throws for an unroutable
+   *         request.
+   */
+  findRoute: function(startNodeId: !string, destNodeId: !string, stepFree: boolean): NavRoute js
+  /**
+   * Resolve a free-text room query to a destination, then route to it.
+   *
+   * Convenience wrapper over {@link NavRouter#findRoute} for the common case
+   * where the student typed "3112" rather than picking a node, saving the client
+   * a search round trip before it can route.
+   *
+   * @param buildingId id of the {@link Building} to search within; scopes the
+   *        query so a room number that repeats across buildings is unambiguous.
+   * @param startNodeId id of the origin {@link MapNode}.
+   * @param roomQuery a room number, room name, or alias. Matched by
+   *        {@link NavRouter#searchRooms}; the single best match is used.
+   * @param stepFree when true, restrict to step-free passage.
+   * @return a {@link NavRoute}. When the query matches nothing,
+   *         {@link NavRoute#found} is false and {@link NavRoute#message} names
+   *         the unmatched query. When it matches several rooms the best match is
+   *         routed to, and the caller can inspect {@link NavRoute#destNodeId} to
+   *         see which was chosen.
+   */
+  routeToRoom: function(buildingId: !string, startNodeId: !string, roomQuery: !string, stepFree: boolean): NavRoute js
+  /**
+   * Find the graph node closest to a point on a floor plan — used to snap the
+   * user's dragged "I'm here" pin onto the walkable graph so a route has
+   * somewhere to start.
+   *
+   * Distance is plain Euclidean distance in the floor's pixel space. The nearest
+   * node by straight-line pixels can occasionally be on the far side of a wall,
+   * since this intentionally ignores walls for speed and simplicity; in a
+   * reasonably dense corridor graph the error is a few meters and self-corrects
+   * as soon as the route is drawn.
+   *
+   * @param floorId id of the {@link Floor} the pin was dropped on.
+   * @param imageX pin X in that floor's pixel space.
+   * @param imageY pin Y in that floor's pixel space.
+   * @return the nearest {@link MapNode} on that floor, or null if the floor has
+   *         no nodes authored yet.
+   */
+  nearestNode: function(floorId: !string, imageX: !double, imageY: !double): MapNode js
+  /**
+   * Search a building's rooms by number, name or alias, for the search box.
+   *
+   * Matching is case-insensitive and ranked: an exact {@link MapNode#roomNumber}
+   * match first, then a room-number prefix match, then a substring match on
+   * {@link MapNode#name}, then a match within {@link MapNode#searchAliases}.
+   * Ranking matters because a student typing "311" should see room 3110 before a
+   * room merely *named* something containing "311".
+   *
+   * @param buildingId id of the {@link Building} to search within.
+   * @param query the raw text the user typed. Declared `!string`, which the
+   *        platform enforces *before* this method runs: null, `""` and a
+   *        whitespace-only string are all rejected with an `Err.InvalidCall`
+   *        rather than reaching the body. **Callers must therefore not call this
+   *        on an empty search box** — debounce and skip the call until the user
+   *        has typed a non-blank character, otherwise the UI surfaces a platform
+   *        error on every cleared input.
+   * @param limit maximum results to return; defaults to 10 when null, and is
+   *        capped internally to keep the response small.
+   * @return matching {@link MapNode} records in rank order, empty when nothing
+   *         matches.
+   */
+  searchRooms: function(buildingId: !string, query: !string, limit: int): [MapNode] js
+  /**
+   * Fetch the entire navigation graph for a building in one call.
+   *
+   * Called once when the map view mounts, so that floor switching, pin dragging
+   * and marker rendering are all local and instant. See
+   * {@link NavGraphSnapshot} for why this is a bulk call and what it does not
+   * scale to.
+   *
+   * @param buildingId id of the {@link Building} to snapshot.
+   * @return a {@link NavGraphSnapshot}. For a building with no authored graph,
+   *         returns a snapshot with empty collections and zero counts rather
+   *         than null, so the client can render an empty state uniformly.
+   */
+  graphForBuilding: function(buildingId: !string): NavGraphSnapshot js
+}

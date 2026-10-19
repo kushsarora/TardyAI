@@ -1,0 +1,107 @@
+/**
+ * One level of a {@link Building}, backed by a floor plan raster image.
+ *
+ * A `Floor` defines the **pixel coordinate space** that all of its
+ * {@link MapNode} geometry lives in. Every node on this floor stores its
+ * position as {@link MapNode#imageX} / {@link MapNode#imageY} measured in
+ * pixels against the image described by {@link Floor#planImageUrl},
+ * {@link Floor#imageWidth} and {@link Floor#imageHeight}, with the origin at
+ * the **top-left** of the image and +Y pointing **down** (standard raster
+ * convention, matching both HTML canvas and SVG).
+ *
+ * Storing geometry in pixel space rather than lat/lon is a deliberate choice:
+ * the floor plan is the artifact the user actually sees and drags a pin on, so
+ * pixel space is the authoritative space. Latitude/longitude enters the system
+ * only through {@link Floor#calibration}, which is used one-directionally to
+ * turn a coarse device GPS fix into a *suggested* starting pin.
+ *
+ * If multiple floors of a building were exported from the same source drawing
+ * at the same scale and orientation (the common case for facilities PDFs), they
+ * will share identical {@link Floor#imageWidth} / {@link Floor#imageHeight} and
+ * can reuse one identical {@link Floor#calibration}. That also makes the floors
+ * stack correctly in a 3D view.
+ */
+entity type Floor {
+
+  /**
+   * The building this floor belongs to; inverse of {@link Building#floors}.
+   */
+  building: !Building
+
+  /**
+   * Signed floor level used for ordering and for vertical-distance costs.
+   *
+   * Ground/street level is 1 for Grainger Hall (matching its 1xxx room
+   * numbering). Basements are negative or zero. The absolute difference between
+   * two levels is what {@link NavRouter} multiplies by the per-floor travel
+   * cost when routing through a vertical connector, so the scale must be
+   * consistent within a building (one unit = one storey).
+   */
+  level: !int
+
+  /**
+   * Human-facing label for the floor, e.g. "Level 3" or "Ground Floor".
+   *
+   * Shown in the floor selector and in multi-floor route instructions such as
+   * "Take elevator A to Level 3".
+   */
+  name: !string
+
+  /**
+   * Path or URL of the floor plan image for this level.
+   *
+   * Nullable on purpose: when null, the UI falls back to rendering a schematic
+   * plan derived from {@link MapNode} positions and {@link NavEdge} links, so
+   * the app is usable before real plans have been sourced. When set, this is
+   * typically a static asset served from the frontend `public/` directory.
+   */
+  planImageUrl: string
+
+  /**
+   * Width of {@link Floor#planImageUrl} in pixels.
+   *
+   * Defines the valid range of {@link MapNode#imageX} (0 to imageWidth) and is
+   * required so the UI can set up a correct viewBox and clamp a dragged pin
+   * without having to load the image first.
+   */
+  imageWidth: !int
+
+  /**
+   * Height of {@link Floor#planImageUrl} in pixels.
+   *
+   * Defines the valid range of {@link MapNode#imageY} (0 to imageHeight).
+   */
+  imageHeight: !int
+
+  /**
+   * Image scale: how many pixels of {@link Floor#planImageUrl} correspond to one
+   * real-world meter.
+   *
+   * Used by {@link NavRouter} to convert pixel distances into walking times for
+   * its A* heuristic, and by the UI to render a distance scale bar. Derive it by
+   * measuring a known span on the plan — a corridor of known length, or the
+   * distance between two {@link GeoCalibration} control points — and dividing
+   * pixels by meters.
+   *
+   * Nullable; the router falls back to a building-wide default when absent,
+   * which degrades heuristic quality (slightly more of the graph gets explored)
+   * but never changes the route that is returned.
+   */
+  pixelsPerMeter: double
+
+  /**
+   * Ground control points mapping real-world lat/lon to this floor's pixel
+   * space, used to convert a device GPS fix into a suggested pin position.
+   *
+   * Null is valid and simply disables the "locate me" suggestion — the user can
+   * still place the pin by hand, which is the primary interaction anyway. See
+   * {@link GeoCalibration} for the fitting rules and minimum point count.
+   */
+  calibration: GeoCalibration
+
+  /**
+   * Every navigation graph vertex on this floor; inverse of
+   * {@link MapNode#floor}.
+   */
+  nodes: [MapNode](floor)
+}

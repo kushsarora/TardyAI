@@ -1,0 +1,92 @@
+[
+  {
+    "id": "grainger-f1",
+    "building": {
+      "id": "grainger"
+    },
+    "level": 1,
+    "name": "Level 1",
+    "planImageUrl": "/plans/floor_p1.png",
+    "imageWidth": 1980,
+    "imageHeight": 1530,
+    "pixelsPerMeter": 12.0,
+    "calibration": {
+      "points": [
+        {
+          "label": "NW outside corner of building",
+          "lat": 43.07305,
+          "lon": -89.40205,
+          "imageX": 95.0,
+          "imageY": 40.0
+        },
+        {
+          "label": "SE outside corner of building",
+          "lat": 43.0721,
+          "lon": -89.3998,
+          "imageX": 1700.0,
+          "imageY": 1460.0
+        }
+      ]
+    }
+  },
+  {
+    "id": "grainger-f2",
+    "building": {
+      "id": "grainger"
+    },
+    "level": 2,
+    "name": "Level 2",
+    "planImageUrl": "/plans/floor_p2.png",
+    "imageWidth": 1980,
+    "imageHeight": 1530,
+    "pixelsPerMeter": 12.0,
+    "calibration": {
+      "points": [
+        {
+          "label": "NW outside corner of building",
+          "lat": 43.07305,
+          "lon": -89.40205,
+          "imageX": 95.0,
+          "imageY": 40.0
+        },
+        {
+          "label": "SE outside corner of building",
+          "lat": 43.0721,
+          "lon": -89.3998,
+          "imageX": 1700.0,
+          "imageY": 1460.0
+        }
+      ]
+    }
+  },
+  {
+    "id": "grainger-f3",
+    "building": {
+      "id": "grainger"
+    },
+    "level": 3,
+    "name": "Level 3",
+    "planImageUrl": "/plans/floor_p3.png",
+    "imageWidth": 1980,
+    "imageHeight": 1530,
+    "pixelsPerMeter": 12.0,
+    "calibration": {
+      "points": [
+        {
+          "label": "NW outside corner of building",
+          "lat": 43.07305,
+          "lon": -89.40205,
+          "imageX": 95.0,
+          "imageY": 40.0
+        },
+        {
+          "label": "SE outside corner of building",
+          "lat": 43.0721,
+          "lon": -89.3998,
+          "imageX": 1700.0,
+          "imageY": 1460.0
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,2030 @@
+[
+  {
+    "id": "e-f1-hall-w-elev-wa",
+    "fromNode": {
+      "id": "n-f1-hall-w"
+    },
+    "toNode": {
+      "id": "n-f1-elev-wa"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.4,
+    "meters": 8.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-elev-wa-hall-w",
+    "fromNode": {
+      "id": "n-f1-elev-wa"
+    },
+    "toNode": {
+      "id": "n-f1-hall-w"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.4,
+    "meters": 8.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-elev-wa-hall-wmid",
+    "fromNode": {
+      "id": "n-f1-elev-wa"
+    },
+    "toNode": {
+      "id": "n-f1-hall-wmid"
+    },
+    "edgeType": "hallway",
+    "seconds": 7.7,
+    "meters": 10.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-wmid-elev-wa",
+    "fromNode": {
+      "id": "n-f1-hall-wmid"
+    },
+    "toNode": {
+      "id": "n-f1-elev-wa"
+    },
+    "edgeType": "hallway",
+    "seconds": 7.7,
+    "meters": 10.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-wmid-elev-wb",
+    "fromNode": {
+      "id": "n-f1-hall-wmid"
+    },
+    "toNode": {
+      "id": "n-f1-elev-wb"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.1,
+    "meters": 7.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-elev-wb-hall-wmid",
+    "fromNode": {
+      "id": "n-f1-elev-wb"
+    },
+    "toNode": {
+      "id": "n-f1-hall-wmid"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.1,
+    "meters": 7.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-wmid-stair-w",
+    "fromNode": {
+      "id": "n-f1-hall-wmid"
+    },
+    "toNode": {
+      "id": "n-f1-stair-w"
+    },
+    "edgeType": "stair",
+    "seconds": 3.8,
+    "meters": 5.0,
+    "stepFree": false
+  },
+  {
+    "id": "e-f1-stair-w-hall-wmid",
+    "fromNode": {
+      "id": "n-f1-stair-w"
+    },
+    "toNode": {
+      "id": "n-f1-hall-wmid"
+    },
+    "edgeType": "stair",
+    "seconds": 3.8,
+    "meters": 5.0,
+    "stepFree": false
+  },
+  {
+    "id": "e-f1-elev-wb-hall-c1",
+    "fromNode": {
+      "id": "n-f1-elev-wb"
+    },
+    "toNode": {
+      "id": "n-f1-hall-c1"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.3,
+    "meters": 12.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-c1-elev-wb",
+    "fromNode": {
+      "id": "n-f1-hall-c1"
+    },
+    "toNode": {
+      "id": "n-f1-elev-wb"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.3,
+    "meters": 12.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-c1-hall-c2",
+    "fromNode": {
+      "id": "n-f1-hall-c1"
+    },
+    "toNode": {
+      "id": "n-f1-hall-c2"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-c2-hall-c1",
+    "fromNode": {
+      "id": "n-f1-hall-c2"
+    },
+    "toNode": {
+      "id": "n-f1-hall-c1"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-c2-hall-c3",
+    "fromNode": {
+      "id": "n-f1-hall-c2"
+    },
+    "toNode": {
+      "id": "n-f1-hall-c3"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.8,
+    "meters": 16.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-c3-hall-c2",
+    "fromNode": {
+      "id": "n-f1-hall-c3"
+    },
+    "toNode": {
+      "id": "n-f1-hall-c2"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.8,
+    "meters": 16.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-c3-hall-e",
+    "fromNode": {
+      "id": "n-f1-hall-c3"
+    },
+    "toNode": {
+      "id": "n-f1-hall-e"
+    },
+    "edgeType": "hallway",
+    "seconds": 8.3,
+    "meters": 10.8,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-e-hall-c3",
+    "fromNode": {
+      "id": "n-f1-hall-e"
+    },
+    "toNode": {
+      "id": "n-f1-hall-c3"
+    },
+    "edgeType": "hallway",
+    "seconds": 8.3,
+    "meters": 10.8,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-e-elev-e",
+    "fromNode": {
+      "id": "n-f1-hall-e"
+    },
+    "toNode": {
+      "id": "n-f1-elev-e"
+    },
+    "edgeType": "hallway",
+    "seconds": 5.1,
+    "meters": 6.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-elev-e-hall-e",
+    "fromNode": {
+      "id": "n-f1-elev-e"
+    },
+    "toNode": {
+      "id": "n-f1-hall-e"
+    },
+    "edgeType": "hallway",
+    "seconds": 5.1,
+    "meters": 6.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-wmid-hall-s1",
+    "fromNode": {
+      "id": "n-f1-hall-wmid"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s1"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.6,
+    "meters": 12.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s1-hall-wmid",
+    "fromNode": {
+      "id": "n-f1-hall-s1"
+    },
+    "toNode": {
+      "id": "n-f1-hall-wmid"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.6,
+    "meters": 12.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s1-hall-s2",
+    "fromNode": {
+      "id": "n-f1-hall-s1"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s2"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s2-hall-s1",
+    "fromNode": {
+      "id": "n-f1-hall-s2"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s1"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s2-hall-s3",
+    "fromNode": {
+      "id": "n-f1-hall-s2"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s3"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s3-hall-s2",
+    "fromNode": {
+      "id": "n-f1-hall-s3"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s2"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s3-hall-s4",
+    "fromNode": {
+      "id": "n-f1-hall-s3"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s4"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.8,
+    "meters": 16.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s4-hall-s3",
+    "fromNode": {
+      "id": "n-f1-hall-s4"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s3"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.8,
+    "meters": 16.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-c2-hall-s3",
+    "fromNode": {
+      "id": "n-f1-hall-c2"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s3"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.6,
+    "meters": 12.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s3-hall-c2",
+    "fromNode": {
+      "id": "n-f1-hall-s3"
+    },
+    "toNode": {
+      "id": "n-f1-hall-c2"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.6,
+    "meters": 12.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s4-hall-e",
+    "fromNode": {
+      "id": "n-f1-hall-s4"
+    },
+    "toNode": {
+      "id": "n-f1-hall-e"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.7,
+    "meters": 16.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-e-hall-s4",
+    "fromNode": {
+      "id": "n-f1-hall-e"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s4"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.7,
+    "meters": 16.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-entrance-w-hall-s1",
+    "fromNode": {
+      "id": "n-f1-entrance-w"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s1"
+    },
+    "edgeType": "hallway",
+    "seconds": 33.0,
+    "meters": 42.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s1-entrance-w",
+    "fromNode": {
+      "id": "n-f1-hall-s1"
+    },
+    "toNode": {
+      "id": "n-f1-entrance-w"
+    },
+    "edgeType": "hallway",
+    "seconds": 33.0,
+    "meters": 42.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-nw1-hall-w",
+    "fromNode": {
+      "id": "n-f1-nw1"
+    },
+    "toNode": {
+      "id": "n-f1-hall-w"
+    },
+    "edgeType": "hallway",
+    "seconds": 26.5,
+    "meters": 34.4,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-w-nw1",
+    "fromNode": {
+      "id": "n-f1-hall-w"
+    },
+    "toNode": {
+      "id": "n-f1-nw1"
+    },
+    "edgeType": "hallway",
+    "seconds": 26.5,
+    "meters": 34.4,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-r1100-nw1",
+    "fromNode": {
+      "id": "n-f1-r1100"
+    },
+    "toNode": {
+      "id": "n-f1-nw1"
+    },
+    "edgeType": "door",
+    "seconds": 9.2,
+    "meters": 8.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-nw1-r1100",
+    "fromNode": {
+      "id": "n-f1-nw1"
+    },
+    "toNode": {
+      "id": "n-f1-r1100"
+    },
+    "edgeType": "door",
+    "seconds": 9.2,
+    "meters": 8.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-r1140-hall-w",
+    "fromNode": {
+      "id": "n-f1-r1140"
+    },
+    "toNode": {
+      "id": "n-f1-hall-w"
+    },
+    "edgeType": "door",
+    "seconds": 13.3,
+    "meters": 13.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-w-r1140",
+    "fromNode": {
+      "id": "n-f1-hall-w"
+    },
+    "toNode": {
+      "id": "n-f1-r1140"
+    },
+    "edgeType": "door",
+    "seconds": 13.3,
+    "meters": 13.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-r1170-hall-s1",
+    "fromNode": {
+      "id": "n-f1-r1170"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s1"
+    },
+    "edgeType": "door",
+    "seconds": 22.6,
+    "meters": 25.4,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s1-r1170",
+    "fromNode": {
+      "id": "n-f1-hall-s1"
+    },
+    "toNode": {
+      "id": "n-f1-r1170"
+    },
+    "edgeType": "door",
+    "seconds": 22.6,
+    "meters": 25.4,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-r1180-hall-s1",
+    "fromNode": {
+      "id": "n-f1-r1180"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s1"
+    },
+    "edgeType": "door",
+    "seconds": 24.5,
+    "meters": 27.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s1-r1180",
+    "fromNode": {
+      "id": "n-f1-hall-s1"
+    },
+    "toNode": {
+      "id": "n-f1-r1180"
+    },
+    "edgeType": "door",
+    "seconds": 24.5,
+    "meters": 27.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-r1210-hall-c1",
+    "fromNode": {
+      "id": "n-f1-r1210"
+    },
+    "toNode": {
+      "id": "n-f1-hall-c1"
+    },
+    "edgeType": "door",
+    "seconds": 28.8,
+    "meters": 33.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-c1-r1210",
+    "fromNode": {
+      "id": "n-f1-hall-c1"
+    },
+    "toNode": {
+      "id": "n-f1-r1210"
+    },
+    "edgeType": "door",
+    "seconds": 28.8,
+    "meters": 33.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-r1310-elev-e",
+    "fromNode": {
+      "id": "n-f1-r1310"
+    },
+    "toNode": {
+      "id": "n-f1-elev-e"
+    },
+    "edgeType": "door",
+    "seconds": 30.5,
+    "meters": 35.8,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-elev-e-r1310",
+    "fromNode": {
+      "id": "n-f1-elev-e"
+    },
+    "toNode": {
+      "id": "n-f1-r1310"
+    },
+    "edgeType": "door",
+    "seconds": 30.5,
+    "meters": 35.8,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-r1250-hall-s2",
+    "fromNode": {
+      "id": "n-f1-r1250"
+    },
+    "toNode": {
+      "id": "n-f1-hall-s2"
+    },
+    "edgeType": "door",
+    "seconds": 10.6,
+    "meters": 9.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-s2-r1250",
+    "fromNode": {
+      "id": "n-f1-hall-s2"
+    },
+    "toNode": {
+      "id": "n-f1-r1250"
+    },
+    "edgeType": "door",
+    "seconds": 10.6,
+    "meters": 9.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-wc1-hall-c1",
+    "fromNode": {
+      "id": "n-f1-wc1"
+    },
+    "toNode": {
+      "id": "n-f1-hall-c1"
+    },
+    "edgeType": "door",
+    "seconds": 4.5,
+    "meters": 1.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f1-hall-c1-wc1",
+    "fromNode": {
+      "id": "n-f1-hall-c1"
+    },
+    "toNode": {
+      "id": "n-f1-wc1"
+    },
+    "edgeType": "door",
+    "seconds": 4.5,
+    "meters": 1.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-w-elev-wa",
+    "fromNode": {
+      "id": "n-f2-hall-w"
+    },
+    "toNode": {
+      "id": "n-f2-elev-wa"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.4,
+    "meters": 8.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-elev-wa-hall-w",
+    "fromNode": {
+      "id": "n-f2-elev-wa"
+    },
+    "toNode": {
+      "id": "n-f2-hall-w"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.4,
+    "meters": 8.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-elev-wa-hall-wmid",
+    "fromNode": {
+      "id": "n-f2-elev-wa"
+    },
+    "toNode": {
+      "id": "n-f2-hall-wmid"
+    },
+    "edgeType": "hallway",
+    "seconds": 7.7,
+    "meters": 10.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-wmid-elev-wa",
+    "fromNode": {
+      "id": "n-f2-hall-wmid"
+    },
+    "toNode": {
+      "id": "n-f2-elev-wa"
+    },
+    "edgeType": "hallway",
+    "seconds": 7.7,
+    "meters": 10.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-wmid-elev-wb",
+    "fromNode": {
+      "id": "n-f2-hall-wmid"
+    },
+    "toNode": {
+      "id": "n-f2-elev-wb"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.1,
+    "meters": 7.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-elev-wb-hall-wmid",
+    "fromNode": {
+      "id": "n-f2-elev-wb"
+    },
+    "toNode": {
+      "id": "n-f2-hall-wmid"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.1,
+    "meters": 7.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-wmid-stair-w",
+    "fromNode": {
+      "id": "n-f2-hall-wmid"
+    },
+    "toNode": {
+      "id": "n-f2-stair-w"
+    },
+    "edgeType": "stair",
+    "seconds": 3.8,
+    "meters": 5.0,
+    "stepFree": false
+  },
+  {
+    "id": "e-f2-stair-w-hall-wmid",
+    "fromNode": {
+      "id": "n-f2-stair-w"
+    },
+    "toNode": {
+      "id": "n-f2-hall-wmid"
+    },
+    "edgeType": "stair",
+    "seconds": 3.8,
+    "meters": 5.0,
+    "stepFree": false
+  },
+  {
+    "id": "e-f2-elev-wb-hall-c1",
+    "fromNode": {
+      "id": "n-f2-elev-wb"
+    },
+    "toNode": {
+      "id": "n-f2-hall-c1"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.3,
+    "meters": 12.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-c1-elev-wb",
+    "fromNode": {
+      "id": "n-f2-hall-c1"
+    },
+    "toNode": {
+      "id": "n-f2-elev-wb"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.3,
+    "meters": 12.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-c1-hall-c2",
+    "fromNode": {
+      "id": "n-f2-hall-c1"
+    },
+    "toNode": {
+      "id": "n-f2-hall-c2"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-c2-hall-c1",
+    "fromNode": {
+      "id": "n-f2-hall-c2"
+    },
+    "toNode": {
+      "id": "n-f2-hall-c1"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-c2-hall-c3",
+    "fromNode": {
+      "id": "n-f2-hall-c2"
+    },
+    "toNode": {
+      "id": "n-f2-hall-c3"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.8,
+    "meters": 16.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-c3-hall-c2",
+    "fromNode": {
+      "id": "n-f2-hall-c3"
+    },
+    "toNode": {
+      "id": "n-f2-hall-c2"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.8,
+    "meters": 16.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-c3-hall-e",
+    "fromNode": {
+      "id": "n-f2-hall-c3"
+    },
+    "toNode": {
+      "id": "n-f2-hall-e"
+    },
+    "edgeType": "hallway",
+    "seconds": 8.3,
+    "meters": 10.8,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-e-hall-c3",
+    "fromNode": {
+      "id": "n-f2-hall-e"
+    },
+    "toNode": {
+      "id": "n-f2-hall-c3"
+    },
+    "edgeType": "hallway",
+    "seconds": 8.3,
+    "meters": 10.8,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-e-elev-e",
+    "fromNode": {
+      "id": "n-f2-hall-e"
+    },
+    "toNode": {
+      "id": "n-f2-elev-e"
+    },
+    "edgeType": "hallway",
+    "seconds": 5.1,
+    "meters": 6.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-elev-e-hall-e",
+    "fromNode": {
+      "id": "n-f2-elev-e"
+    },
+    "toNode": {
+      "id": "n-f2-hall-e"
+    },
+    "edgeType": "hallway",
+    "seconds": 5.1,
+    "meters": 6.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-wmid-hall-s1",
+    "fromNode": {
+      "id": "n-f2-hall-wmid"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s1"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.6,
+    "meters": 12.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s1-hall-wmid",
+    "fromNode": {
+      "id": "n-f2-hall-s1"
+    },
+    "toNode": {
+      "id": "n-f2-hall-wmid"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.6,
+    "meters": 12.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s1-hall-s2",
+    "fromNode": {
+      "id": "n-f2-hall-s1"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s2"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s2-hall-s1",
+    "fromNode": {
+      "id": "n-f2-hall-s2"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s1"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s2-hall-s3",
+    "fromNode": {
+      "id": "n-f2-hall-s2"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s3"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s3-hall-s2",
+    "fromNode": {
+      "id": "n-f2-hall-s3"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s2"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s3-hall-s4",
+    "fromNode": {
+      "id": "n-f2-hall-s3"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s4"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.8,
+    "meters": 16.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s4-hall-s3",
+    "fromNode": {
+      "id": "n-f2-hall-s4"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s3"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.8,
+    "meters": 16.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-c2-hall-s3",
+    "fromNode": {
+      "id": "n-f2-hall-c2"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s3"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.6,
+    "meters": 12.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s3-hall-c2",
+    "fromNode": {
+      "id": "n-f2-hall-s3"
+    },
+    "toNode": {
+      "id": "n-f2-hall-c2"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.6,
+    "meters": 12.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s4-hall-e",
+    "fromNode": {
+      "id": "n-f2-hall-s4"
+    },
+    "toNode": {
+      "id": "n-f2-hall-e"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.7,
+    "meters": 16.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-e-hall-s4",
+    "fromNode": {
+      "id": "n-f2-hall-e"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s4"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.7,
+    "meters": 16.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-nw1-hall-w",
+    "fromNode": {
+      "id": "n-f2-nw1"
+    },
+    "toNode": {
+      "id": "n-f2-hall-w"
+    },
+    "edgeType": "hallway",
+    "seconds": 26.5,
+    "meters": 34.4,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-w-nw1",
+    "fromNode": {
+      "id": "n-f2-hall-w"
+    },
+    "toNode": {
+      "id": "n-f2-nw1"
+    },
+    "edgeType": "hallway",
+    "seconds": 26.5,
+    "meters": 34.4,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-r2120-nw1",
+    "fromNode": {
+      "id": "n-f2-r2120"
+    },
+    "toNode": {
+      "id": "n-f2-nw1"
+    },
+    "edgeType": "door",
+    "seconds": 7.8,
+    "meters": 6.2,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-nw1-r2120",
+    "fromNode": {
+      "id": "n-f2-nw1"
+    },
+    "toNode": {
+      "id": "n-f2-r2120"
+    },
+    "edgeType": "door",
+    "seconds": 7.8,
+    "meters": 6.2,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-r2210-hall-c1",
+    "fromNode": {
+      "id": "n-f2-r2210"
+    },
+    "toNode": {
+      "id": "n-f2-hall-c1"
+    },
+    "edgeType": "door",
+    "seconds": 24.3,
+    "meters": 27.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-c1-r2210",
+    "fromNode": {
+      "id": "n-f2-hall-c1"
+    },
+    "toNode": {
+      "id": "n-f2-r2210"
+    },
+    "edgeType": "door",
+    "seconds": 24.3,
+    "meters": 27.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-r2170-hall-s1",
+    "fromNode": {
+      "id": "n-f2-r2170"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s1"
+    },
+    "edgeType": "door",
+    "seconds": 21.9,
+    "meters": 24.6,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s1-r2170",
+    "fromNode": {
+      "id": "n-f2-hall-s1"
+    },
+    "toNode": {
+      "id": "n-f2-r2170"
+    },
+    "edgeType": "door",
+    "seconds": 21.9,
+    "meters": 24.6,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-r2180-hall-s1",
+    "fromNode": {
+      "id": "n-f2-r2180"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s1"
+    },
+    "edgeType": "door",
+    "seconds": 23.9,
+    "meters": 27.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s1-r2180",
+    "fromNode": {
+      "id": "n-f2-hall-s1"
+    },
+    "toNode": {
+      "id": "n-f2-r2180"
+    },
+    "edgeType": "door",
+    "seconds": 23.9,
+    "meters": 27.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-r2310-hall-c3",
+    "fromNode": {
+      "id": "n-f2-r2310"
+    },
+    "toNode": {
+      "id": "n-f2-hall-c3"
+    },
+    "edgeType": "door",
+    "seconds": 23.2,
+    "meters": 26.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-c3-r2310",
+    "fromNode": {
+      "id": "n-f2-hall-c3"
+    },
+    "toNode": {
+      "id": "n-f2-r2310"
+    },
+    "edgeType": "door",
+    "seconds": 23.2,
+    "meters": 26.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-r2335-elev-e",
+    "fromNode": {
+      "id": "n-f2-r2335"
+    },
+    "toNode": {
+      "id": "n-f2-elev-e"
+    },
+    "edgeType": "door",
+    "seconds": 37.4,
+    "meters": 44.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-elev-e-r2335",
+    "fromNode": {
+      "id": "n-f2-elev-e"
+    },
+    "toNode": {
+      "id": "n-f2-r2335"
+    },
+    "edgeType": "door",
+    "seconds": 37.4,
+    "meters": 44.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-r2290-hall-s2",
+    "fromNode": {
+      "id": "n-f2-r2290"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s2"
+    },
+    "edgeType": "door",
+    "seconds": 20.2,
+    "meters": 22.4,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s2-r2290",
+    "fromNode": {
+      "id": "n-f2-hall-s2"
+    },
+    "toNode": {
+      "id": "n-f2-r2290"
+    },
+    "edgeType": "door",
+    "seconds": 20.2,
+    "meters": 22.4,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-r2080-hall-s1",
+    "fromNode": {
+      "id": "n-f2-r2080"
+    },
+    "toNode": {
+      "id": "n-f2-hall-s1"
+    },
+    "edgeType": "door",
+    "seconds": 17.6,
+    "meters": 19.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-s1-r2080",
+    "fromNode": {
+      "id": "n-f2-hall-s1"
+    },
+    "toNode": {
+      "id": "n-f2-r2080"
+    },
+    "edgeType": "door",
+    "seconds": 17.6,
+    "meters": 19.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-wc2-hall-c1",
+    "fromNode": {
+      "id": "n-f2-wc2"
+    },
+    "toNode": {
+      "id": "n-f2-hall-c1"
+    },
+    "edgeType": "door",
+    "seconds": 4.5,
+    "meters": 1.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-hall-c1-wc2",
+    "fromNode": {
+      "id": "n-f2-hall-c1"
+    },
+    "toNode": {
+      "id": "n-f2-wc2"
+    },
+    "edgeType": "door",
+    "seconds": 4.5,
+    "meters": 1.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-w-elev-wa",
+    "fromNode": {
+      "id": "n-f3-hall-w"
+    },
+    "toNode": {
+      "id": "n-f3-elev-wa"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.4,
+    "meters": 8.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-elev-wa-hall-w",
+    "fromNode": {
+      "id": "n-f3-elev-wa"
+    },
+    "toNode": {
+      "id": "n-f3-hall-w"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.4,
+    "meters": 8.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-elev-wa-hall-wmid",
+    "fromNode": {
+      "id": "n-f3-elev-wa"
+    },
+    "toNode": {
+      "id": "n-f3-hall-wmid"
+    },
+    "edgeType": "hallway",
+    "seconds": 7.7,
+    "meters": 10.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-wmid-elev-wa",
+    "fromNode": {
+      "id": "n-f3-hall-wmid"
+    },
+    "toNode": {
+      "id": "n-f3-elev-wa"
+    },
+    "edgeType": "hallway",
+    "seconds": 7.7,
+    "meters": 10.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-wmid-elev-wb",
+    "fromNode": {
+      "id": "n-f3-hall-wmid"
+    },
+    "toNode": {
+      "id": "n-f3-elev-wb"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.1,
+    "meters": 7.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-elev-wb-hall-wmid",
+    "fromNode": {
+      "id": "n-f3-elev-wb"
+    },
+    "toNode": {
+      "id": "n-f3-hall-wmid"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.1,
+    "meters": 7.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-wmid-stair-w",
+    "fromNode": {
+      "id": "n-f3-hall-wmid"
+    },
+    "toNode": {
+      "id": "n-f3-stair-w"
+    },
+    "edgeType": "stair",
+    "seconds": 3.8,
+    "meters": 5.0,
+    "stepFree": false
+  },
+  {
+    "id": "e-f3-stair-w-hall-wmid",
+    "fromNode": {
+      "id": "n-f3-stair-w"
+    },
+    "toNode": {
+      "id": "n-f3-hall-wmid"
+    },
+    "edgeType": "stair",
+    "seconds": 3.8,
+    "meters": 5.0,
+    "stepFree": false
+  },
+  {
+    "id": "e-f3-elev-wb-hall-c1",
+    "fromNode": {
+      "id": "n-f3-elev-wb"
+    },
+    "toNode": {
+      "id": "n-f3-hall-c1"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.3,
+    "meters": 12.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-c1-elev-wb",
+    "fromNode": {
+      "id": "n-f3-hall-c1"
+    },
+    "toNode": {
+      "id": "n-f3-elev-wb"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.3,
+    "meters": 12.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-c1-hall-c2",
+    "fromNode": {
+      "id": "n-f3-hall-c1"
+    },
+    "toNode": {
+      "id": "n-f3-hall-c2"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-c2-hall-c1",
+    "fromNode": {
+      "id": "n-f3-hall-c2"
+    },
+    "toNode": {
+      "id": "n-f3-hall-c1"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-c2-hall-c3",
+    "fromNode": {
+      "id": "n-f3-hall-c2"
+    },
+    "toNode": {
+      "id": "n-f3-hall-c3"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.8,
+    "meters": 16.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-c3-hall-c2",
+    "fromNode": {
+      "id": "n-f3-hall-c3"
+    },
+    "toNode": {
+      "id": "n-f3-hall-c2"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.8,
+    "meters": 16.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-c3-hall-e",
+    "fromNode": {
+      "id": "n-f3-hall-c3"
+    },
+    "toNode": {
+      "id": "n-f3-hall-e"
+    },
+    "edgeType": "hallway",
+    "seconds": 8.3,
+    "meters": 10.8,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-e-hall-c3",
+    "fromNode": {
+      "id": "n-f3-hall-e"
+    },
+    "toNode": {
+      "id": "n-f3-hall-c3"
+    },
+    "edgeType": "hallway",
+    "seconds": 8.3,
+    "meters": 10.8,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-e-elev-e",
+    "fromNode": {
+      "id": "n-f3-hall-e"
+    },
+    "toNode": {
+      "id": "n-f3-elev-e"
+    },
+    "edgeType": "hallway",
+    "seconds": 5.1,
+    "meters": 6.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-elev-e-hall-e",
+    "fromNode": {
+      "id": "n-f3-elev-e"
+    },
+    "toNode": {
+      "id": "n-f3-hall-e"
+    },
+    "edgeType": "hallway",
+    "seconds": 5.1,
+    "meters": 6.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-wmid-hall-s1",
+    "fromNode": {
+      "id": "n-f3-hall-wmid"
+    },
+    "toNode": {
+      "id": "n-f3-hall-s1"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.6,
+    "meters": 12.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-s1-hall-wmid",
+    "fromNode": {
+      "id": "n-f3-hall-s1"
+    },
+    "toNode": {
+      "id": "n-f3-hall-wmid"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.6,
+    "meters": 12.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-s1-hall-s2",
+    "fromNode": {
+      "id": "n-f3-hall-s1"
+    },
+    "toNode": {
+      "id": "n-f3-hall-s2"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-s2-hall-s1",
+    "fromNode": {
+      "id": "n-f3-hall-s2"
+    },
+    "toNode": {
+      "id": "n-f3-hall-s1"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-s2-hall-s3",
+    "fromNode": {
+      "id": "n-f3-hall-s2"
+    },
+    "toNode": {
+      "id": "n-f3-hall-s3"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-s3-hall-s2",
+    "fromNode": {
+      "id": "n-f3-hall-s3"
+    },
+    "toNode": {
+      "id": "n-f3-hall-s2"
+    },
+    "edgeType": "hallway",
+    "seconds": 15.4,
+    "meters": 20.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-s3-hall-s4",
+    "fromNode": {
+      "id": "n-f3-hall-s3"
+    },
+    "toNode": {
+      "id": "n-f3-hall-s4"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.8,
+    "meters": 16.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-s4-hall-s3",
+    "fromNode": {
+      "id": "n-f3-hall-s4"
+    },
+    "toNode": {
+      "id": "n-f3-hall-s3"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.8,
+    "meters": 16.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-c2-hall-s3",
+    "fromNode": {
+      "id": "n-f3-hall-c2"
+    },
+    "toNode": {
+      "id": "n-f3-hall-s3"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.6,
+    "meters": 12.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-s3-hall-c2",
+    "fromNode": {
+      "id": "n-f3-hall-s3"
+    },
+    "toNode": {
+      "id": "n-f3-hall-c2"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.6,
+    "meters": 12.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-s4-hall-e",
+    "fromNode": {
+      "id": "n-f3-hall-s4"
+    },
+    "toNode": {
+      "id": "n-f3-hall-e"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.7,
+    "meters": 16.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-e-hall-s4",
+    "fromNode": {
+      "id": "n-f3-hall-e"
+    },
+    "toNode": {
+      "id": "n-f3-hall-s4"
+    },
+    "edgeType": "hallway",
+    "seconds": 12.7,
+    "meters": 16.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-nw1-nw2",
+    "fromNode": {
+      "id": "n-f3-nw1"
+    },
+    "toNode": {
+      "id": "n-f3-nw2"
+    },
+    "edgeType": "hallway",
+    "seconds": 11.6,
+    "meters": 15.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-nw2-nw1",
+    "fromNode": {
+      "id": "n-f3-nw2"
+    },
+    "toNode": {
+      "id": "n-f3-nw1"
+    },
+    "edgeType": "hallway",
+    "seconds": 11.6,
+    "meters": 15.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-nw2-nw3",
+    "fromNode": {
+      "id": "n-f3-nw2"
+    },
+    "toNode": {
+      "id": "n-f3-nw3"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.1,
+    "meters": 11.8,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-nw3-nw2",
+    "fromNode": {
+      "id": "n-f3-nw3"
+    },
+    "toNode": {
+      "id": "n-f3-nw2"
+    },
+    "edgeType": "hallway",
+    "seconds": 9.1,
+    "meters": 11.8,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-nw3-hall-w",
+    "fromNode": {
+      "id": "n-f3-nw3"
+    },
+    "toNode": {
+      "id": "n-f3-hall-w"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.2,
+    "meters": 8.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-w-nw3",
+    "fromNode": {
+      "id": "n-f3-hall-w"
+    },
+    "toNode": {
+      "id": "n-f3-nw3"
+    },
+    "edgeType": "hallway",
+    "seconds": 6.2,
+    "meters": 8.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-r3112-nw1",
+    "fromNode": {
+      "id": "n-f3-r3112"
+    },
+    "toNode": {
+      "id": "n-f3-nw1"
+    },
+    "edgeType": "door",
+    "seconds": 8.6,
+    "meters": 7.2,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-nw1-r3112",
+    "fromNode": {
+      "id": "n-f3-nw1"
+    },
+    "toNode": {
+      "id": "n-f3-r3112"
+    },
+    "edgeType": "door",
+    "seconds": 8.6,
+    "meters": 7.2,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-r3111-nw1",
+    "fromNode": {
+      "id": "n-f3-r3111"
+    },
+    "toNode": {
+      "id": "n-f3-nw1"
+    },
+    "edgeType": "door",
+    "seconds": 11.4,
+    "meters": 10.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-nw1-r3111",
+    "fromNode": {
+      "id": "n-f3-nw1"
+    },
+    "toNode": {
+      "id": "n-f3-r3111"
+    },
+    "edgeType": "door",
+    "seconds": 11.4,
+    "meters": 10.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-r3115-nw2",
+    "fromNode": {
+      "id": "n-f3-r3115"
+    },
+    "toNode": {
+      "id": "n-f3-nw2"
+    },
+    "edgeType": "door",
+    "seconds": 13.0,
+    "meters": 13.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-nw2-r3115",
+    "fromNode": {
+      "id": "n-f3-nw2"
+    },
+    "toNode": {
+      "id": "n-f3-r3115"
+    },
+    "edgeType": "door",
+    "seconds": 13.0,
+    "meters": 13.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-r3150-hall-w",
+    "fromNode": {
+      "id": "n-f3-r3150"
+    },
+    "toNode": {
+      "id": "n-f3-hall-w"
+    },
+    "edgeType": "door",
+    "seconds": 6.2,
+    "meters": 4.2,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-w-r3150",
+    "fromNode": {
+      "id": "n-f3-hall-w"
+    },
+    "toNode": {
+      "id": "n-f3-r3150"
+    },
+    "edgeType": "door",
+    "seconds": 6.2,
+    "meters": 4.2,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-r3210-hall-c1",
+    "fromNode": {
+      "id": "n-f3-r3210"
+    },
+    "toNode": {
+      "id": "n-f3-hall-c1"
+    },
+    "edgeType": "door",
+    "seconds": 24.0,
+    "meters": 27.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-c1-r3210",
+    "fromNode": {
+      "id": "n-f3-hall-c1"
+    },
+    "toNode": {
+      "id": "n-f3-r3210"
+    },
+    "edgeType": "door",
+    "seconds": 24.0,
+    "meters": 27.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-r3290-hall-s2",
+    "fromNode": {
+      "id": "n-f3-r3290"
+    },
+    "toNode": {
+      "id": "n-f3-hall-s2"
+    },
+    "edgeType": "door",
+    "seconds": 11.2,
+    "meters": 10.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-s2-r3290",
+    "fromNode": {
+      "id": "n-f3-hall-s2"
+    },
+    "toNode": {
+      "id": "n-f3-r3290"
+    },
+    "edgeType": "door",
+    "seconds": 11.2,
+    "meters": 10.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-r3335-elev-e",
+    "fromNode": {
+      "id": "n-f3-r3335"
+    },
+    "toNode": {
+      "id": "n-f3-elev-e"
+    },
+    "edgeType": "door",
+    "seconds": 37.4,
+    "meters": 44.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-elev-e-r3335",
+    "fromNode": {
+      "id": "n-f3-elev-e"
+    },
+    "toNode": {
+      "id": "n-f3-r3335"
+    },
+    "edgeType": "door",
+    "seconds": 37.4,
+    "meters": 44.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-r3340-hall-c3",
+    "fromNode": {
+      "id": "n-f3-r3340"
+    },
+    "toNode": {
+      "id": "n-f3-hall-c3"
+    },
+    "edgeType": "door",
+    "seconds": 29.1,
+    "meters": 34.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-c3-r3340",
+    "fromNode": {
+      "id": "n-f3-hall-c3"
+    },
+    "toNode": {
+      "id": "n-f3-r3340"
+    },
+    "edgeType": "door",
+    "seconds": 29.1,
+    "meters": 34.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-r3560-hall-s4",
+    "fromNode": {
+      "id": "n-f3-r3560"
+    },
+    "toNode": {
+      "id": "n-f3-hall-s4"
+    },
+    "edgeType": "door",
+    "seconds": 42.3,
+    "meters": 51.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-s4-r3560",
+    "fromNode": {
+      "id": "n-f3-hall-s4"
+    },
+    "toNode": {
+      "id": "n-f3-r3560"
+    },
+    "edgeType": "door",
+    "seconds": 42.3,
+    "meters": 51.1,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-wc3-hall-c1",
+    "fromNode": {
+      "id": "n-f3-wc3"
+    },
+    "toNode": {
+      "id": "n-f3-hall-c1"
+    },
+    "edgeType": "door",
+    "seconds": 4.5,
+    "meters": 1.9,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-hall-c1-wc3",
+    "fromNode": {
+      "id": "n-f3-hall-c1"
+    },
+    "toNode": {
+      "id": "n-f3-wc3"
+    },
+    "edgeType": "door",
+    "seconds": 4.5,
+    "meters": 1.9,
+    "stepFree": true
+  }
+]

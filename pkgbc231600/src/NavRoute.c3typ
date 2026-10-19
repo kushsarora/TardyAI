@@ -1,0 +1,92 @@
+/**
+ * The complete result of a routing request — the value returned to the frontend
+ * by {@link NavRouter#findRoute} and {@link NavRouter#routeToRoom}.
+ *
+ * Plain value type with no identity; routes are computed on demand and never
+ * persisted.
+ *
+ * ### Failure is a value, not an exception
+ *
+ * A request that cannot be satisfied returns a `NavRoute` with
+ * {@link NavRoute#found} false and a populated {@link NavRoute#message}, rather
+ * than throwing. "No path exists" is an ordinary, expected outcome — most often
+ * when step-free mode is on and the only way to the destination is a stairwell —
+ * and the UI needs to explain it to the user, not surface a stack trace. Callers
+ * must therefore check {@link NavRoute#found} before reading
+ * {@link NavRoute#legs}, which is empty on failure.
+ */
+type NavRoute {
+
+  /**
+   * Whether a usable path was found.
+   *
+   * When false, {@link NavRoute#legs} is empty, the totals are zero, and
+   * {@link NavRoute#message} explains why. See the type-level note on why
+   * failure is modeled as a value.
+   */
+  found: !boolean
+
+  /**
+   * Explanation of the outcome when {@link NavRoute#found} is false, written for
+   * display to a student — e.g. "No step-free route to 3112; the only access is
+   * by stairs." Null or empty on success.
+   */
+  message: string
+
+  /**
+   * The route broken into one {@link RouteLeg} per floor, in travel order.
+   *
+   * Empty when {@link NavRoute#found} is false.
+   */
+  legs: ![RouteLeg]
+
+  /**
+   * Total estimated journey time in **seconds**, including both horizontal
+   * walking and the synthesized vertical travel through connectors (elevator
+   * wait plus ride, or stair climbing time).
+   *
+   * This is the number the "will I make it to class?" countdown is computed
+   * against, so it intentionally includes the elevator wait that a pure
+   * distance metric would miss.
+   */
+  totalSeconds: !double
+
+  /**
+   * Total horizontal distance walked in meters, summed over all legs.
+   *
+   * Excludes vertical travel, which has no meaningful horizontal distance.
+   * Informational.
+   */
+  totalMeters: double
+
+  /**
+   * Number of distinct floors the route passes through.
+   *
+   * 1 means a single-floor route. The UI uses this to decide whether to show
+   * floor-transition affordances at all.
+   */
+  floorsTraversed: !int
+
+  /**
+   * Id of the {@link MapNode} the route started from — the graph node nearest
+   * the user's dropped pin, as resolved by {@link NavRouter#nearestNode}.
+   */
+  startNodeId: string
+
+  /**
+   * Id of the destination {@link MapNode}.
+   *
+   * Useful when the destination was resolved from a text query by
+   * {@link NavRouter#routeToRoom}, so the UI can show exactly which room was
+   * matched.
+   */
+  destNodeId: string
+
+  /**
+   * Echo of the accessibility mode the route was computed under.
+   *
+   * Returned so the UI can label a displayed route as step-free and detect a
+   * stale result after the user toggles the mode.
+   */
+  stepFree: !boolean
+}

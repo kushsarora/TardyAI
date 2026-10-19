@@ -1,0 +1,82 @@
+/**
+ * A directed, walkable connection between two {@link MapNode} vertices on the
+ * **same floor**.
+ *
+ * Edges are the search space of {@link NavRouter#findRoute}, which minimizes
+ * total {@link NavEdge#seconds}.
+ *
+ * ### Directionality
+ *
+ * An edge is directed, but ordinary corridors are walkable both ways, so seed
+ * data normally creates edges **in pairs** (A to B and B to A). Keeping them
+ * directed rather than implicitly bidirectional costs a little authoring effort
+ * and buys the ability to model genuinely one-way passages — an exit-only
+ * stairwell door, or a turnstile.
+ *
+ * ### Cross-floor movement is NOT an edge
+ *
+ * There are intentionally no cross-floor edges. Vertical movement is derived by
+ * the router from {@link MapNode#connectorKey}; see {@link MapNode} for the
+ * rationale. An edge whose endpoints are on different floors is a data error.
+ */
+entity type NavEdge {
+
+  /**
+   * Origin node; inverse of {@link MapNode#outgoingEdges}.
+   */
+  fromNode: !MapNode
+
+  /**
+   * Destination node; inverse of {@link MapNode#incomingEdges}.
+   *
+   * Must sit on the same {@link Floor} as {@link NavEdge#fromNode}.
+   */
+  toNode: !MapNode
+
+  /**
+   * The kind of passage this edge represents. One of:
+   *
+   * - `hallway` — normal corridor walking.
+   * - `door` — passing through a doorway; usually a short edge with a small
+   *   time penalty for the act of opening it.
+   * - `stair` — a flight of stairs **within** one floor (a split-level or
+   *   mezzanine step). Always has {@link NavEdge#stepFree} false. Note that
+   *   stairs *between* floors are modeled via connector keys, not this.
+   * - `elevator` — walking into or out of an elevator car.
+   * - `ramp` — a graded ramp; step-free, but slightly slower than level floor.
+   *
+   * The UI uses this to decide how to draw the segment and to phrase the
+   * instruction for the leg.
+   */
+  edgeType: !string
+
+  /**
+   * Estimated time to traverse this edge, in **seconds**. This is the A* edge
+   * cost.
+   *
+   * Time rather than distance is the right cost because it lets a 3-second door
+   * and a 3-second corridor segment compete on equal and realistic terms, and
+   * because the TardyAI "will I make it?" feature needs a time estimate
+   * directly. A typical indoor walking pace of about 1.3 m/s means roughly
+   * 0.77 seconds per meter.
+   */
+  seconds: !double
+
+  /**
+   * Horizontal distance of the edge in meters.
+   *
+   * Informational — shown in route details and useful for sanity-checking that
+   * {@link NavEdge#seconds} is plausible. Not used by the router.
+   */
+  meters: double
+
+  /**
+   * Whether this edge can be traversed without using stairs.
+   *
+   * False for every `stair` edge. Accessibility mode excludes all false edges,
+   * which can legitimately make a destination unreachable — the router reports
+   * that honestly via {@link NavRoute#found} rather than silently returning a
+   * route with stairs in it.
+   */
+  stepFree: !boolean
+}

@@ -1,0 +1,79 @@
+/**
+ * The portion of a route that takes place on a single {@link Floor}.
+ *
+ * Plain value type with no identity, returned inside {@link NavRoute#legs}.
+ *
+ * A route confined to one floor has exactly one leg. A route that changes floors
+ * has one leg per floor **in travel order**, which is what lets the UI show the
+ * correct polyline for whichever floor is currently selected and prompt the user
+ * at each transition ("Take elevator A to Level 3"). Splitting by floor in the
+ * backend rather than the frontend keeps the drawing code trivial: the view just
+ * picks the leg matching the selected floor and draws
+ * {@link RouteLeg#points} as-is.
+ */
+type RouteLeg {
+
+  /**
+   * Id of the {@link Floor} this leg is walked on.
+   */
+  floorId: !string
+
+  /**
+   * Signed level of that floor; mirrors {@link Floor#level}.
+   *
+   * Lets the UI order legs and auto-advance the floor selector without
+   * resolving the floor reference.
+   */
+  floorLevel: !int
+
+  /**
+   * Display name of the floor; mirrors {@link Floor#name}.
+   *
+   * Used verbatim inside {@link RouteLeg#instruction}.
+   */
+  floorName: string
+
+  /**
+   * The polyline to draw for this leg, **in travel order** from where the leg
+   * begins to where it ends.
+   *
+   * Always contains at least one point. A single-point leg is normal and means
+   * the user arrives on this floor and immediately boards another connector, or
+   * that the destination is the connector exit itself.
+   */
+  points: ![RoutePoint]
+
+  /**
+   * Walking time for this leg alone, in seconds.
+   *
+   * Excludes the vertical travel time of the connector that *ends* the leg —
+   * that cost is attributed to the following leg's transition and is included in
+   * {@link NavRoute#totalSeconds}.
+   */
+  seconds: !double
+
+  /**
+   * Horizontal distance walked on this leg, in meters. Informational.
+   */
+  meters: double
+
+  /**
+   * Human-readable prompt shown when this leg begins, phrased as an
+   * instruction, e.g. "Walk to elevator A" or "Take elevator A to Level 3, then
+   * walk to 3112".
+   *
+   * Generated server-side so the phrasing stays consistent and the frontend
+   * does not reimplement instruction logic.
+   */
+  instruction: !string
+
+  /**
+   * When this leg ends at a vertical connector, the
+   * {@link MapNode#connectorKey} of the stair or elevator to board.
+   *
+   * Null on the final leg of a route, which is how the UI detects the end of
+   * the journey. Non-null legs tell the user which specific shaft to use, which
+   * matters in a building with several.
+   */
+  exitConnectorKey: string
+}

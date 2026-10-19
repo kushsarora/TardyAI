@@ -1,0 +1,55 @@
+/**
+ * Every navigation graph vertex and connection for one {@link Building},
+ * returned in a single call by {@link NavRouter#graphForBuilding}.
+ *
+ * Plain value type with no identity.
+ *
+ * ### Why a bulk snapshot exists
+ *
+ * The map view needs node positions to draw markers, and needs them for the
+ * whole building because the user can switch floors freely. Fetching
+ * {@link MapNode} and {@link NavEdge} per floor, per interaction, would mean a
+ * round trip on every floor change and a visible stall while panning. One
+ * snapshot on page load is a few hundred small records for a building the size
+ * of Grainger Hall, which is cheap to serialize and lets every subsequent
+ * interaction be instant and local.
+ *
+ * Note the deliberate tradeoff: this does not scale to a whole campus in one
+ * call. It is scoped to a single building precisely so the payload stays
+ * bounded. A campus-wide view would need per-building paging instead.
+ */
+type NavGraphSnapshot {
+
+  /**
+   * Id of the {@link Building} this snapshot describes.
+   */
+  buildingId: !string
+
+  /**
+   * Every {@link MapNode} across all floors of the building.
+   *
+   * Empty when the building has no graph authored yet, which the UI should
+   * surface as an empty state rather than an error.
+   */
+  nodes: ![MapNode]
+
+  /**
+   * Every {@link NavEdge} whose endpoints lie in this building.
+   */
+  edges: ![NavEdge]
+
+  /**
+   * Count of {@link NavGraphSnapshot#nodes}, included so the UI can show graph
+   * coverage without walking the array.
+   */
+  nodeCount: !int
+
+  /**
+   * Count of {@link NavGraphSnapshot#edges}.
+   *
+   * A healthy authored graph has noticeably more edges than nodes; an edge
+   * count at or below the node count usually means corridor connections are
+   * missing or were only authored in one direction.
+   */
+  edgeCount: !int
+}

@@ -1,0 +1,73 @@
+/**
+ * A physical campus building that TardyAI can navigate the interior of.
+ *
+ * A `Building` is the root of the navigation graph: it owns an ordered set of
+ * {@link Floor} records, and each floor owns the {@link MapNode} vertices and
+ * {@link NavEdge} connections that {@link NavRouter} searches over.
+ *
+ * Geographic fields on this type ({@link Building#centroidLat},
+ * {@link Building#centroidLon}) are only used to decide *which* building a
+ * device is probably standing in. They are deliberately NOT used for in-building
+ * positioning — browser geolocation carries 5-15 m of horizontal error indoors
+ * and gives no usable floor, so the user confirms their floor and pin position
+ * manually. See {@link GeoCalibration} for the per-floor lat/lon-to-pixel
+ * transform that produces the initial pin guess.
+ */
+entity type Building {
+
+  /**
+   * Display name of the building, as a student would say it out loud.
+   *
+   * Example: "Grainger Hall". Shown in the building picker and the route header.
+   */
+  name: !string
+
+  /**
+   * Campus or institution the building belongs to, e.g. "UW-Madison".
+   *
+   * Used to group buildings in the picker once more than one building is loaded.
+   */
+  campus: string
+
+  /**
+   * Street address, e.g. "975 University Avenue".
+   *
+   * Informational only — shown in the building detail header. Not geocoded.
+   */
+  address: string
+
+  /**
+   * Floor level that the UI opens on, expressed in the same signed scale as
+   * {@link Floor#level}.
+   *
+   * This should be the level a student most often enters from (the street
+   * entrance), because it is the best default when we cannot detect the floor.
+   * Defaults to level 1 behavior if null.
+   */
+  defaultFloorLevel: int
+
+  /**
+   * Latitude of the building's approximate center, in decimal degrees (WGS84).
+   *
+   * Used only for coarse "are you near/inside this building?" checks and to
+   * sanity-check a device fix before running the {@link GeoCalibration}
+   * transform. Not precise enough for in-building positioning.
+   */
+  centroidLat: double
+
+  /**
+   * Longitude of the building's approximate center, in decimal degrees (WGS84).
+   *
+   * Companion to {@link Building#centroidLat}; same caveats apply.
+   */
+  centroidLon: double
+
+  /**
+   * Every floor belonging to this building, as the inverse of
+   * {@link Floor#building}.
+   *
+   * Callers that need floors in display order should sort by
+   * {@link Floor#level} ascending — the collection itself is unordered.
+   */
+  floors: [Floor](building)
+}

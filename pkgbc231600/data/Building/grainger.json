@@ -1,0 +1,11 @@
+[
+  {
+    "id": "grainger",
+    "name": "Grainger Hall",
+    "campus": "UW-Madison",
+    "address": "975 University Avenue, Madison, WI",
+    "defaultFloorLevel": 1,
+    "centroidLat": 43.07258,
+    "centroidLon": -89.40092
+  }
+]

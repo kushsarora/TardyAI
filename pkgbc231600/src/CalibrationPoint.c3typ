@@ -1,0 +1,50 @@
+/**
+ * A single ground control point: one real-world location whose position is
+ * known in BOTH latitude/longitude and floor plan pixel coordinates.
+ *
+ * Plain value type, embedded in {@link GeoCalibration#points}; it has no
+ * identity and is not independently persistable.
+ *
+ * Each point is one constraint in the least-squares fit described on
+ * {@link GeoCalibration}. The two coordinate pairs must describe the *same*
+ * physical spot — a mismatch of a few meters between the lat/lon and the pixel
+ * reading is the single most common cause of a transform that is subtly and
+ * confusingly wrong across the whole floor.
+ */
+type CalibrationPoint {
+
+  /**
+   * Human-readable note identifying the physical feature this point marks,
+   * e.g. "NW outside corner of building" or "center of rotunda".
+   *
+   * Purely for maintainability — whoever re-calibrates later needs to find the
+   * same spot. Not used in the fit.
+   */
+  label: string
+
+  /**
+   * Latitude of the control point in decimal degrees (WGS84).
+   */
+  lat: !double
+
+  /**
+   * Longitude of the control point in decimal degrees (WGS84).
+   */
+  lon: !double
+
+  /**
+   * X coordinate of the same physical point on the floor plan image, in pixels
+   * from the image's left edge.
+   *
+   * Must fall within 0 to {@link Floor#imageWidth} of the owning floor.
+   */
+  imageX: !double
+
+  /**
+   * Y coordinate of the same physical point on the floor plan image, in pixels
+   * from the image's TOP edge (+Y points down).
+   *
+   * Must fall within 0 to {@link Floor#imageHeight} of the owning floor.
+   */
+  imageY: !double
+}

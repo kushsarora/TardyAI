@@ -1,0 +1,36 @@
+/**
+ * One vertex of a drawn route polyline, in floor plan pixel space.
+ *
+ * Plain value type with no identity, returned inside
+ * {@link RouteLeg#points}. It is a deliberately flattened projection of
+ * {@link MapNode} — carrying only what the renderer needs — so the UI can draw
+ * a route without resolving node references or issuing follow-up fetches.
+ */
+type RoutePoint {
+
+  /**
+   * Id of the {@link MapNode} this point came from.
+   *
+   * Lets the UI correlate a drawn vertex back to the graph, for example to
+   * highlight the node under the cursor or to re-route from a tapped waypoint.
+   */
+  nodeId: !string
+
+  /**
+   * X coordinate in the floor's pixel space; mirrors {@link MapNode#imageX}.
+   */
+  x: !double
+
+  /**
+   * Y coordinate in the floor's pixel space; mirrors {@link MapNode#imageY}.
+   */
+  y: !double
+
+  /**
+   * The originating node's {@link MapNode#kind}.
+   *
+   * Carried through so the renderer can draw a distinct marker at elevators and
+   * stairwells without a second lookup.
+   */
+  kind: string
+}

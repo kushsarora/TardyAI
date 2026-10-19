@@ -1,0 +1,42 @@
+/**
+ * The set of ground control points that relate real-world coordinates to a
+ * {@link Floor}'s floor plan pixel space.
+ *
+ * This is a plain value type embedded in {@link Floor#calibration} — it has no
+ * identity of its own and is not independently persistable.
+ *
+ * ### How the transform is fitted
+ *
+ * The number of points in {@link GeoCalibration#points} determines which
+ * transform the client fits:
+ *
+ * - **3 or more points** — a full 6-parameter affine transform, solved by
+ *   least squares. This absorbs rotation, independent x/y scaling, and shear,
+ *   which matters because facilities drawings are frequently rotated relative
+ *   to true north and are not always square.
+ * - **exactly 2 points** — a 4-parameter similarity transform (uniform scale +
+ *   rotation + translation). Correct when the drawing is uniformly scaled, but
+ *   it cannot represent shear or anisotropic scale.
+ * - **fewer than 2 points** — not solvable; the client must skip the GPS
+ *   suggestion entirely and require a manual pin.
+ *
+ * ### Accuracy expectations
+ *
+ * Even a perfectly fitted transform only maps the *device's reported position*
+ * into pixel space, and indoors that position typically carries 5-15 m of error
+ * (far worse in building cores, and unavailable in basements). The transform
+ * therefore produces a **suggestion plus an uncertainty radius**, never an
+ * authoritative location. Choose control points that are far apart and easy to
+ * identify on both the plan and a satellite map — opposite building corners are
+ * ideal, because closely spaced points amplify fitting error dramatically.
+ */
+type GeoCalibration {
+
+  /**
+   * Two or more control points tying lat/lon to pixel xy on this floor.
+   *
+   * Order is not significant. See the type-level documentation for how point
+   * count selects the transform model.
+   */
+  points: ![CalibrationPoint]
+}
