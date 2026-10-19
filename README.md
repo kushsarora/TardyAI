@@ -144,6 +144,7 @@ Being explicit so nobody trusts these further than they deserve:
 
 ```bash
 node --test pkgbc231600/test/node/*.test.js
+python3 -I -m unittest discover -s pkgbc231600/test/py -t pkgbc231600/test/py
 cd pkgbc231600/ui/react
 npm test -- --runInBand --coverage=false
 npm run build

@@ -251,6 +251,22 @@ class RoutesAreTheRoutersRoute(unittest.TestCase):
         self.assertEqual([p["nodeId"] for p in result["route"]], router_node_ids(nav))
         return nav
 
+    def test_screenshot_journeys_use_corrected_geometry_and_suite_connectors(self):
+        for start, dest in [("1210B", "1270"), ("1270", "3210H")]:
+            for step_free in (False, True):
+                with self.subTest(start=start, dest=dest, step_free=step_free):
+                    result, _ = ask([extraction(start, dest, step_free=step_free)])
+                    start_id = "n-f1-r" + start
+                    dest_id = ("n-f3-r" if dest == "3210H" else "n-f1-r") + dest
+                    nav = self.assert_same_as_router(result, start_id, dest_id, step_free)
+                    final = nav["legs"][-1]["points"][-1]
+                    self.assertEqual(result["route"][-1]["imageX"], final["x"])
+                    self.assertEqual(result["route"][-1]["imageY"], final["y"])
+                    if dest == "3210H":
+                        connector = "elev-commons" if step_free else "stair-commons"
+                        self.assertIn("n-f1-" + connector, drawn_node_ids(result))
+                        self.assertIn("n-f3-" + connector, drawn_node_ids(result))
+
     def test_the_user_report_1310_to_1270(self):
         result, fake = ask(
             [extraction("1310", "1270", start_floor="1")],
