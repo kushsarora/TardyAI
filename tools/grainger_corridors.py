@@ -256,18 +256,27 @@ L2 = FloorPlan(
         "x1540m": (1540, 780),
         "x1540s": (1540, 1060),
         "commons-west-s": (690, 520),
-        "commons-west-n": (690, 300),
-        "commons-north-e": (1080, 300),
+        # North lane y=278: open floor between the pillars (y 252-264) and the
+        # top wall of the 2210E-L office block (y 294).
+        "commons-west-n": (690, 278),
+        "commons-north-e": (1080, 278),
         "commons-ne": (1080, 250),
-        "commons-south": (820, 520),
-        "commons-south-e": (1080, 580),
-        "commons-office-w": (820, 580),
+        # South of 2210M/N the open floor is y 524-568 (y=520 is their dashed
+        # south wall), widening south to y~630 east of x 856 for the 2210S/R
+        # doors. Pillars stand at y 572-580 (x 848-855, 972-980, 1096-1104), so
+        # the two lanes are y=545 and y=600, joined at x=870 and x=1120.
+        "commons-south": (820, 545),
+        "commons-elev-s": (870, 545),
+        "commons-south-e": (1120, 545),
+        "commons-office-w": (870, 600),
+        "commons-office-e": (1120, 600),
         "elev-commons": (870, 520),
         "stair-commons": (680, 550),
     },
     corridors=(
-        "commons-west-n commons-west-s commons-south elev-commons",
-        "commons-south commons-office-w commons-south-e",
+        "commons-west-n commons-west-s commons-south commons-elev-s elev-commons",
+        "commons-elev-s commons-south-e",
+        "commons-elev-s commons-office-w commons-office-e commons-south-e",
         "commons-west-s stair-commons",
         "commons-west-n commons-north-e commons-ne",
         "w118n w118 n405 n635",
@@ -317,9 +326,9 @@ L2 = FloorPlan(
         R("2080", 510, 1080, "Nicholas Lecture Hall", aliases="lecture hall,nicholas"),
         R("2210", 690, 488, "Learning Commons", door=(690, 488), aliases="library,study,commons"),
         R("2210A", 708, 397, door=(690, 397)),
-        R("2210N", 1085, 467, "Class Room 2210N", door=(1080, 580)),
-        R("2210R", 1020, 700, "Class Room 2210R", door=(1020, 580)),
-        R("2210S", 920, 700, "Class Room 2210S", door=(920, 580)),
+        R("2210N", 1085, 467, "Class Room 2210N", door=(1116, 545)),  # gap in its south wall
+        R("2210R", 1020, 700, "Class Room 2210R", door=(1020, 600)),
+        R("2210S", 920, 700, "Class Room 2210S", door=(920, 600)),
         R("2210U", 767, 625, "Class Room 2210U", door=(690, 520)),
         R("2200K", 640, 615, door=(690, 520)),
         R("2250", 840, 900, "Multicultural Center Lounge"),
@@ -337,7 +346,9 @@ L2 = FloorPlan(
         R("2310", 1240, 395, "Eve/Exec/Prof MBA", door=(1370, 400)),
         R("2311", 1283, 331),
         R("2312", 1240, 340),
-        R("2313", 1205, 335),
+        # Inside the 2310 suite: the stairwell at x 1108-1150 walls it off from
+        # the Commons, so it is entered like 2311/2312, from the atrium walkway.
+        R("2313", 1205, 335, door=(1370, 350)),
         R("2315", 1180, 466),
         R("2316", 1227, 466),
         R("2317", 1268, 466),
@@ -404,10 +415,12 @@ L2 = FloorPlan(
 # ---------------------------------------------------------------------------
 # Main hall y=786 from the 3150 suite to the east lounges. West wing: the
 # corridor x=335 and the arc past 3102-3112. South-west: corridors x=405 and
-# x=618 either side of 3070/3081-3085, joined at y=995. North: the skylit
-# corridor y=628 south of the Learning Commons, reached from the east lobby
-# (x=1250). East: the walkway x=1365 from the rotunda hub (3320) south past
-# the atrium. The MBA suites east of it (3415-3547 along the east wall) open
+# x=618 either side of 3070/3081-3085, joined at y=995. The skylit corridor
+# y~628 south of the Learning Commons is not mapped: the plan shows glazing on
+# the Commons side (y 575-585), a solid wall to the south (y 674-680), and a
+# partition at x=1158 into the MBA&M study area, so no wall-free link to the
+# hall. The offices 3301-3311 open east onto the walkway. East: the walkway
+# x=1365 from the rotunda hub (3320) south past the atrium. The MBA suites east of it (3415-3547 along the east wall) open
 # only onto their own corridors behind the filled lounges 3432/3434.
 
 L3 = FloorPlan(
@@ -438,9 +451,6 @@ L3 = FloorPlan(
         "stair-entry": (365, 1230),
         "c618": (618, 995),
         "s618": (618, 1105),
-        # North corridor south of the Learning Commons.
-        "n1250": (1320, 628),
-        "n660": (660, 628),
         # Walkway x=1365 and the rotunda hub.
         "lb725": (1365, 725),
         "elev-e": (1380, 725),
@@ -479,7 +489,6 @@ L3 = FloorPlan(
         "m405 c405 s405",
         "c405 c618",
         "m618 c618 s618",
-        "m1250 n1250 n660",
         "m1365 lb725 hub-c hub-n hub-ne",
         "lb725 elev-e",
         "hub-c hub-w",

@@ -3929,8 +3929,8 @@
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 3.5,
-    "meters": 4.6,
+    "seconds": 4.9,
+    "meters": 6.4,
     "stepFree": true
   },
   {
@@ -3943,8 +3943,8 @@
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 3.5,
-    "meters": 4.6,
+    "seconds": 4.9,
+    "meters": 6.4,
     "stepFree": true
   },
   {
@@ -4097,8 +4097,8 @@
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 8.3,
-    "meters": 10.8,
+    "seconds": 8.5,
+    "meters": 11.0,
     "stepFree": true
   },
   {
@@ -4111,17 +4111,17 @@
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 8.3,
-    "meters": 10.8,
+    "seconds": 8.5,
+    "meters": 11.0,
     "stepFree": true
   },
   {
-    "id": "e-f2-commons-south-elev-commons",
+    "id": "e-f2-commons-south-commons-elev-s",
     "fromNode": {
       "id": "n-f2-commons-south"
     },
     "toNode": {
-      "id": "n-f2-elev-commons"
+      "id": "n-f2-commons-elev-s"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
@@ -4130,9 +4130,9 @@
     "stepFree": true
   },
   {
-    "id": "e-f2-elev-commons-commons-south",
+    "id": "e-f2-commons-elev-s-commons-south",
     "fromNode": {
-      "id": "n-f2-elev-commons"
+      "id": "n-f2-commons-elev-s"
     },
     "toNode": {
       "id": "n-f2-commons-south"
@@ -4144,115 +4144,59 @@
     "stepFree": true
   },
   {
-    "id": "e-f2-commons-south-commons-office-w",
+    "id": "e-f2-commons-elev-s-elev-commons",
     "fromNode": {
-      "id": "n-f2-commons-south"
+      "id": "n-f2-commons-elev-s"
     },
     "toNode": {
-      "id": "n-f2-commons-office-w"
+      "id": "n-f2-elev-commons"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 3.8,
-    "meters": 5.0,
+    "seconds": 1.6,
+    "meters": 2.1,
     "stepFree": true
   },
   {
-    "id": "e-f2-commons-office-w-commons-south",
+    "id": "e-f2-elev-commons-commons-elev-s",
     "fromNode": {
-      "id": "n-f2-commons-office-w"
+      "id": "n-f2-elev-commons"
     },
     "toNode": {
-      "id": "n-f2-commons-south"
+      "id": "n-f2-commons-elev-s"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 3.8,
-    "meters": 5.0,
+    "seconds": 1.6,
+    "meters": 2.1,
     "stepFree": true
   },
   {
-    "id": "e-f2-commons-office-w-d2210S",
+    "id": "e-f2-commons-elev-s-d2210N",
     "fromNode": {
-      "id": "n-f2-commons-office-w"
-    },
-    "toNode": {
-      "id": "n-f2-d2210S"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 6.4,
-    "meters": 8.3,
-    "stepFree": true
-  },
-  {
-    "id": "e-f2-d2210S-commons-office-w",
-    "fromNode": {
-      "id": "n-f2-d2210S"
-    },
-    "toNode": {
-      "id": "n-f2-commons-office-w"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 6.4,
-    "meters": 8.3,
-    "stepFree": true
-  },
-  {
-    "id": "e-f2-d2210S-d2210R",
-    "fromNode": {
-      "id": "n-f2-d2210S"
-    },
-    "toNode": {
-      "id": "n-f2-d2210R"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 6.4,
-    "meters": 8.3,
-    "stepFree": true
-  },
-  {
-    "id": "e-f2-d2210R-d2210S",
-    "fromNode": {
-      "id": "n-f2-d2210R"
-    },
-    "toNode": {
-      "id": "n-f2-d2210S"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 6.4,
-    "meters": 8.3,
-    "stepFree": true
-  },
-  {
-    "id": "e-f2-d2210R-d2210N",
-    "fromNode": {
-      "id": "n-f2-d2210R"
+      "id": "n-f2-commons-elev-s"
     },
     "toNode": {
       "id": "n-f2-d2210N"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 3.6,
-    "meters": 4.7,
+    "seconds": 15.8,
+    "meters": 20.5,
     "stepFree": true
   },
   {
-    "id": "e-f2-d2210N-d2210R",
+    "id": "e-f2-d2210N-commons-elev-s",
     "fromNode": {
       "id": "n-f2-d2210N"
     },
     "toNode": {
-      "id": "n-f2-d2210R"
+      "id": "n-f2-commons-elev-s"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 3.6,
-    "meters": 4.7,
+    "seconds": 15.8,
+    "meters": 20.5,
     "stepFree": true
   },
   {
@@ -4284,6 +4228,146 @@
     "stepFree": true
   },
   {
+    "id": "e-f2-commons-elev-s-commons-office-w",
+    "fromNode": {
+      "id": "n-f2-commons-elev-s"
+    },
+    "toNode": {
+      "id": "n-f2-commons-office-w"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 3.5,
+    "meters": 4.6,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-commons-office-w-commons-elev-s",
+    "fromNode": {
+      "id": "n-f2-commons-office-w"
+    },
+    "toNode": {
+      "id": "n-f2-commons-elev-s"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 3.5,
+    "meters": 4.6,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-commons-office-w-d2210S",
+    "fromNode": {
+      "id": "n-f2-commons-office-w"
+    },
+    "toNode": {
+      "id": "n-f2-d2210S"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 3.2,
+    "meters": 4.2,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-d2210S-commons-office-w",
+    "fromNode": {
+      "id": "n-f2-d2210S"
+    },
+    "toNode": {
+      "id": "n-f2-commons-office-w"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 3.2,
+    "meters": 4.2,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-d2210S-d2210R",
+    "fromNode": {
+      "id": "n-f2-d2210S"
+    },
+    "toNode": {
+      "id": "n-f2-d2210R"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 6.4,
+    "meters": 8.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-d2210R-d2210S",
+    "fromNode": {
+      "id": "n-f2-d2210R"
+    },
+    "toNode": {
+      "id": "n-f2-d2210S"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 6.4,
+    "meters": 8.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-d2210R-commons-office-e",
+    "fromNode": {
+      "id": "n-f2-d2210R"
+    },
+    "toNode": {
+      "id": "n-f2-commons-office-e"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 6.4,
+    "meters": 8.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-commons-office-e-d2210R",
+    "fromNode": {
+      "id": "n-f2-commons-office-e"
+    },
+    "toNode": {
+      "id": "n-f2-d2210R"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 6.4,
+    "meters": 8.3,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-commons-office-e-commons-south-e",
+    "fromNode": {
+      "id": "n-f2-commons-office-e"
+    },
+    "toNode": {
+      "id": "n-f2-commons-south-e"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 3.5,
+    "meters": 4.6,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-commons-south-e-commons-office-e",
+    "fromNode": {
+      "id": "n-f2-commons-south-e"
+    },
+    "toNode": {
+      "id": "n-f2-commons-office-e"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 3.5,
+    "meters": 4.6,
+    "stepFree": true
+  },
+  {
     "id": "e-f2-commons-west-s-stair-commons",
     "fromNode": {
       "id": "n-f2-commons-west-s"
@@ -4312,59 +4396,31 @@
     "stepFree": false
   },
   {
-    "id": "e-f2-commons-west-n-d2313",
+    "id": "e-f2-commons-west-n-commons-north-e",
     "fromNode": {
       "id": "n-f2-commons-west-n"
-    },
-    "toNode": {
-      "id": "n-f2-d2313"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 24.7,
-    "meters": 32.2,
-    "stepFree": true
-  },
-  {
-    "id": "e-f2-d2313-commons-west-n",
-    "fromNode": {
-      "id": "n-f2-d2313"
-    },
-    "toNode": {
-      "id": "n-f2-commons-west-n"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 24.7,
-    "meters": 32.2,
-    "stepFree": true
-  },
-  {
-    "id": "e-f2-d2313-commons-north-e",
-    "fromNode": {
-      "id": "n-f2-d2313"
     },
     "toNode": {
       "id": "n-f2-commons-north-e"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 0.3,
-    "meters": 0.3,
+    "seconds": 25.0,
+    "meters": 32.5,
     "stepFree": true
   },
   {
-    "id": "e-f2-commons-north-e-d2313",
+    "id": "e-f2-commons-north-e-commons-west-n",
     "fromNode": {
       "id": "n-f2-commons-north-e"
     },
     "toNode": {
-      "id": "n-f2-d2313"
+      "id": "n-f2-commons-west-n"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 0.3,
-    "meters": 0.3,
+    "seconds": 25.0,
+    "meters": 32.5,
     "stepFree": true
   },
   {
@@ -4377,8 +4433,8 @@
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 3.2,
-    "meters": 4.2,
+    "seconds": 1.8,
+    "meters": 2.3,
     "stepFree": true
   },
   {
@@ -4391,8 +4447,8 @@
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 3.2,
-    "meters": 4.2,
+    "seconds": 1.8,
+    "meters": 2.3,
     "stepFree": true
   },
   {
@@ -6636,31 +6692,59 @@
     "stepFree": true
   },
   {
-    "id": "e-f2-d2312-d2339",
+    "id": "e-f2-d2312-d2313",
     "fromNode": {
       "id": "n-f2-d2312"
     },
     "toNode": {
-      "id": "n-f2-d2339"
+      "id": "n-f2-d2313"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 2.1,
-    "meters": 2.8,
+    "seconds": 0.4,
+    "meters": 0.5,
     "stepFree": true
   },
   {
-    "id": "e-f2-d2339-d2312",
+    "id": "e-f2-d2313-d2312",
     "fromNode": {
-      "id": "n-f2-d2339"
+      "id": "n-f2-d2313"
     },
     "toNode": {
       "id": "n-f2-d2312"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 2.1,
-    "meters": 2.8,
+    "seconds": 0.4,
+    "meters": 0.5,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-d2313-d2339",
+    "fromNode": {
+      "id": "n-f2-d2313"
+    },
+    "toNode": {
+      "id": "n-f2-d2339"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 1.7,
+    "meters": 2.2,
+    "stepFree": true
+  },
+  {
+    "id": "e-f2-d2339-d2313",
+    "fromNode": {
+      "id": "n-f2-d2339"
+    },
+    "toNode": {
+      "id": "n-f2-d2313"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 1.7,
+    "meters": 2.2,
     "stepFree": true
   },
   {
@@ -13916,118 +14000,6 @@
     "stepFree": true
   },
   {
-    "id": "e-f3-m1250-d3301",
-    "fromNode": {
-      "id": "n-f3-m1250"
-    },
-    "toNode": {
-      "id": "n-f3-d3301"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 8.5,
-    "meters": 11.0,
-    "stepFree": true
-  },
-  {
-    "id": "e-f3-d3301-m1250",
-    "fromNode": {
-      "id": "n-f3-d3301"
-    },
-    "toNode": {
-      "id": "n-f3-m1250"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 8.5,
-    "meters": 11.0,
-    "stepFree": true
-  },
-  {
-    "id": "e-f3-d3301-n1250",
-    "fromNode": {
-      "id": "n-f3-d3301"
-    },
-    "toNode": {
-      "id": "n-f3-n1250"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 1.7,
-    "meters": 2.2,
-    "stepFree": true
-  },
-  {
-    "id": "e-f3-n1250-d3301",
-    "fromNode": {
-      "id": "n-f3-n1250"
-    },
-    "toNode": {
-      "id": "n-f3-d3301"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 1.7,
-    "meters": 2.2,
-    "stepFree": true
-  },
-  {
-    "id": "e-f3-n1250-d3303",
-    "fromNode": {
-      "id": "n-f3-n1250"
-    },
-    "toNode": {
-      "id": "n-f3-d3303"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 0.3,
-    "meters": 0.4,
-    "stepFree": true
-  },
-  {
-    "id": "e-f3-d3303-n1250",
-    "fromNode": {
-      "id": "n-f3-d3303"
-    },
-    "toNode": {
-      "id": "n-f3-n1250"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 0.3,
-    "meters": 0.4,
-    "stepFree": true
-  },
-  {
-    "id": "e-f3-d3303-n660",
-    "fromNode": {
-      "id": "n-f3-d3303"
-    },
-    "toNode": {
-      "id": "n-f3-n660"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 42.0,
-    "meters": 54.6,
-    "stepFree": true
-  },
-  {
-    "id": "e-f3-n660-d3303",
-    "fromNode": {
-      "id": "n-f3-n660"
-    },
-    "toNode": {
-      "id": "n-f3-d3303"
-    },
-    "routingRevision": "grainger-access-v2",
-    "edgeType": "hallway",
-    "seconds": 42.0,
-    "meters": 54.6,
-    "stepFree": true
-  },
-  {
     "id": "e-f3-m1365-lb725",
     "fromNode": {
       "id": "n-f3-m1365"
@@ -14084,31 +14056,59 @@
     "stepFree": true
   },
   {
-    "id": "e-f3-d3420-d3412",
+    "id": "e-f3-d3420-d3301",
     "fromNode": {
       "id": "n-f3-d3420"
     },
     "toNode": {
-      "id": "n-f3-d3412"
+      "id": "n-f3-d3301"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 2.4,
-    "meters": 3.1,
+    "seconds": 1.1,
+    "meters": 1.4,
     "stepFree": true
   },
   {
-    "id": "e-f3-d3412-d3420",
+    "id": "e-f3-d3301-d3420",
     "fromNode": {
-      "id": "n-f3-d3412"
+      "id": "n-f3-d3301"
     },
     "toNode": {
       "id": "n-f3-d3420"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 2.4,
-    "meters": 3.1,
+    "seconds": 1.1,
+    "meters": 1.4,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-d3301-d3412",
+    "fromNode": {
+      "id": "n-f3-d3301"
+    },
+    "toNode": {
+      "id": "n-f3-d3412"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 1.3,
+    "meters": 1.7,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-d3412-d3301",
+    "fromNode": {
+      "id": "n-f3-d3412"
+    },
+    "toNode": {
+      "id": "n-f3-d3301"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 1.3,
+    "meters": 1.7,
     "stepFree": true
   },
   {
@@ -14168,31 +14168,59 @@
     "stepFree": true
   },
   {
-    "id": "e-f3-d3410-d3413",
+    "id": "e-f3-d3410-d3303",
     "fromNode": {
       "id": "n-f3-d3410"
     },
     "toNode": {
-      "id": "n-f3-d3413"
+      "id": "n-f3-d3303"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 1.3,
-    "meters": 1.8,
+    "seconds": 0.6,
+    "meters": 0.8,
     "stepFree": true
   },
   {
-    "id": "e-f3-d3413-d3410",
+    "id": "e-f3-d3303-d3410",
     "fromNode": {
-      "id": "n-f3-d3413"
+      "id": "n-f3-d3303"
     },
     "toNode": {
       "id": "n-f3-d3410"
     },
     "routingRevision": "grainger-access-v2",
     "edgeType": "hallway",
-    "seconds": 1.3,
-    "meters": 1.8,
+    "seconds": 0.6,
+    "meters": 0.8,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-d3303-d3413",
+    "fromNode": {
+      "id": "n-f3-d3303"
+    },
+    "toNode": {
+      "id": "n-f3-d3413"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 0.8,
+    "meters": 1.0,
+    "stepFree": true
+  },
+  {
+    "id": "e-f3-d3413-d3303",
+    "fromNode": {
+      "id": "n-f3-d3413"
+    },
+    "toNode": {
+      "id": "n-f3-d3303"
+    },
+    "routingRevision": "grainger-access-v2",
+    "edgeType": "hallway",
+    "seconds": 0.8,
+    "meters": 1.0,
     "stepFree": true
   },
   {
