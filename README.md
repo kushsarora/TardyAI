@@ -1,242 +1,99 @@
-# TardyAI
+# TardyAI (iOS)
 
-Indoor wayfinding — "Google Maps for inside buildings." Built for students who are late or lost in
-large, confusing campus buildings. Demo building: **Grainger Hall**, UW–Madison business school.
+Indoor wayfinding for students who are late or lost: "Google Maps for inside buildings."
+Demo building: **Grainger Hall**, UW–Madison.
 
-Type a room number, get a walking route drawn on the real floor plan, across floors, with an honest
-answer to the only question that matters: *am I going to be late?*
+Type a room number and you get a walking route drawn on the real floor plan, across floors. You also get an honest answer to the question that matters: *am I going to be late?*
+
+> **Looking for the C3 web app?** It lives on the [`C3` branch](https://github.com/kushsarora/TardyAI/tree/C3), unchanged, for reference.
+> `main` is the native iOS app (SwiftUI). The routing engine, the Grainger map data and the 3D model came from that branch.
 
 ## What it does
 
-- **Floor plan map** — real UW–Madison Space Management plans, pan/zoom, floor selector.
-- **"I'm here" pin** — tap the plan, or let the browser suggest a position from GPS. The GPS
-  accuracy circle is drawn so the uncertainty is visible, and the pin stays draggable.
-- **Room search** — by number (`3335`) or name (`Learning Commons`).
-- **A\* routing** — over a graph of rooms, hallway intersections, doors, stairs and elevators.
-  Edge cost is **time**, not distance.
-- **Multi-floor routes** — "Take the elevator to Level 3", with one leg per floor.
-- **Step-free mode** — blocks stair edges and prefers elevators. One toggle, different route *and*
-  different ETA.
-- **The TardyAI hook** — enter your class start time, get "Arrive 2 min late" or "You have 3 min to
-  spare", recomputed every 15 s.
+- **Floor plan map.** Real UW–Madison floor plans with pinch to zoom, drag to pan and a floor picker (L1–L3). The map frames your route automatically.
+- **Room search.** Search by number (`3335`), name (`Learning Commons`) or a term like `restroom`. You can also browse every room by floor.
+- **Tap the plan.** Tap any room to get **Go here** or **Start** buttons.
+- **"Start from my location".** GPS suggests a start on the floor you've picked, and the accuracy circle is drawn. GPS can't tell floors apart, so you always choose the floor.
+- **A\* routing.** Routes are costed in *time*, not distance. Multi-floor routes say things like "Take Elevator A (west) up to Level 3."
+- **Step-free mode.** No stairs, elevators only. One toggle gives a different route *and* a different ETA.
+- **The TardyAI hook.** Set your class time and you get "About 2 min late" or "3 min to spare", rechecked every 15 s.
+- **Turn-by-turn directions.** A floor-by-floor walkthrough with Next/Back. It follows the map, not your real position.
+- **3D view.** A plan-derived cutaway of Grainger with your route through it. You can orbit it, zoom, separate or stack the floors, and show one floor or all of them.
 
-## Architecture
+## Run it on a Mac + iPhone
 
-The **floor-plan pictures are the map source**. Their authored circulation, room access
-points, building details, and routing engine are packaged with the frontend. Navigation runs
-in the browser, including when C3 hosts the app. No C3 `Building`, `Floor`, `MapNode`, or
-`NavEdge` records are required for the map, room directory, search, or walking routes.
-This is authored routing aligned to the pictures, not automatic wall detection or indoor tracking.
+**Needs:** a Mac with **Xcode 16 or newer**, and an iPhone on **iOS 17 or newer**. A free Apple ID is enough; you don't need a paid developer account.
 
-An optional C3 map provider remains available for a future server-managed map.
+1. Clone and open the project:
+   ```bash
+   git clone https://github.com/kushsarora/TardyAI.git
+   cd TardyAI
+   open TardyAI.xcodeproj
+   ```
+   Xcode resolves the local `TardyCore` package on its own.
+2. **Signing.** Click the blue **TardyAI** project in the sidebar, then the **TardyAI** target, then **Signing & Capabilities**.
+   - Under **Team**, choose *Add an Account…*, sign in with your Apple ID, and pick your "(Personal Team)".
+   - If Xcode says the bundle identifier is taken, change `com.arsalanahmad.TardyAI` to something unique, like `com.<yourname>.TardyAI`.
+3. **Simulator (quickest).** Pick an iPhone simulator in the toolbar and press **⌘R**.
+4. **Your iPhone.**
+   - Plug it in, unlock it and tap **Trust**.
+   - Pick it in the toolbar and press **⌘R**.
+   - The first time, iOS asks you to turn on **Developer Mode**: go to *Settings → Privacy & Security → Developer Mode*, restart, and confirm.
+   - If the app won't open with "Untrusted Developer", go to *Settings → General → VPN & Device Management*, tap your Apple ID, then **Trust**.
+   - Apps signed with a free account expire after 7 days. Press ⌘R again to reinstall.
+
+To fake being at Grainger in the simulator, use *Features → Location → Custom Location…*, for example `43.0726, -89.4010`.
+
+## Project layout
 
 ```
-pkgbc231600/                  # the C3 package (name is fixed — do not rename)
-  src/                        # C3 types (.c3typ) + NavRouter.js (the A* router, server-side JS)
-  data/                       # the Grainger Hall graph: 1 building, 3 floors, 674 nodes (261 rooms), 1356 edges
-  ui/react/                   # Vite + React 18 + TypeScript + Tailwind frontend
-    public/plans/             # rasterized floor plans (1980×1530)
-tools/                        # offline helpers (PDF → PNG, graph authoring)
+TardyAI.xcodeproj/        Xcode project (iOS 17+, iPhone and iPad)
+TardyAI/                  The app: SwiftUI screens, SceneKit 3D view, location
+  Plans/                  Floor-plan images (1980×1530 px)
+  Assets.xcassets/        App icon, accent colour
+TardyCore/                Swift package with no UI code, unit-tested on its own
+  Sources/TardyCore/
+    NavRouter.swift       A* router, turn-by-turn steps, room search, nearest node
+    BuildingMap.swift     Loads the bundled Grainger graph
+    GeoTransform.swift    GPS → floor-plan pixel suggestion
+    ArrivalEstimate.swift The "am I late?" verdict
+    Building3DModel.swift The plan-derived 3D model + plan→world mapping
+    Resources/            Grainger data: 3 floors, 674 nodes (265 places), 1356 edges, 3D model
+  Tests/                  Parity, search, GPS, arrival and 3D-data tests
 ```
 
-### Backend types
+The app target picks up any file you add under `TardyAI/` automatically. The project uses Xcode 16's synchronized folders, so you don't need to drag files into the project.
 
-| Type | Role |
-| --- | --- |
-| `Building` | the building, its centroid, its floors |
-| `Floor` | the **pixel coordinate space** all geometry lives in (plan image + scale + GPS calibration) |
-| `MapNode` | a graph vertex: room, hallway, door, stairs, elevator, entrance, restroom |
-| `NavEdge` | a directed, **same-floor** walkable connection, costed in seconds |
-| `NavRouter` | 5 methods: `findRoute`, `routeToRoom`, `nearestNode`, `searchRooms`, `graphForBuilding` |
+## Tests
 
-Two decisions worth knowing before you change anything:
-
-- **Pixel space is authoritative, not lat/lon.** Node positions are `imageX`/`imageY` against the
-  floor plan raster. Lat/lon enters only via `Floor.calibration`, and only to *suggest* a pin.
-- **Cross-floor movement is synthesized, never stored.** No `NavEdge` spans floors. `MapNode`s that
-  share a `connectorKey` (the same stairwell or elevator shaft) are implicitly linked, and the cost
-  is derived from the level difference. Adding a floor stays a local change.
-
-### Why you pick your own floor
-
-GPS gives roughly 5–15 m horizontally indoors and 15–40 m *vertically*, against about 4 m of floor
-spacing — so altitude cannot tell storeys apart. No browser ships a barometer API either. So the app
-never guesses the floor: you tap it. The floor selector auto-advances as a route crosses floors.
-
-## Running it
-
-For a standalone local demo (no credentials required):
+`TardyCore` builds and tests with plain SwiftPM on macOS or Linux:
 
 ```bash
-cd pkgbc231600/ui/react
-npm ci
-npm run dev
+cd TardyCore
+swift test
 ```
 
-Open `http://localhost:9000`. To type-check, lint and bundle:
+The headline test, `RouterParityTests`, replays **858 routes** recorded from the original C3 JavaScript router, in both regular and step-free mode. It requires the Swift port to produce identical paths, ETAs, distances and every word of the directions. It also checks room search and nearest-node lookups.
+
+To regenerate that fixture after an intentional routing change, run the original router from the `C3` branch:
 
 ```bash
-cd pkgbc231600/ui/react
-npm ci
-npm run build
+git worktree add ../tardyai-c3 C3
+node TardyCore/scripts/make_router_oracle.js ../tardyai-c3/pkgbc231600 TardyCore/Tests/TardyCoreTests/Fixtures/router-oracle.json
 ```
 
-The default map provider is **bundled**, both locally and inside C3. C3 environment variables
-and the old `VITE_DATA_MODE=live` setting do not switch navigation to C3 entity records.
-For C3 hosting, configure `VITE_C3_PKG`, `VITE_C3_BASE_URL`, `VITE_C3_ENV`, and `VITE_C3_APP`
-as usual; C3 Code manages the dev server and deployment sync. **Rebuild/sync the frontend to
-apply map updates. There is no map database to seed for the default provider.**
+In Xcode, open `TardyCore/Package.swift` and press **⌘U** to run the same tests.
 
-Only set `VITE_NAV_DATA_MODE=server` when deliberately using a fully configured C3 map backend.
-Authentication remains in C3 settings. The optional conversational `/room-finder` feature is
-separate: it still requires its C3 backend, model configuration, and server-side navigation data.
+## How routing works (two rules to know before changing anything)
 
-`npm run build` runs ESLint at error level, then `tsc`, then Vite. All three must pass.
+- **Pixel space is authoritative, not lat/lon.** Node positions are `imageX`/`imageY` on the floor-plan image. Lat/lon only enters through each floor's `calibration` points, and only to *suggest* a pin.
+- **Cross-floor movement is synthesized, never stored.** No edge spans floors. Stair and elevator nodes that share a `connectorKey` (the same shaft) are linked implicitly. The cost comes from the level difference: elevators are a 40 s wait plus 10 s per floor; stairs are 22 s per floor up and 15 s per floor down. Adding a floor stays a local change.
 
-Room Finder's server logic (`src/RoomFinder.py`: the model reads the sentence, `NavRouter` picks the
-path) is tested offline against the real router and seed data. Needs `python3` and `node`:
+## Known-approximate (carried over from the C3 version)
 
-```bash
-python3 -I -m unittest discover -s pkgbc231600/test/py -t pkgbc231600/test/py
-```
-
-## Secrets
-
-Nothing secret is committed, and nothing secret needs to be. Specifically:
-
-- `.env` files are ignored at **every** directory level, in every form (`.env`, `.env.local`,
-  `.env.*.local`, `*.env`) — verified with `git check-ignore`.
-- `VITE_C3_AUTH_TOKEN` appears in `vite.config.mts` only as a *variable name* — the dev proxy reads
-  it from the environment at request time. It is never written to a tracked file.
-- `node_modules/`, `.vs-cache/`, `**/gen/cache/**`, `ui/content/` (build output) and
-  `*.c3pkg.lock.json` are ignored.
-- Agent/editor session artifacts (`.claude/`, `.attachments/`, `.playwright/`, `.playwright-mcp/`)
-  are ignored, as are browser screenshots dropped in the repo root.
-
-Credentials are configured through the C3 Code **Settings** page, never in this repo.
-
-## Known-approximate
-
-Being explicit so nobody trusts these further than they deserve:
-
-- **Node pixel coordinates were eyeballed** off the plan renders. They are the most likely visible
-  flaw. Correct node positions in `tools/build_graph.py`, regenerate the seed graph, and rebuild.
-  The student interface keeps coordinate-authoring tools out of the navigation flow.
-- `pixelsPerMeter = 12.0` is an estimate. It affects only the A\* heuristic, never the returned
-  route or its ETA.
-- The two GPS calibration points are approximate building corners.
-- `floor_p4.png` is rendered but unmapped — there are four plan images and three `Floor` records.
-- Floor-plan extraction is **not** automated. `tools/build_graph.py` has a clearly marked
-  `extract_nodes_from_plan()` stub documenting the intended vision pipeline; it raises
-  `NotImplementedError` by design.
-
-## Updated navigation experience
-
-- Responsive green and ivory interface with a compact desktop rail and mobile bottom navigation.
-- Choose a start by room/entrance search or by placing a draggable map pin. GPS is a suggestion,
-  never a floor detector. Search a destination or select a labeled room on the floor plan.
-- Keyboard suggestions (arrows, Enter, Escape), empty/error states, and stale-response protection.
-- Searchable directory of mapped rooms, restrooms, and entrances; saved rooms persist in local storage.
-- Swap endpoints, reset a journey, toggle step-free routing, and inspect each floor’s directions.
-- Start directions for a user-controlled floor-by-floor walkthrough. This does **not** track your
-  real indoor position. Finishing directions is a manual action, not proof of physical arrival.
-- Today’s class time gives an arrival estimate, updates every 15 seconds, and conservatively rounds lateness.
-- Wheel and pinch zoom, pan, fit-to-view, and keyboard map controls (`+`, `-`, arrows, `0`).
-- Visible load/search/route errors, retry, image-failure notice, and application error recovery.
-
-## Validation
-
-```bash
-node --test pkgbc231600/test/node/*.test.js
-python3 -I -m unittest discover -s pkgbc231600/test/py -t pkgbc231600/test/py
-cd pkgbc231600/ui/react
-npm test -- --runInBand --coverage=false
-npm run build
-```
-
-The backend tests cover routing every mapped room from the entrance in default and step-free modes,
-room/door integrity, cross-floor connectors, turn directions, and disconnected graph handling.
-Frontend regressions cover room search races and keyboard selection, request failures, time-sensitive
-arrival verdicts, and route step rendering. Browser checks additionally cover the full entrance-to-3335
-journey, elevator routing, manual floor guidance, persistent favorites, zoom and pin interactions,
-and desktop/mobile layouts.
-
-## What still needs real-world work
-
-The application is a functional wayfinding demo, not a surveyed indoor positioning system. Before
-campus-wide use, verify corridor geometry and accessible entrances on site, calibrate plan scales,
-map the fourth floor and additional buildings, and account for locked doors, construction, and
-opening hours. Current route times use authored walking costs and fixed elevator estimates; they
-do not incorporate live crowds or outages. Indoor GPS uncertainty is displayed, and selecting a floor
-is always the user’s responsibility. Saved rooms are local to the browser, not synced to an account.
-
-## Routing geometry revision: grainger-access-v2
-
-Routes now start/end at mapped access points. `MapNode.imageX/imageY` are walkable
-routing positions; `labelX/labelY` preserve the printed room label for map markers.
-The zero-length room/door membership edge adds a 3-second door allowance without
-inventing a walk across a classroom. A mapped access point is an approximate approach
-on the circulation network, not a surveyed doorway or a measured indoor location.
-
-The revised graph includes the Huber/Learning Commons internal circulation, its stairs
-and elevator, and rooms 3210B–3210H. Upper-floor suite access does not cross the solid
-south wall. The enclosed West Stairs now uses the south-west stairwell; the level-3
-hatched central opening is no longer treated as a stair landing. The public east-wing
-route may consequently choose an elevator even with step-free mode off.
-
-`test/node/geometry.test.js` samples every graph edge against independently transcribed
-interior rectangles for the reported classrooms, service blocks, and central openings.
-It checks both screenshot journeys in both directions, in regular and step-free modes.
-These obstacle fixtures cover specific problem areas; they do not certify every wall,
-entrance, lift, or access restriction in the real building. Plan-derived circulation and
-connector access still need an on-site check before production wayfinding.
-
-**Optional server map provider only:** when using `VITE_NAV_DATA_MODE=server`, deploy the updated `MapNode`, `NavEdge`,
-`NavGraphSnapshot`, and `NavRoute` types and `NavRouter.js`, then upsert the regenerated
-MapNode/NavEdge seeds. Reload the generated Waypoint, AnnotatedPlan, and BuildingFacts
-data and annotated images if using the vision room finder. Deploy/rebuild the frontend
-as well. C3 upserts retain removed records, so routing filters nodes and edges to
-`routingRevision = grainger-access-v2`; obsolete shortcut records cannot rejoin the
-current graph. The frontend rejects an older graph/service instead of drawing it.
-The default bundled map packages the revised graph automatically at build time, including for C3-hosted builds.
-
-## 3D Grainger navigation
-
-Use the **2D / 3D** toggle above the map. Both views share the selected start,
-destination, accessible route, walking estimate, and directions. Switching views
-never changes route geometry. The selected view persists in this browser.
-
-The 3D view provides a plan-derived cutaway with extruded wall contours and the
-original floor-plan textures. Drag to orbit, right-drag/two-finger drag to pan,
-and scroll/pinch to zoom. The camera also supports arrow keys, `+`, `-`, and `0`.
-Choose all floors or one floor; separate the floors to see vertical connections,
-or stack them. Click a room label to choose a destination; click a floor to set
-an approximate start. The directory and search remain keyboard-accessible in
-both views. Starting directions focuses the current leg's floor.
-
-Hallway paths preserve every authored route point. Colored connections join the
-actual stair/elevator endpoints between floor legs. The moving bead indicates
-route direction, not a tracked user position. Start/destination markers stay at
-their mapped positions. Room markers use their independent printed-label position.
-
-The 3D model is **illustrative, not a surveyed BIM**. Dark strokes in the plan
-rasters are traced after masking labels and removing small text components;
-some annotations can remain and some wall details can be omitted. The footprint
-and openings are approximate. Wall height (2.8 m) and floor spacing (4.2 m) are
-assumptions; separated floors use an exaggerated 26 m display gap. Rendering
-geometry is separate from the circulation graph and never creates walkable edges.
-Only the three mapped floors are modeled.
-
-Regenerate the model after changing the plan rasters or room label coordinates:
-
-```bash
-python3 tools/build_graph.py
-python3 tools/build_3d_model.py
-```
-
-The generated model is `ui/react/src/assets/grainger-3d.json`. Its Three.js renderer
-loads only when 3D is selected. All geometry and textures ship with the frontend;
-no C3 map database or external model service is needed. Rebuild/sync the frontend
-in C3 to apply the feature. WebGL2 is required for 3D; unsupported browsers retain
-the same route in the 2D view. The renderer releases GPU resources on view changes
-and respects reduced-motion preferences.
+- Node pixel positions were eyeballed off the plan images; they're the most likely visible flaw. The authoring scripts (`tools/build_graph.py`, `tools/build_3d_model.py`) are on the `C3` branch.
+- `pixelsPerMeter = 12` is an estimate. It affects only the A\* heuristic and the 3D scale, never the route or its ETA.
+- The two GPS calibration points are approximate building corners. Unlike the web version, the iOS app fits GPS in a y-down frame, so suggestions aren't mirrored.
+- Only Levels 1–3 are mapped.
+- The 3D model is illustrative, not a surveyed BIM. Walls are traced from the plan images, and wall height (2.8 m) and floor spacing (4.2 m, or 26 m when separated) are assumptions.
+- Directions don't track your real indoor position, and route times don't account for crowds, locked doors or elevator outages.
