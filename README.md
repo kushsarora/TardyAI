@@ -20,6 +20,10 @@ Type a room number and you get a walking route drawn on the real floor plan, acr
 - **Turn-by-turn directions.** A floor-by-floor walkthrough with Next/Back. It follows the map, not your real position.
 - **3D view.** A plan-derived cutaway of Grainger with your route through it. You can orbit it, zoom, separate or stack the floors, and show one floor or all of them.
 
+## Wireframes
+
+Screen-by-screen wireframes for the UI pass are in [`docs/wireframes/`](docs/wireframes/README.md).
+
 ## Run it on a Mac + iPhone
 
 **Needs:** a Mac with **Xcode 16 or newer**, and an iPhone on **iOS 17 or newer**. A free Apple ID is enough; you don't need a paid developer account.
