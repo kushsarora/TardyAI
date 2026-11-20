@@ -31,7 +31,7 @@ public struct Building3DModel: Decodable, Sendable {
         guard let url = Bundle.module.url(forResource: "Resources", withExtension: nil)?
             .appendingPathComponent("Grainger3D.json"),
             FileManager.default.fileExists(atPath: url.path) else {
-            throw TardyDataError.missingResource("Grainger3D.json")
+            throw HoloDataError.missingResource("Grainger3D.json")
         }
         return try JSONDecoder().decode(Building3DModel.self, from: Data(contentsOf: url))
     }

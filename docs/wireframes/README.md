@@ -1,4 +1,4 @@
-# TardyAI iOS wireframes
+# HoloMap iOS wireframes
 
 Wireframes for the UI pass on the SwiftUI app. The editable canvas is [TardyAI iOS Wireframes](https://claude.ai/artifact/6e5bbeBrV6SdD58Vj8ywMt). These PNGs are exported from it at iPhone size (390×844 pt, @3x).
 
@@ -42,12 +42,11 @@ All data is real: Grainger Hall, router output for West Entrance → 3335 (186 s
 - **Next floor**, **Back** and **Done** move between parts. The app never claims to track you indoors.
 
 ### 6 · 3D view: `Building3DView` (SceneKit)
-- Shows the same route as 2D. Orange is the elevator ride between floors.
-- **Floors:** built from the traced plan model, with each floor's plan image on its slab.
-- **Toggles:**
-  - Separate floors: 26 m gap. Stacked: 4.2 m.
-  - All floors, or only the current floor.
-- This wireframe's stack is schematic; the app renders the real geometry.
+- The wireframe PNG predates the hologram restyle. It still shows the right layout, not the current look.
+- Dark backdrop; floors drawn in cyan light from the real plans. Amber is the route, green the start, pink the destination beam.
+- **Layout switch:** Exploded (26 m between floors), Stacked (4.2 m, as built) or One floor.
+- The selected floor is bright and the others dim. Tap a floor, or use the top picker, to select it.
+- A recenter button puts the camera back. A note says only Levels 1–3 are mapped.
 
 ### 7 · Edge states
 - **Late:** the verdict turns red with a warning icon.

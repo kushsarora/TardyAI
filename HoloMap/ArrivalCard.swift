@@ -1,5 +1,5 @@
 import SwiftUI
-import TardyCore
+import HoloCore
 
 /// "Class starts at …" → "2 min to spare" / "About 3 min late", rechecked every 15 s.
 struct ArrivalCard: View {
@@ -44,9 +44,9 @@ struct ArrivalCard: View {
                 }
                 Spacer(minLength: 0)
             }
-            .foregroundStyle(verdict.isLate ? Color.red : Color.tardyGreen)
+            .foregroundStyle(verdict.isLate ? Color.red : Color.holoGreen)
             .padding(10)
-            .background((verdict.isLate ? Color.red : Color.tardyGreen).opacity(0.1),
+            .background((verdict.isLate ? Color.red : Color.holoGreen).opacity(0.1),
                         in: RoundedRectangle(cornerRadius: 10))
             .accessibilityElement(children: .combine)
         }

@@ -1,5 +1,5 @@
 import SwiftUI
-import TardyCore
+import HoloCore
 
 /// The 2D floor-plan map: the real plan image with the route, pins and GPS
 /// circle drawn on top. Pinch to zoom, drag to pan, tap to pick a spot.

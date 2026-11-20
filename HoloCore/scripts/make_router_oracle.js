@@ -1,4 +1,4 @@
-// Generates TardyCore parity fixtures by running the original C3 NavRouter.js
+// Generates HoloCore parity fixtures by running the original C3 NavRouter.js
 // (via the C3 branch's offline test harness) on the Grainger seed data.
 // Usage: node make_router_oracle.js <path-to-C3-pkgbc231600> <out.json>
 'use strict';

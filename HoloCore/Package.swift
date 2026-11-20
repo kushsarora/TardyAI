@@ -1,24 +1,24 @@
 // swift-tools-version:5.9
-// TardyCore: the platform-independent heart of TardyAI — building data,
+// HoloCore: the platform-independent heart of HoloMap — building data,
 // A* routing, turn-by-turn steps, room search, GPS-to-plan projection and the
 // "am I late?" estimate. No UIKit/SwiftUI here, so `swift test` runs on any
 // machine with a Swift toolchain (macOS or Linux).
 import PackageDescription
 
 let package = Package(
-    name: "TardyCore",
+    name: "HoloCore",
     platforms: [.iOS(.v17), .macOS(.v14)],
     products: [
-        .library(name: "TardyCore", targets: ["TardyCore"]),
+        .library(name: "HoloCore", targets: ["HoloCore"]),
     ],
     targets: [
         .target(
-            name: "TardyCore",
+            name: "HoloCore",
             resources: [.copy("Resources")]
         ),
         .testTarget(
-            name: "TardyCoreTests",
-            dependencies: ["TardyCore"],
+            name: "HoloCoreTests",
+            dependencies: ["HoloCore"],
             resources: [.copy("Fixtures")]
         ),
     ]

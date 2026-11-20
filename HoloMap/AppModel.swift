@@ -1,11 +1,22 @@
 import CoreLocation
 import Observation
 import SwiftUI
-import TardyCore
+import HoloCore
 
 enum MapMode: String, CaseIterable, Identifiable {
     case plan = "2D"
     case model = "3D"
+    var id: String { rawValue }
+}
+
+/// How the 3D view arranges the floors.
+enum HoloLayout: String, CaseIterable, Identifiable {
+    /// Floors pulled apart so you can see into each one.
+    case exploded = "Exploded"
+    /// Floors at their real spacing, as the building stands.
+    case stacked = "Stacked"
+    /// Only the selected floor.
+    case single = "One floor"
     var id: String { rawValue }
 }
 
@@ -47,8 +58,9 @@ final class AppModel {
 
     var selectedFloorId: String
     var mapMode: MapMode = .plan
-    var separatedFloors = true
-    var showAllFloors3D = true
+    var layout3D: HoloLayout = .exploded
+    /// Bumped by the 3D view's recenter button.
+    var recenter3D = 0
     /// Which leg the student is on in "Start directions" mode; nil when browsing.
     var activeLegIndex: Int?
     var tapped: TappedSpot?
@@ -99,6 +111,17 @@ final class AppModel {
         guard let name = floor.planImageName else { return nil }
         if let cached = planImages[name] { return cached }
         // Xcode normally copies Plans/*.png to the bundle root; fall back to the subfolder just in case.
+        let image = UIImage(named: name)
+            ?? Bundle.main.path(forResource: name, ofType: "png", inDirectory: "Plans").flatMap(UIImage.init(contentsOfFile:))
+        planImages[name] = image
+        return image
+    }
+
+    /// The glowing version of a floor plan for the 3D view (`holo_p1` for `floor_p1`),
+    /// baked by `tools/bake_holo_plans.py`.
+    func holoPlanImage(for floor: Floor) -> UIImage? {
+        guard let name = floor.planImageName?.replacingOccurrences(of: "floor_", with: "holo_") else { return nil }
+        if let cached = planImages[name] { return cached }
         let image = UIImage(named: name)
             ?? Bundle.main.path(forResource: name, ofType: "png", inDirectory: "Plans").flatMap(UIImage.init(contentsOfFile:))
         planImages[name] = image

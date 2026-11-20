@@ -1,6 +1,6 @@
 import Foundation
 import XCTest
-@testable import TardyCore
+@testable import HoloCore
 
 final class ArrivalTests: XCTestCase {
     private var calendar: Calendar {

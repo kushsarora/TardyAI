@@ -21,7 +21,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
         case .notDetermined:
             manager.requestWhenInUseAuthorization() // continues in locationManagerDidChangeAuthorization
         case .restricted, .denied:
-            finish(.failure(Failure(message: "Location access is off for TardyAI. Turn it on in Settings, or tap the map to set your start.")))
+            finish(.failure(Failure(message: "Location access is off for HoloMap. Turn it on in Settings, or tap the map to set your start.")))
         default:
             manager.requestLocation()
         }
@@ -33,7 +33,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
         case .authorizedWhenInUse, .authorizedAlways:
             manager.requestLocation()
         case .restricted, .denied:
-            finish(.failure(Failure(message: "Location access is off for TardyAI. Turn it on in Settings, or tap the map to set your start.")))
+            finish(.failure(Failure(message: "Location access is off for HoloMap. Turn it on in Settings, or tap the map to set your start.")))
         default:
             break
         }

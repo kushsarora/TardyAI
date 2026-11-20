@@ -1,6 +1,6 @@
 import Foundation
 import XCTest
-@testable import TardyCore
+@testable import HoloCore
 
 /// Replays answers recorded from the original C3 JavaScript router
 /// (`Fixtures/router-oracle.json`, made by `scripts/make_router_oracle.js`)

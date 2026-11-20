@@ -1,5 +1,5 @@
 import SwiftUI
-import TardyCore
+import HoloCore
 
 /// What the place picker is choosing.
 enum PickerTarget: String, Identifiable {
@@ -210,7 +210,7 @@ private struct StepRow: View {
         HStack(spacing: 12) {
             Image(systemName: symbol)
                 .frame(width: 24)
-                .foregroundStyle(step.kind == .connector ? Color.orange : Color.tardyGreen)
+                .foregroundStyle(step.kind == .connector ? Color.orange : Color.holoGreen)
             Text(step.text)
                 .font(.subheadline)
                 .frame(maxWidth: .infinity, alignment: .leading)

@@ -1,5 +1,5 @@
 import SwiftUI
-import TardyCore
+import HoloCore
 
 struct ContentView: View {
     @Bindable var model: AppModel
@@ -77,7 +77,7 @@ struct MapControls: View {
                         }
                         .frame(width: 44, height: 40)
                         .foregroundStyle(isSelected ? Color.white : Color.primary)
-                        .background(isSelected ? Color.tardyGreen : Color.clear, in: RoundedRectangle(cornerRadius: 9))
+                        .background(isSelected ? Color.holoGreen : Color.clear, in: RoundedRectangle(cornerRadius: 9))
                     }
                     .accessibilityLabel("\(floor.displayName)\(onRoute ? ", on your route" : "")")
                     .accessibilityAddTraits(isSelected ? .isSelected : [])
@@ -96,7 +96,7 @@ struct TappedSpotCard: View {
     var body: some View {
         HStack(spacing: 10) {
             Image(systemName: spot.place.map(PlaceIcon.name(for:)) ?? "mappin")
-                .foregroundStyle(Color.tardyGreen)
+                .foregroundStyle(Color.holoGreen)
                 .font(.title3)
             VStack(alignment: .leading, spacing: 1) {
                 Text(spot.place?.title ?? "This spot").font(.headline)
@@ -132,7 +132,7 @@ struct BannerView: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
-            Image(systemName: "location.circle").foregroundStyle(Color.tardyGreen)
+            Image(systemName: "location.circle").foregroundStyle(Color.holoGreen)
             Text(text).font(.footnote).frame(maxWidth: .infinity, alignment: .leading)
             Button(action: dismiss) {
                 Image(systemName: "xmark").font(.caption.weight(.bold))

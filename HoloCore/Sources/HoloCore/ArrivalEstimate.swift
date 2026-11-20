@@ -1,6 +1,6 @@
 import Foundation
 
-/// The TardyAI hook: "am I going to be late?"
+/// The HoloMap hook: "am I going to be late?"
 public struct ArrivalVerdict: Equatable, Sendable {
     public var isLate: Bool
     /// "About 2 min late", "You'll arrive just in time", "3 min to spare".

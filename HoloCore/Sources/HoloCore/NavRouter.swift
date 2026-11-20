@@ -2,7 +2,7 @@ import Foundation
 
 // A* indoor wayfinding over the MapNode / NavEdge graph — a faithful port of the
 // C3 branch's `pkgbc231600/src/NavRouter.js`. The parity tests replay that
-// router's answers (TardyCoreTests/Fixtures/router-oracle.json) against this one,
+// router's answers (HoloCoreTests/Fixtures/router-oracle.json) against this one,
 // so change the two together or regenerate the fixture deliberately.
 
 // MARK: - Route types

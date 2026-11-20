@@ -1,6 +1,6 @@
 import Foundation
 
-public enum TardyDataError: Error, CustomStringConvertible {
+public enum HoloDataError: Error, CustomStringConvertible {
     case missingResource(String)
     case noBuilding
     case unknownFloor(nodeId: String, floorId: String)
@@ -40,7 +40,7 @@ public final class BuildingMap: Sendable {
         let revision = building.id == "grainger" ? BuildingMap.graingerRoutingRevision : nil
         let currentNodes = nodes.filter { revision == nil || $0.routingRevision == revision }
         for node in currentNodes where floorsById[node.floorId] == nil {
-            throw TardyDataError.unknownFloor(nodeId: node.id, floorId: node.floorId)
+            throw HoloDataError.unknownFloor(nodeId: node.id, floorId: node.floorId)
         }
         self.nodes = currentNodes
         self.edges = edges.filter { revision == nil || $0.routingRevision == revision }
@@ -50,7 +50,7 @@ public final class BuildingMap: Sendable {
     /// Load the Grainger Hall map shipped inside this package.
     public static func loadGrainger() throws -> BuildingMap {
         guard let dir = Bundle.module.url(forResource: "Resources", withExtension: nil) else {
-            throw TardyDataError.missingResource("Resources")
+            throw HoloDataError.missingResource("Resources")
         }
         return try load(from: dir)
     }
@@ -60,12 +60,12 @@ public final class BuildingMap: Sendable {
         func read<T: Decodable>(_ name: String, as: T.Type) throws -> T {
             let url = directory.appendingPathComponent(name)
             guard FileManager.default.fileExists(atPath: url.path) else {
-                throw TardyDataError.missingResource(name)
+                throw HoloDataError.missingResource(name)
             }
             return try JSONDecoder().decode(T.self, from: Data(contentsOf: url))
         }
         guard let building = try read("Building.json", as: [Building].self).first else {
-            throw TardyDataError.noBuilding
+            throw HoloDataError.noBuilding
         }
         return try BuildingMap(
             building: building,

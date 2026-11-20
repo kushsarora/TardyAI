@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7A0000000000000000000010 /* TardyCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7A0000000000000000000011 /* TardyCore */; };
+		7A0000000000000000000010 /* HoloCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7A0000000000000000000011 /* HoloCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7A0000000000000000000001 /* TardyAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TardyAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A0000000000000000000001 /* HoloMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoloMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		7A0000000000000000000002 /* TardyAI */ = {
+		7A0000000000000000000002 /* HoloMap */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TardyAI;
+			path = HoloMap;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A0000000000000000000010 /* TardyCore in Frameworks */,
+				7A0000000000000000000010 /* HoloCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -37,7 +37,7 @@
 		7A0000000000000000000004 = {
 			isa = PBXGroup;
 			children = (
-				7A0000000000000000000002 /* TardyAI */,
+				7A0000000000000000000002 /* HoloMap */,
 				7A0000000000000000000005 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -45,7 +45,7 @@
 		7A0000000000000000000005 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7A0000000000000000000001 /* TardyAI.app */,
+				7A0000000000000000000001 /* HoloMap.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -53,9 +53,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7A0000000000000000000006 /* TardyAI */ = {
+		7A0000000000000000000006 /* HoloMap */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7A0000000000000000000020 /* Build configuration list for PBXNativeTarget "TardyAI" */;
+			buildConfigurationList = 7A0000000000000000000020 /* Build configuration list for PBXNativeTarget "HoloMap" */;
 			buildPhases = (
 				7A0000000000000000000007 /* Sources */,
 				7A0000000000000000000003 /* Frameworks */,
@@ -66,14 +66,14 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				7A0000000000000000000002 /* TardyAI */,
+				7A0000000000000000000002 /* HoloMap */,
 			);
-			name = TardyAI;
+			name = HoloMap;
 			packageProductDependencies = (
-				7A0000000000000000000011 /* TardyCore */,
+				7A0000000000000000000011 /* HoloCore */,
 			);
-			productName = TardyAI;
-			productReference = 7A0000000000000000000001 /* TardyAI.app */;
+			productName = HoloMap;
+			productReference = 7A0000000000000000000001 /* HoloMap.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -91,7 +91,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 7A0000000000000000000021 /* Build configuration list for PBXProject "TardyAI" */;
+			buildConfigurationList = 7A0000000000000000000021 /* Build configuration list for PBXProject "HoloMap" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -101,14 +101,14 @@
 			mainGroup = 7A0000000000000000000004;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				7A0000000000000000000012 /* XCLocalSwiftPackageReference "TardyCore" */,
+				7A0000000000000000000012 /* XCLocalSwiftPackageReference "HoloCore" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7A0000000000000000000005 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7A0000000000000000000006 /* TardyAI */,
+				7A0000000000000000000006 /* HoloMap */,
 			);
 		};
 /* End PBXProject section */
@@ -203,9 +203,9 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = TardyAI;
+				INFOPLIST_KEY_CFBundleDisplayName = HoloMap;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TardyAI uses your location only to suggest where you are on the floor plan. You can always move the pin yourself.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "HoloMap uses your location only to suggest where you are on the floor plan. You can always move the pin yourself.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -216,7 +216,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.arsalanahmad.TardyAI";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.arsalanahmad.HoloMap";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -234,9 +234,9 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = TardyAI;
+				INFOPLIST_KEY_CFBundleDisplayName = HoloMap;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "TardyAI uses your location only to suggest where you are on the floor plan. You can always move the pin yourself.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "HoloMap uses your location only to suggest where you are on the floor plan. You can always move the pin yourself.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -247,7 +247,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.arsalanahmad.TardyAI";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.arsalanahmad.HoloMap";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -258,7 +258,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7A0000000000000000000020 /* Build configuration list for PBXNativeTarget "TardyAI" */ = {
+		7A0000000000000000000020 /* Build configuration list for PBXNativeTarget "HoloMap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7A0000000000000000000024 /* Debug */,
@@ -267,7 +267,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7A0000000000000000000021 /* Build configuration list for PBXProject "TardyAI" */ = {
+		7A0000000000000000000021 /* Build configuration list for PBXProject "HoloMap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7A0000000000000000000022 /* Debug */,
@@ -279,16 +279,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		7A0000000000000000000012 /* XCLocalSwiftPackageReference "TardyCore" */ = {
+		7A0000000000000000000012 /* XCLocalSwiftPackageReference "HoloCore" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = TardyCore;
+			relativePath = HoloCore;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7A0000000000000000000011 /* TardyCore */ = {
+		7A0000000000000000000011 /* HoloCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = TardyCore;
+			productName = HoloCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

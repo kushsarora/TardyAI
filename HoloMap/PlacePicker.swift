@@ -1,5 +1,5 @@
 import SwiftUI
-import TardyCore
+import HoloCore
 
 /// Search rooms by number ("3335"), name ("Learning Commons") or a term like "restroom".
 struct PlacePicker: View {
@@ -60,7 +60,7 @@ struct PlacePicker: View {
         } label: {
             HStack(spacing: 12) {
                 Image(systemName: PlaceIcon.name(for: node))
-                    .foregroundStyle(Color.tardyGreen)
+                    .foregroundStyle(Color.holoGreen)
                     .frame(width: 24)
                 VStack(alignment: .leading, spacing: 1) {
                     Text(node.title).foregroundStyle(.primary)
