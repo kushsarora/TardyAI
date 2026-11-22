@@ -170,7 +170,7 @@ struct RoutePanel: View {
             }
             .disabled(model.isLocating)
         } footer: {
-            Text("Tip: tap a room on the model to start from it or go to it. GPS suggests a spot on the floor you’ve picked; it can’t tell floors apart.")
+            Text("Tip: tap a room on the model to start from it or go to it. Drag to turn the model, pinch to zoom. GPS suggests a spot on the floor you’ve picked; it can’t tell floors apart. Only Levels 1–3 are mapped so far.")
         }
     }
 }

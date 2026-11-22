@@ -12,6 +12,14 @@ enum HoloLayout: String, CaseIterable, Identifiable {
     /// Only the selected floor.
     case single = "One floor"
     var id: String { rawValue }
+
+    var symbol: String {
+        switch self {
+        case .exploded: return "square.3.layers.3d"
+        case .stacked: return "square.stack.3d.up.fill"
+        case .single: return "square"
+        }
+    }
 }
 
 /// A spot the student tapped on a floor of the model, waiting for "Start here" / "Go here".

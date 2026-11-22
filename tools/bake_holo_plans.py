@@ -3,7 +3,7 @@
 
 Reads tools/plans/floor_pN.png (the real UW floor plans, not shipped in the
 app) and writes HoloMap/Plans/holo_pN.png: linework as cyan light and room-type
-fills as a dim tint, on a dark sheet of glass in the shape of the building
+fills as a dim tint, on a dark, nearly solid slab in the shape of the building
 footprint. Outside the footprint the image is fully transparent. The alpha
 channel is what lets one flat plane both glow and dim the floors beneath it.
 
@@ -23,10 +23,10 @@ MODEL = ROOT / "HoloCore" / "Sources" / "HoloCore" / "Resources" / "Grainger3D.j
 FLOORS = ROOT / "HoloCore" / "Sources" / "HoloCore" / "Resources" / "Floor.json"
 
 LINE = np.array([0.45, 0.92, 1.0])   # linework colour
-FILL_GAIN = 0.30                     # how much of a room's colour survives
+FILL_GAIN = 0.42                     # how much of a room's colour survives
 LINE_GAIN = 0.95
-GLASS = np.array([0.01, 0.04, 0.08])  # the slab's own colour
-GLASS_ALPHA = 0.6                     # how much a slab hides what is below it
+GLASS = np.array([0.03, 0.075, 0.13])  # the slab's own colour
+GLASS_ALPHA = 0.94                    # how much a slab hides what is below it
 
 
 def bake(plan: Image.Image, outline, openings) -> Image.Image:

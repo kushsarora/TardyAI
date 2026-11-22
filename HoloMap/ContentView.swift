@@ -42,18 +42,30 @@ enum PanelLayout {
     static let peekHeight: CGFloat = 190
 }
 
-/// The building's name and the floor picker.
+/// Everything that changes the view of the model, in one row at the top where
+/// the route panel can never cover it: layout, recenter and the floor picker.
 struct MapControls: View {
     @Bindable var model: AppModel
 
     var body: some View {
         HStack(spacing: 8) {
-            Label(model.map.building.name, systemImage: "cube.transparent")
-                .font(.subheadline.weight(.semibold))
-                .lineLimit(1)
-                .padding(.horizontal, 12)
-                .frame(height: 46)
-                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+            Picker("Layout", selection: $model.layout3D) {
+                ForEach(HoloLayout.allCases) { layout in
+                    Image(systemName: layout.symbol).accessibilityLabel(layout.rawValue).tag(layout)
+                }
+            }
+            .pickerStyle(.segmented)
+            .frame(width: 132)
+
+            Button {
+                model.recenter3D += 1
+            } label: {
+                Image(systemName: "scope")
+                    .font(.body.weight(.semibold))
+                    .frame(width: 40, height: 40)
+                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10))
+            }
+            .accessibilityLabel("Recenter the model")
 
             Spacer(minLength: 4)
 

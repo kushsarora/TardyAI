@@ -3,13 +3,13 @@ import SceneKit
 import simd
 import SwiftUI
 
-/// The map: a holographic 3D model of Grainger Hall with the route through it.
+/// The map: a 3D model of Grainger Hall with the route through it.
 /// Illustrative only: walls are traced from the plan images, heights are assumed.
 struct Building3DView: View {
     @Bindable var model: AppModel
 
     var body: some View {
-        ZStack(alignment: .bottom) {
+        ZStack {
             Color(HoloTheme.backdropBottom)
             if let model3D = model.model3D {
                 BuildingScene(
@@ -28,61 +28,33 @@ struct Building3DView: View {
                     onTap: { floorId, point in model.tapMap(floorId: floorId, point: point) })
                     .accessibilityLabel("3D model of \(model.map.building.name)")
                     .accessibilityHint("Use the route panel to choose rooms.")
-                controls
             } else {
                 ContentUnavailableView("3D model unavailable", systemImage: "cube.transparent",
                                        description: Text("The model data couldn’t be loaded. Search and directions still work."))
             }
         }
     }
-
-    private var controls: some View {
-        VStack(spacing: 8) {
-            HStack(spacing: 8) {
-                Picker("Layout", selection: $model.layout3D) {
-                    ForEach(HoloLayout.allCases) { Text($0.rawValue).tag($0) }
-                }
-                .pickerStyle(.segmented)
-
-                Button {
-                    model.recenter3D += 1
-                } label: {
-                    Image(systemName: "scope")
-                        .font(.body.weight(.semibold))
-                        .frame(width: 38, height: 32)
-                        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 8))
-                }
-                .accessibilityLabel("Recenter the 3D view")
-            }
-            Text("Drag to orbit · pinch to zoom · tap a room to pick it")
-                .font(.caption2)
-                .foregroundStyle(.secondary)
-            Text("Levels 1–3 are mapped. Higher floors aren’t yet.")
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
-        }
-        .padding(10)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 14))
-        .padding(.horizontal, 12)
-        .padding(.bottom, PanelLayout.peekHeight + 12)
-    }
 }
 
-/// Every colour and strength the hologram uses, in one place for tuning.
-/// Glowing parts are drawn additively, so a darker colour means a fainter glow.
+/// Every colour and strength the model uses, in one place for tuning.
+/// Floors and walls are solid; the rim, route and pins glow (drawn additively,
+/// so for those a darker colour means a fainter glow).
 enum HoloTheme {
     static let backdropTop = UIColor(red: 0.03, green: 0.07, blue: 0.13, alpha: 1)
     static let backdropBottom = UIColor(red: 0.005, green: 0.012, blue: 0.03, alpha: 1)
 
-    static let wallSide: CGFloat = 0.13
-    static let wallTop: CGFloat = 0.6
+    /// Walls are solid and lit, so nearer walls hide farther ones.
+    static let wall = UIColor(red: 0.20, green: 0.50, blue: 0.62, alpha: 1)
+    static let wallSelfGlow = UIColor(red: 0.03, green: 0.09, blue: 0.12, alpha: 1)
     static let rim: CGFloat = 0.85
     static let grid: CGFloat = 0.22
     static let shaft: CGFloat = 0.3
 
-    /// Brightness of the floors that aren't selected.
-    static let dimmedExploded: CGFloat = 0.42
-    static let dimmedStacked: CGFloat = 0.2
+    /// The selected floor is fully solid. Floors below it stay solid but a little
+    /// dimmer; floors above it turn to ghosts so they never hide it.
+    static let belowSelected: CGFloat = 0.8
+    static let aboveSelectedExploded: CGFloat = 0.3
+    static let aboveSelectedStacked: CGFloat = 0.1
 
     /// Camera glow. Set `bloom` to false if the model looks washed out or runs slowly.
     static let bloom = true
@@ -97,8 +69,8 @@ enum HoloTheme {
     static func violet(_ k: CGFloat) -> UIColor { UIColor(red: 0.72 * k, green: 0.50 * k, blue: 1.0 * k, alpha: 1) }
     static func blue(_ k: CGFloat) -> UIColor { UIColor(red: 0.25 * k, green: 0.55 * k, blue: 1.0 * k, alpha: 1) }
 
-    /// Drawing order. Nothing writes depth, so this alone decides what covers what:
-    /// lower floors first, then the route, pins and labels on top of everything.
+    /// Drawing order: lower floors first, then the route, pins and labels, which
+    /// ignore depth and so stay visible through walls and floors.
     enum Order {
         static let grid = -10
         static func floor(level: Int) -> Int { level * 100 }
@@ -197,6 +169,19 @@ private struct BuildingScene: UIViewRepresentable {
             scene.rootNode.addChildNode(cameraNode)
             view.pointOfView = cameraNode
 
+            // Light for the walls only; everything else is unlit.
+            let ambient = SCNNode()
+            ambient.light = SCNLight()
+            ambient.light?.type = .ambient
+            ambient.light?.intensity = 450
+            scene.rootNode.addChildNode(ambient)
+            let sun = SCNNode()
+            sun.light = SCNLight()
+            sun.light?.type = .directional
+            sun.light?.intensity = 900
+            sun.eulerAngles = SCNVector3(-Float.pi / 3.2, Float.pi / 5, 0)
+            scene.rootNode.addChildNode(sun)
+
             scene.rootNode.addChildNode(SceneBuilder.gridNode())
 
             // Each floor is one textured plane and two small meshes, so this is quick
@@ -214,15 +199,16 @@ private struct BuildingScene: UIViewRepresentable {
             let gap = config.floorGap
             let gapChanged = previous.map { $0.floorGap != gap } ?? false
 
-            // Floors glide to their new height; the selected one stays bright.
-            let dimmed = config.layout == .stacked ? HoloTheme.dimmedStacked : HoloTheme.dimmedExploded
+            // Floors glide to their new height. Anything above the selected floor is ghosted.
+            let selectedLevel = map.floorsById[config.selectedFloorId]?.level ?? 1
+            let above = config.layout == .stacked ? HoloTheme.aboveSelectedStacked : HoloTheme.aboveSelectedExploded
             SCNTransaction.begin()
             SCNTransaction.animationDuration = animated ? 0.45 : 0
             for floor in map.floors {
                 guard let node = floorNodes[floor.id] else { continue }
                 node.position.y = Float(World3D.elevation(level: floor.level, floorGap: gap))
                 node.isHidden = !config.shows(floor.id)
-                node.opacity = floor.id == config.selectedFloorId ? 1 : dimmed
+                node.opacity = floor.level == selectedLevel ? 1 : (floor.level < selectedLevel ? HoloTheme.belowSelected : above)
             }
             SCNTransaction.commit()
 
@@ -395,7 +381,11 @@ private enum SceneBuilder {
 
     static func floorNodes(map: BuildingMap, model3D: Building3DModel) -> [String: SCNNode] {
         var result: [String: SCNNode] = [:]
-        let wallMaterials = [glow(HoloTheme.cyan(HoloTheme.wallSide)), glow(HoloTheme.cyan(HoloTheme.wallTop))]
+        let wallMaterial = SCNMaterial()
+        wallMaterial.lightingModel = .lambert
+        wallMaterial.diffuse.contents = HoloTheme.wall
+        wallMaterial.emission.contents = HoloTheme.wallSelfGlow
+        wallMaterial.isDoubleSided = true
         let rimMaterials = [glow(HoloTheme.cyan(HoloTheme.rim)), glow(HoloTheme.cyan(HoloTheme.rim))]
 
         for authored in model3D.floors {
@@ -406,8 +396,8 @@ private enum SceneBuilder {
             group.name = floor.id
 
             // One flat plane carries the whole floor: the real plan drawn as light on a
-            // sheet of dark glass cut to the footprint. The texture's alpha does the
-            // cutting and the dimming of the floors beneath; it is also what taps hit.
+            // dark, nearly solid slab cut to the footprint. The texture's alpha does the
+            // cutting and hides the floors beneath; the plane is also what taps hit.
             let plane = SCNPlane(width: floor.imageWidth / scale, height: floor.imageHeight / scale)
             let planMaterial = SCNMaterial()
             planMaterial.lightingModel = .constant
@@ -415,11 +405,10 @@ private enum SceneBuilder {
                 planMaterial.diffuse.contents = image
                 planMaterial.diffuse.mipFilter = .linear
             } else {
-                planMaterial.diffuse.contents = UIColor(red: 0.02, green: 0.08, blue: 0.14, alpha: 0.6)
+                planMaterial.diffuse.contents = UIColor(red: 0.03, green: 0.075, blue: 0.13, alpha: 0.94)
             }
             planMaterial.isDoubleSided = true
             planMaterial.writesToDepthBuffer = false
-            planMaterial.readsFromDepthBuffer = false
             plane.materials = [planMaterial]
             let planNode = SCNNode(geometry: plane)
             planNode.name = planPrefix + floor.id
@@ -427,9 +416,9 @@ private enum SceneBuilder {
             planNode.renderingOrder = order
             group.addChildNode(planNode)
 
-            // Walls: a translucent band along every traced wall edge, with a bright top line.
+            // Walls: a solid, lit face along every traced wall edge.
             let wallMesh = HoloGeometry.wallMesh(for: authored, floor: floor, height: model3D.wallHeightMeters)
-            if let walls = geometry(wallMesh, materials: wallMaterials) {
+            if let walls = geometry(wallMesh, materials: [wallMaterial], topLines: false) {
                 let node = SCNNode(geometry: walls)
                 node.renderingOrder = order + 2
                 group.addChildNode(node)
@@ -437,7 +426,7 @@ private enum SceneBuilder {
 
             // Rim: a bright band around the footprint so each floor reads as one shape.
             let rimMesh = HoloGeometry.rimMesh(for: authored, floor: floor, height: 0.9)
-            if let rim = geometry(rimMesh, materials: rimMaterials) {
+            if let rim = geometry(rimMesh, materials: rimMaterials, topLines: true) {
                 let node = SCNNode(geometry: rim)
                 node.renderingOrder = order + 3
                 group.addChildNode(node)
@@ -453,13 +442,16 @@ private enum SceneBuilder {
         return result
     }
 
-    /// A HoloCore mesh as SceneKit geometry: the bands (first material) and their top lines (second).
-    static func geometry(_ mesh: WallMesh, materials: [SCNMaterial]) -> SCNGeometry? {
+    /// A HoloCore mesh as SceneKit geometry: the faces (first material) and, if asked,
+    /// the lines along their tops (second material).
+    static func geometry(_ mesh: WallMesh, materials: [SCNMaterial], topLines: Bool) -> SCNGeometry? {
         guard !mesh.isEmpty else { return nil }
         let vertices = mesh.positions.map { SCNVector3($0.x, $0.y, $0.z) }
-        let geometry = SCNGeometry(sources: [SCNGeometrySource(vertices: vertices)],
-                                   elements: [SCNGeometryElement(indices: mesh.triangles, primitiveType: .triangles),
-                                              SCNGeometryElement(indices: mesh.topLines, primitiveType: .line)])
+        let normals = mesh.normals.map { SCNVector3($0.x, $0.y, $0.z) }
+        var elements = [SCNGeometryElement(indices: mesh.triangles, primitiveType: .triangles)]
+        if topLines { elements.append(SCNGeometryElement(indices: mesh.topLines, primitiveType: .line)) }
+        let geometry = SCNGeometry(sources: [SCNGeometrySource(vertices: vertices), SCNGeometrySource(normals: normals)],
+                                   elements: elements)
         geometry.materials = materials
         return geometry
     }

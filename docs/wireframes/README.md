@@ -19,7 +19,7 @@ All data is real: Grainger Hall, router output for West Entrance → 3335 (186 s
 
 ### 1 · Home: `ContentView`, `Building3DView`
 - The map fills the screen. The route panel is a sheet the student can't dismiss, with three heights: peek, half and full.
-- **Top bar:** the building name and a floor picker (L3/L2/L1). An orange dot under a floor means the route passes through it.
+- **Top bar:** the layout switch (Exploded / Stacked / One floor), a recenter button and a floor picker (L3/L2/L1). Nothing floats over the model at the bottom, so the route panel never covers a control. An orange dot under a floor means the route passes through it.
 - **Start:** defaults to West Entrance, the only mapped entrance.
 - **Map gestures:** pinch to zoom, drag to pan. The ⤢ button shows the whole floor.
 
@@ -47,7 +47,7 @@ All data is real: Grainger Hall, router output for West Entrance → 3335 (186 s
 - The wireframe PNG predates the hologram restyle. It still shows the right layout, not the current look.
 - Dark backdrop; floors drawn in cyan light from the real plans. Amber is the route, green the start, pink the destination beam.
 - **Layout switch:** Exploded (26 m between floors), Stacked (4.2 m, as built) or One floor.
-- The selected floor is bright and the others dim. Tap a room to pick it (this also selects its floor), or use the top picker.
+- Floors and walls are solid. Floors above the selected one are ghosted. Tap a room to pick it (this also selects its floor), or use the top picker.
 - One floor looks from above and stands in for the old 2D map.
 - A recenter button puts the camera back. A note says only Levels 1–3 are mapped.
 

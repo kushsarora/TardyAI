@@ -1,12 +1,14 @@
 import Foundation
 
-/// A lightweight wall mesh for one floor: a vertical band along every wall
+/// A lightweight wall mesh for one floor: a vertical face along every wall
 /// edge, plus the line along its top. Built by hand because extruding the
 /// traced outlines with SceneKit's shape tessellator was too heavy for a phone.
 /// Positions are metres in the floor's own frame (y = 0 is the floor), using
 /// the `World3D` mapping.
 public struct WallMesh: Sendable, Equatable {
     public var positions: [SIMD3<Float>] = []
+    /// One per position: the outward-facing horizontal direction of its wall face, for lighting.
+    public var normals: [SIMD3<Float>] = []
     /// Two triangles per wall edge.
     public var triangles: [UInt32] = []
     /// One segment per wall edge, along the top.
@@ -15,19 +17,23 @@ public struct WallMesh: Sendable, Equatable {
     public var isEmpty: Bool { triangles.isEmpty }
 
     /// Adds a band of the given height standing on a closed ring of ground points.
+    /// Each edge gets its own four vertices so every wall face is lit flat.
     public mutating func addBand(ring: [SIMD3<Float>], height: Float) {
         guard ring.count >= 3 else { return }
-        let base = UInt32(positions.count)
-        let n = UInt32(ring.count)
-        for p in ring {
-            positions.append(p)
-            positions.append(SIMD3<Float>(p.x, p.y + height, p.z))
-        }
-        for i in 0..<n {
-            let j = (i + 1) % n
-            let a = base + 2 * i, b = base + 2 * j
-            triangles.append(contentsOf: [a, b, b + 1, a, b + 1, a + 1])
-            topLines.append(contentsOf: [a + 1, b + 1])
+        for i in ring.indices {
+            let a = ring[i], b = ring[(i + 1) % ring.count]
+            let dx = b.x - a.x, dz = b.z - a.z
+            let length = (dx * dx + dz * dz).squareRoot()
+            guard length > 0 else { continue }
+            let normal = SIMD3<Float>(dz / length, 0, -dx / length)
+            let base = UInt32(positions.count)
+            positions.append(a)
+            positions.append(b)
+            positions.append(SIMD3<Float>(b.x, b.y + height, b.z))
+            positions.append(SIMD3<Float>(a.x, a.y + height, a.z))
+            normals.append(contentsOf: [normal, normal, normal, normal])
+            triangles.append(contentsOf: [base, base + 1, base + 2, base, base + 2, base + 3])
+            topLines.append(contentsOf: [base + 3, base + 2])
         }
     }
 }

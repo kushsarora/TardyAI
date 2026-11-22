@@ -14,7 +14,7 @@ Type a room number and you get a walking route drawn on the real floor plan, acr
 
 The whole map is one 3D model. There is no separate 2D view.
 
-- **3D hologram.** Grainger as a glowing model you can orbit and zoom: the real floor plans drawn in light on each floor, with the walls standing on them. Switch between *Exploded*, *Stacked* and *One floor* (seen from above, for reading room numbers), pick a floor with L1–L3, and recenter with one button.
+- **3D hologram.** Grainger as a glowing model you can orbit and zoom: the real floor plans drawn in light on each floor, with solid walls standing on them. Floors above the one you pick turn to ghosts so they never hide it. From the top bar, switch between *Exploded*, *Stacked* and *One floor* (seen from above, for reading room numbers), pick a floor with L1–L3, and recenter with one button.
 - **Tap a room.** Tap any room on the model to get **Go here** or **Start** buttons.
 - **Room search.** Search by number (`3335`), name (`Learning Commons`) or a term like `restroom`. You can also browse every room by floor.
 - **"Start from my location".** GPS suggests a start on the floor you've picked, and the accuracy circle is drawn on that floor. GPS can't tell floors apart, so you always choose the floor.
@@ -79,7 +79,7 @@ The app target picks up any file you add under `HoloMap/` automatically. The pro
 
 Every colour and glow strength is in `HoloTheme` at the top of `HoloMap/Building3DView.swift`. If the model looks washed out on a device, lower `bloomIntensity` or set `bloom` to `false` first (turning it off also makes drawing cheaper).
 
-The walls are not extruded solids. `HoloCore` simplifies the traced outlines and turns each wall edge into one upright band (about 9,000 triangles per floor), which is what keeps the model quick to build and draw. The floor textures are baked, not drawn at run time; after changing a floor plan or the bake settings, run `python3 tools/bake_holo_plans.py` (needs `pillow` and `numpy`).
+The walls are not extruded solids. `HoloCore` simplifies the traced outlines and turns each wall edge into one upright, lit face (about 9,000 triangles per floor), which is what keeps the model quick to build and draw. The floor textures are baked, not drawn at run time; after changing a floor plan or the bake settings, run `python3 tools/bake_holo_plans.py` (needs `pillow` and `numpy`).
 
 ## Tests
 

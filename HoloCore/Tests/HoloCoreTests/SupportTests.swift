@@ -116,10 +116,13 @@ final class WallMeshTests: XCTestCase {
     func testBandHasTwoTrianglesAndOneTopLinePerEdge() {
         var mesh = WallMesh()
         mesh.addBand(ring: [SIMD3(0, 0, 0), SIMD3(1, 0, 0), SIMD3(1, 0, 1)], height: 2)
-        XCTAssertEqual(mesh.positions.count, 6)
+        XCTAssertEqual(mesh.positions.count, 12)
+        XCTAssertEqual(mesh.normals.count, 12)
         XCTAssertEqual(mesh.triangles.count, 18)
         XCTAssertEqual(mesh.topLines.count, 6)
-        XCTAssertTrue(mesh.triangles.allSatisfy { $0 < 6 })
+        XCTAssertTrue(mesh.triangles.allSatisfy { $0 < 12 })
+        // The first edge runs along +x, so its face looks along z and is unit length.
+        XCTAssertEqual(mesh.normals[0], SIMD3<Float>(0, 0, -1))
         XCTAssertTrue(mesh.topLines.allSatisfy { mesh.positions[Int($0)].y == 2 })
     }
 
@@ -131,6 +134,8 @@ final class WallMeshTests: XCTestCase {
             let mesh = HoloGeometry.wallMesh(for: authored, floor: floor, height: model.wallHeightMeters)
             XCTAssertFalse(mesh.isEmpty)
             XCTAssertLessThan(mesh.positions.count, 20_000, "level \(authored.level)")
+            XCTAssertEqual(mesh.normals.count, mesh.positions.count)
+            XCTAssertTrue(mesh.normals.allSatisfy { abs(($0.x * $0.x + $0.z * $0.z).squareRoot() - 1) < 1e-3 })
             XCTAssertTrue(mesh.triangles.allSatisfy { Int($0) < mesh.positions.count })
             XCTAssertTrue(mesh.positions.allSatisfy { $0.x.isFinite && $0.y.isFinite && $0.z.isFinite })
             XCTAssertTrue(mesh.positions.allSatisfy { abs($0.x) < 90 && abs($0.z) < 70 })
