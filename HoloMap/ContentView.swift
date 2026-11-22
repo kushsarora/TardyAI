@@ -7,19 +7,12 @@ struct ContentView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            Group {
-                switch model.mapMode {
-                case .plan:
-                    FloorPlanView(model: model)
-                case .model:
-                    Building3DView(model: model)
-                }
-            }
-            .ignoresSafeArea()
+            Building3DView(model: model)
+                .ignoresSafeArea()
 
             VStack(spacing: 10) {
                 MapControls(model: model)
-                if let tapped = model.tapped, model.mapMode == .plan {
+                if let tapped = model.tapped {
                     TappedSpotCard(model: model, spot: tapped)
                         .transition(.move(edge: .top).combined(with: .opacity))
                 }
@@ -39,6 +32,7 @@ struct ContentView: View {
                 .presentationBackgroundInteraction(.enabled(upThrough: .medium))
                 .presentationDragIndicator(.visible)
                 .interactiveDismissDisabled()
+                .preferredColorScheme(.dark)
         }
     }
 }
@@ -48,17 +42,18 @@ enum PanelLayout {
     static let peekHeight: CGFloat = 190
 }
 
-/// Floor picker and the 2D / 3D toggle.
+/// The building's name and the floor picker.
 struct MapControls: View {
     @Bindable var model: AppModel
 
     var body: some View {
         HStack(spacing: 8) {
-            Picker("Map", selection: $model.mapMode) {
-                ForEach(MapMode.allCases) { Text($0.rawValue).tag($0) }
-            }
-            .pickerStyle(.segmented)
-            .frame(width: 96)
+            Label(model.map.building.name, systemImage: "cube.transparent")
+                .font(.subheadline.weight(.semibold))
+                .lineLimit(1)
+                .padding(.horizontal, 12)
+                .frame(height: 46)
+                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
 
             Spacer(minLength: 4)
 
@@ -72,7 +67,7 @@ struct MapControls: View {
                         VStack(spacing: 2) {
                             Text("L\(floor.level)").font(.subheadline.weight(.semibold))
                             Circle()
-                                .fill(onRoute ? Color.blue : Color.clear)
+                                .fill(onRoute ? Color.orange : Color.clear)
                                 .frame(width: 5, height: 5)
                         }
                         .frame(width: 44, height: 40)

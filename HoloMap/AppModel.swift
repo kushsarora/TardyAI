@@ -3,12 +3,6 @@ import Observation
 import SwiftUI
 import HoloCore
 
-enum MapMode: String, CaseIterable, Identifiable {
-    case plan = "2D"
-    case model = "3D"
-    var id: String { rawValue }
-}
-
 /// How the 3D view arranges the floors.
 enum HoloLayout: String, CaseIterable, Identifiable {
     /// Floors pulled apart so you can see into each one.
@@ -20,7 +14,7 @@ enum HoloLayout: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
-/// A spot the student tapped on the floor plan, waiting for "Start here" / "Go here".
+/// A spot the student tapped on a floor of the model, waiting for "Start here" / "Go here".
 struct TappedSpot: Equatable {
     var floorId: String
     var point: CGPoint
@@ -28,13 +22,6 @@ struct TappedSpot: Equatable {
     var place: MapNode?
     /// The routable node closest to the tap (what "Start here" uses).
     var nearestNodeId: String?
-}
-
-/// Asks the map to frame a region of a floor plan (plan pixels).
-struct FocusRequest: Equatable {
-    var id: Int
-    var floorId: String
-    var rect: CGRect?
 }
 
 /// Where the GPS suggested the student is, for drawing the accuracy circle.
@@ -57,7 +44,6 @@ final class AppModel {
     private(set) var route: NavRoute?
 
     var selectedFloorId: String
-    var mapMode: MapMode = .plan
     var layout3D: HoloLayout = .exploded
     /// Bumped by the 3D view's recenter button.
     var recenter3D = 0
@@ -67,9 +53,7 @@ final class AppModel {
     var gpsFix: GPSFix?
     var banner: String?
     var isLocating = false
-    private(set) var focus: FocusRequest
 
-    @ObservationIgnored private var planImages: [String: UIImage] = [:]
     private let location = LocationProvider()
 
     init() throws {
@@ -81,7 +65,6 @@ final class AppModel {
         startId = start?.id
         let firstFloor = start?.floorId ?? map.floors.first?.id ?? ""
         selectedFloorId = firstFloor
-        focus = FocusRequest(id: 0, floorId: firstFloor, rect: nil)
     }
 
     // MARK: Lookups
@@ -105,27 +88,6 @@ final class AppModel {
         default:
             return "Pinned spot"
         }
-    }
-
-    func planImage(for floor: Floor) -> UIImage? {
-        guard let name = floor.planImageName else { return nil }
-        if let cached = planImages[name] { return cached }
-        // Xcode normally copies Plans/*.png to the bundle root; fall back to the subfolder just in case.
-        let image = UIImage(named: name)
-            ?? Bundle.main.path(forResource: name, ofType: "png", inDirectory: "Plans").flatMap(UIImage.init(contentsOfFile:))
-        planImages[name] = image
-        return image
-    }
-
-    /// The glowing version of a floor plan for the 3D view (`holo_p1` for `floor_p1`),
-    /// baked by `tools/bake_holo_plans.py`.
-    func holoPlanImage(for floor: Floor) -> UIImage? {
-        guard let name = floor.planImageName?.replacingOccurrences(of: "floor_", with: "holo_") else { return nil }
-        if let cached = planImages[name] { return cached }
-        let image = UIImage(named: name)
-            ?? Bundle.main.path(forResource: name, ofType: "png", inDirectory: "Plans").flatMap(UIImage.init(contentsOfFile:))
-        planImages[name] = image
-        return image
     }
 
     func search(_ query: String) -> [MapNode] {
@@ -169,7 +131,6 @@ final class AppModel {
         tapped = nil
         guard startId != nil, destId != nil else {
             route = nil
-            requestFocus(on: selectedFloorId)
             return
         }
         let result = router.findRoute(from: startId, to: destId, stepFree: stepFree)
@@ -177,37 +138,13 @@ final class AppModel {
         if let firstLeg = result.legs.first {
             selectedFloorId = firstLeg.floorId
         }
-        requestFocus(on: selectedFloorId)
     }
 
-    // MARK: Floors and framing
+    // MARK: Floors
 
     func selectFloor(_ floorId: String) {
         selectedFloorId = floorId
         tapped = nil
-        requestFocus(on: floorId)
-    }
-
-    func requestFocus(on floorId: String) {
-        focus = FocusRequest(id: focus.id + 1, floorId: floorId, rect: routeBounds(on: floorId))
-    }
-
-    /// Bounding box of everything worth seeing on a floor: its route legs and pins.
-    func routeBounds(on floorId: String) -> CGRect? {
-        var points: [CGPoint] = []
-        for (index, leg) in (foundRoute?.legs ?? []).enumerated() where leg.floorId == floorId {
-            if let active = activeLegIndex, active != index { continue }
-            points += leg.points.map { CGPoint(x: $0.x, y: $0.y) }
-        }
-        if points.isEmpty {
-            for node in [startNode, destNode].compactMap({ $0 }) where node.floorId == floorId {
-                points.append(CGPoint(x: node.imageX, y: node.imageY))
-            }
-        }
-        guard let first = points.first else { return nil }
-        var rect = CGRect(origin: first, size: .zero)
-        for p in points.dropFirst() { rect = rect.union(CGRect(origin: p, size: .zero)) }
-        return rect.insetBy(dx: -90, dy: -90)
     }
 
     // MARK: Directions mode
@@ -221,12 +158,10 @@ final class AppModel {
         guard let route = foundRoute, route.legs.indices.contains(index) else { return }
         activeLegIndex = index
         selectedFloorId = route.legs[index].floorId
-        requestFocus(on: selectedFloorId)
     }
 
     func endDirections() {
         activeLegIndex = nil
-        requestFocus(on: selectedFloorId)
     }
 
     // MARK: Map taps
@@ -246,6 +181,16 @@ final class AppModel {
         }
         let nearest = router.nearestNode(floorId: floorId, x: point.x, y: point.y) { $0.kind != .door }
         tapped = TappedSpot(floorId: floorId, point: point, place: best, nearestNodeId: nearest?.id)
+    }
+
+    /// A tap on the 3D model: `floorId` is nil when the tap missed every floor.
+    func tapMap(floorId: String?, point: CGPoint) {
+        guard let floorId else {
+            tapped = nil
+            return
+        }
+        if floorId != selectedFloorId { selectFloor(floorId) }
+        handleTap(at: point, floorId: floorId)
     }
 
     func startFromTap() {

@@ -2,6 +2,8 @@
 
 Wireframes for the UI pass on the SwiftUI app. The editable canvas is [TardyAI iOS Wireframes](https://claude.ai/artifact/6e5bbeBrV6SdD58Vj8ywMt). These PNGs are exported from it at iPhone size (390×844 pt, @3x).
 
+> **The app is now 3D-only.** The 2D floor-plan map in screens 1–5 and 7 was removed; the model in screen 6 is the map everywhere. The panel, search, directions and edge states are unchanged. These wireframes need a redraw.
+
 **Flow:** Home → tap a room or search → route + "am I late?" card → step-by-step directions. The 3D view and the edge states come after.
 
 All data is real: Grainger Hall, router output for West Entrance → 3335 (186 s, shown as "4 min"; 160 m; via Elevator C). The layout matches the app on `main`, so restyle freely, but keep the sheet-over-map structure. Values in `[brackets]` are filled in live.
@@ -15,9 +17,9 @@ All data is real: Grainger Hall, router output for West Entrance → 3335 (186 s
 
 ## Screen notes
 
-### 1 · Home: `ContentView`, `FloorPlanView`
+### 1 · Home: `ContentView`, `Building3DView`
 - The map fills the screen. The route panel is a sheet the student can't dismiss, with three heights: peek, half and full.
-- **Top bar:** a 2D/3D switch and a floor picker (L3/L2/L1). A blue dot under a floor means the route passes through it.
+- **Top bar:** the building name and a floor picker (L3/L2/L1). An orange dot under a floor means the route passes through it.
 - **Start:** defaults to West Entrance, the only mapped entrance.
 - **Map gestures:** pinch to zoom, drag to pan. The ⤢ button shows the whole floor.
 
@@ -45,7 +47,8 @@ All data is real: Grainger Hall, router output for West Entrance → 3335 (186 s
 - The wireframe PNG predates the hologram restyle. It still shows the right layout, not the current look.
 - Dark backdrop; floors drawn in cyan light from the real plans. Amber is the route, green the start, pink the destination beam.
 - **Layout switch:** Exploded (26 m between floors), Stacked (4.2 m, as built) or One floor.
-- The selected floor is bright and the others dim. Tap a floor, or use the top picker, to select it.
+- The selected floor is bright and the others dim. Tap a room to pick it (this also selects its floor), or use the top picker.
+- One floor looks from above and stands in for the old 2D map.
 - A recenter button puts the camera back. A note says only Levels 1–3 are mapped.
 
 ### 7 · Edge states

@@ -14,6 +14,7 @@ struct HoloMapApp: App {
             case .success(let model):
                 ContentView(model: model)
                     .tint(.holoGreen)
+                    .preferredColorScheme(.dark)
             case .failure(let error):
                 ContentUnavailableView("Couldn’t load the map",
                                        systemImage: "exclamationmark.triangle",
@@ -24,7 +25,7 @@ struct HoloMapApp: App {
 }
 
 extension Color {
-    /// HoloMap's green, carried over from the web app.
-    static let holoGreen = Color(red: 0.18, green: 0.42, blue: 0.31)
+    /// HoloMap's green: the web app's green, lifted so it reads on the dark hologram.
+    static let holoGreen = Color(red: 0.16, green: 0.62, blue: 0.45)
     static let holoIvory = Color(red: 0.98, green: 0.97, blue: 0.93)
 }

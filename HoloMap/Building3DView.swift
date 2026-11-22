@@ -3,11 +3,10 @@ import SceneKit
 import simd
 import SwiftUI
 
-/// The holographic 3D model of Grainger Hall with the same route as the 2D map.
+/// The map: a holographic 3D model of Grainger Hall with the route through it.
 /// Illustrative only: walls are traced from the plan images, heights are assumed.
 struct Building3DView: View {
     @Bindable var model: AppModel
-    @State private var ready = false
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -16,7 +15,6 @@ struct Building3DView: View {
                 BuildingScene(
                     map: model.map,
                     model3D: model3D,
-                    planImages: holoImages,
                     config: BuildingScene.Config(
                         route: model.foundRoute,
                         activeLegIndex: model.activeLegIndex,
@@ -24,31 +22,18 @@ struct Building3DView: View {
                         selectedFloorId: model.selectedFloorId,
                         startNodeId: model.startId,
                         destNodeId: model.destId,
+                        tapped: model.tapped,
+                        gpsFix: model.gpsFix,
                         recenterToken: model.recenter3D),
-                    onSelectFloor: { model.selectFloor($0) },
-                    onReady: { ready = true })
+                    onTap: { floorId, point in model.tapMap(floorId: floorId, point: point) })
                     .accessibilityLabel("3D model of \(model.map.building.name)")
-                if !ready {
-                    ProgressView("Building the hologram…")
-                        .tint(.white)
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
+                    .accessibilityHint("Use the route panel to choose rooms.")
                 controls
             } else {
                 ContentUnavailableView("3D model unavailable", systemImage: "cube.transparent",
-                                       description: Text("The 2D map still has your route."))
+                                       description: Text("The model data couldn’t be loaded. Search and directions still work."))
             }
         }
-        .environment(\.colorScheme, .dark)
-    }
-
-    private var holoImages: [String: UIImage] {
-        var images: [String: UIImage] = [:]
-        for floor in model.map.floors {
-            if let image = model.holoPlanImage(for: floor) { images[floor.id] = image }
-        }
-        return images
     }
 
     private var controls: some View {
@@ -69,7 +54,7 @@ struct Building3DView: View {
                 }
                 .accessibilityLabel("Recenter the 3D view")
             }
-            Text("Drag to orbit · pinch to zoom · tap a floor to select it")
+            Text("Drag to orbit · pinch to zoom · tap a room to pick it")
                 .font(.caption2)
                 .foregroundStyle(.secondary)
             Text("Levels 1–3 are mapped. Higher floors aren’t yet.")
@@ -88,12 +73,9 @@ struct Building3DView: View {
 enum HoloTheme {
     static let backdropTop = UIColor(red: 0.03, green: 0.07, blue: 0.13, alpha: 1)
     static let backdropBottom = UIColor(red: 0.005, green: 0.012, blue: 0.03, alpha: 1)
-    static let slab = UIColor(red: 0.01, green: 0.04, blue: 0.08, alpha: 1)
-    /// How much a slab hides the floors underneath it (0 = not at all).
-    static let slabOpacity: CGFloat = 0.6
 
-    static let wallTop: CGFloat = 0.55
-    static let wallSide: CGFloat = 0.07
+    static let wallSide: CGFloat = 0.13
+    static let wallTop: CGFloat = 0.6
     static let rim: CGFloat = 0.85
     static let grid: CGFloat = 0.22
     static let shaft: CGFloat = 0.3
@@ -102,7 +84,7 @@ enum HoloTheme {
     static let dimmedExploded: CGFloat = 0.42
     static let dimmedStacked: CGFloat = 0.2
 
-    /// Camera glow. Set `bloom` to false if the model looks washed out on device.
+    /// Camera glow. Set `bloom` to false if the model looks washed out or runs slowly.
     static let bloom = true
     static let bloomIntensity: CGFloat = 0.9
     static let bloomThreshold: CGFloat = 0.7
@@ -112,6 +94,8 @@ enum HoloTheme {
     static func amber(_ k: CGFloat) -> UIColor { UIColor(red: 1.0 * k, green: 0.74 * k, blue: 0.22 * k, alpha: 1) }
     static func green(_ k: CGFloat) -> UIColor { UIColor(red: 0.25 * k, green: 1.0 * k, blue: 0.55 * k, alpha: 1) }
     static func pink(_ k: CGFloat) -> UIColor { UIColor(red: 1.0 * k, green: 0.30 * k, blue: 0.45 * k, alpha: 1) }
+    static func violet(_ k: CGFloat) -> UIColor { UIColor(red: 0.72 * k, green: 0.50 * k, blue: 1.0 * k, alpha: 1) }
+    static func blue(_ k: CGFloat) -> UIColor { UIColor(red: 0.25 * k, green: 0.55 * k, blue: 1.0 * k, alpha: 1) }
 
     /// Drawing order. Nothing writes depth, so this alone decides what covers what:
     /// lower floors first, then the route, pins and labels on top of everything.
@@ -133,6 +117,8 @@ private struct BuildingScene: UIViewRepresentable {
         var selectedFloorId: String
         var startNodeId: String?
         var destNodeId: String?
+        var tapped: TappedSpot?
+        var gpsFix: GPSFix?
         var recenterToken: Int
 
         var floorGap: Double { layout == .exploded ? World3D.separatedFloorGap : World3D.stackedFloorGap }
@@ -143,40 +129,38 @@ private struct BuildingScene: UIViewRepresentable {
 
     let map: BuildingMap
     let model3D: Building3DModel
-    let planImages: [String: UIImage]
     let config: Config
-    let onSelectFloor: (String) -> Void
-    let onReady: () -> Void
+    let onTap: (_ floorId: String?, _ planPoint: CGPoint) -> Void
 
     func makeCoordinator() -> Coordinator { Coordinator(map: map, model3D: model3D) }
 
     func makeUIView(context: Context) -> SCNView {
         let view = SCNView()
         view.backgroundColor = HoloTheme.backdropBottom
-        view.antialiasingMode = .multisampling4X
+        view.antialiasingMode = .multisampling2X
         view.allowsCameraControl = true
         view.defaultCameraController.interactionMode = .orbitTurntable
         view.defaultCameraController.inertiaEnabled = true
         // Keep the camera above the ground so the building never flips over.
         view.defaultCameraController.minimumVerticalAngle = 6
-        view.defaultCameraController.maximumVerticalAngle = 88
+        view.defaultCameraController.maximumVerticalAngle = 89
 
         let tap = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap(_:)))
         view.addGestureRecognizer(tap)
 
-        context.coordinator.onSelectFloor = onSelectFloor
-        context.coordinator.attach(to: view, planImages: planImages, onReady: onReady)
+        context.coordinator.onTap = onTap
+        context.coordinator.attach(to: view)
         context.coordinator.apply(config)
         return view
     }
 
     func updateUIView(_ view: SCNView, context: Context) {
-        context.coordinator.onSelectFloor = onSelectFloor
+        context.coordinator.onTap = onTap
         context.coordinator.apply(config)
     }
 
     final class Coordinator: NSObject {
-        var onSelectFloor: ((String) -> Void)?
+        var onTap: ((String?, CGPoint) -> Void)?
 
         private let map: BuildingMap
         private let model3D: Building3DModel
@@ -186,7 +170,6 @@ private struct BuildingScene: UIViewRepresentable {
         private var floorNodes: [String: SCNNode] = [:]
         private var overlayNode: SCNNode?
         private var applied: Config?
-        private var pending: Config?
 
         init(map: BuildingMap, model3D: Building3DModel) {
             self.map = map
@@ -194,7 +177,7 @@ private struct BuildingScene: UIViewRepresentable {
             super.init()
         }
 
-        func attach(to view: SCNView, planImages: [String: UIImage], onReady: @escaping () -> Void) {
+        func attach(to view: SCNView) {
             self.view = view
             view.scene = scene
             scene.background.contents = SceneBuilder.backdropImage()
@@ -216,27 +199,16 @@ private struct BuildingScene: UIViewRepresentable {
 
             scene.rootNode.addChildNode(SceneBuilder.gridNode())
 
-            // Tessellating a few hundred traced wall outlines takes a moment; do it off the main thread.
-            let map = self.map, model3D = self.model3D
-            DispatchQueue.global(qos: .userInitiated).async {
-                let built = SceneBuilder.floorNodes(map: map, model3D: model3D, planImages: planImages)
-                DispatchQueue.main.async { [weak self] in
-                    guard let self else { return }
-                    for (id, node) in built {
-                        self.scene.rootNode.addChildNode(node)
-                        self.floorNodes[id] = node
-                    }
-                    let config = self.pending
-                    self.applied = nil
-                    if let config { self.apply(config) }
-                    onReady()
-                }
+            // Each floor is one textured plane and two small meshes, so this is quick
+            // enough to do right here.
+            for (id, node) in SceneBuilder.floorNodes(map: map, model3D: model3D) {
+                scene.rootNode.addChildNode(node)
+                floorNodes[id] = node
             }
         }
 
         func apply(_ config: Config) {
-            pending = config
-            guard !floorNodes.isEmpty, config != applied else { return }
+            guard config != applied else { return }
             let previous = applied
             let animated = previous != nil
             let gap = config.floorGap
@@ -273,7 +245,8 @@ private struct BuildingScene: UIViewRepresentable {
 
         private static let verticalFieldOfView: Float = 50
 
-        /// Frames whatever is on show from the south-east, a little above.
+        /// Frames whatever is on show: from the south-east for the whole building,
+        /// from almost straight above for a single floor.
         private func placeCamera(for config: Config, animated: Bool) {
             guard let view, let floor = map.floors.first else { return }
             let scale = floor.pixelsPerMeter ?? 12
@@ -283,9 +256,11 @@ private struct BuildingScene: UIViewRepresentable {
             let levels = map.floors.filter { config.shows($0.id) }.map(\.level)
             let bottom = Float(World3D.elevation(level: levels.min() ?? 1, floorGap: config.floorGap))
             let top = Float(World3D.elevation(level: levels.max() ?? 1, floorGap: config.floorGap) + model3D.wallHeightMeters)
-            let radius = (halfWidth * halfWidth + halfDepth * halfDepth + pow((top - bottom) / 2, 2)).squareRoot()
+            let halfHeight = (top - bottom) / 2
+            let radius = (halfWidth * halfWidth + halfDepth * halfDepth + halfHeight * halfHeight).squareRoot()
 
             // A phone in portrait is limited by its width, so fit the narrower field of view.
+            // Before the first layout the view has no size yet; assume a portrait phone.
             let size = view.bounds.size
             let aspect = size.width > 0 && size.height > 0 ? Float(size.width / size.height) : 0.46
             let halfVertical = Self.verticalFieldOfView / 2 * .pi / 180
@@ -294,7 +269,7 @@ private struct BuildingScene: UIViewRepresentable {
 
             // Aim a little below the middle so the model sits above the route panel.
             let center = SIMD3<Float>(0, (top + bottom) / 2 - distance * tan(halfVertical) * 0.12, 0)
-            let direction = simd_normalize(SIMD3<Float>(0.38, 0.55, 0.74))
+            let direction = simd_normalize(config.layout == .single ? SIMD3<Float>(0, 0.92, 0.40) : SIMD3<Float>(0.38, 0.55, 0.74))
             let position = center + direction * distance
             let target = SCNVector3(center.x, center.y, center.z)
 
@@ -307,22 +282,29 @@ private struct BuildingScene: UIViewRepresentable {
             view.defaultCameraController.target = target
         }
 
-        // MARK: Tap a floor to select it
+        // MARK: Tap a spot on a floor
 
         @objc func handleTap(_ gesture: UITapGestureRecognizer) {
             guard let view, gesture.state == .ended else { return }
             let hits = view.hitTest(gesture.location(in: view),
                                     options: [.searchMode: SCNHitTestSearchMode.all.rawValue])
+            // Nearest first. A floor's plane covers its whole plan image, so skip
+            // hits outside the footprint and let the tap fall through to the floor below.
             for hit in hits {
-                var node: SCNNode? = hit.node
-                while let current = node {
-                    if let name = current.name, floorNodes[name] != nil {
-                        if name != applied?.selectedFloorId { onSelectFloor?(name) }
-                        return
-                    }
-                    node = current.parent
-                }
+                guard let name = hit.node.name, name.hasPrefix(SceneBuilder.planPrefix) else { continue }
+                let floorId = String(name.dropFirst(SceneBuilder.planPrefix.count))
+                guard let floor = map.floorsById[floorId],
+                      let authored = model3D.floors.first(where: { $0.floorId == floorId }) else { continue }
+                // Plane-local (x right, y toward plan north, in metres) → plan pixels.
+                let scale = floor.pixelsPerMeter ?? 12
+                let local = hit.localCoordinates
+                let x = Double(local.x) * scale + floor.imageWidth / 2
+                let y = floor.imageHeight / 2 - Double(local.y) * scale
+                guard authored.contains(x: x, y: y) else { continue }
+                onTap?(floorId, CGPoint(x: x, y: y))
+                return
             }
+            onTap?(nil, .zero)
         }
     }
 }
@@ -330,6 +312,8 @@ private struct BuildingScene: UIViewRepresentable {
 /// Turns the plan-derived model and a route into SceneKit nodes.
 /// World mapping (see `World3D`): +Y up, +Z south, plan centre at the origin.
 private enum SceneBuilder {
+    /// A floor's tappable plane is named this plus the floor id.
+    static let planPrefix = "plan:"
 
     // MARK: Materials
 
@@ -400,13 +384,19 @@ private enum SceneBuilder {
 
     // MARK: Floors
 
-    static func floorNodes(map: BuildingMap, model3D: Building3DModel, planImages: [String: UIImage]) -> [String: SCNNode] {
+    /// The glowing plan texture for a floor: `holo_p1` for `floor_p1`, baked by `tools/bake_holo_plans.py`.
+    static func holoImage(for floor: Floor) -> UIImage? {
+        guard let name = floor.planImageName?.replacingOccurrences(of: "floor_", with: "holo_") else { return nil }
+        // Xcode normally copies Plans/*.png to the bundle root; fall back to the subfolder just in case.
+        if let image = UIImage(named: name) { return image }
+        guard let path = Bundle.main.path(forResource: name, ofType: "png", inDirectory: "Plans") else { return nil }
+        return UIImage(contentsOfFile: path)
+    }
+
+    static func floorNodes(map: BuildingMap, model3D: Building3DModel) -> [String: SCNNode] {
         var result: [String: SCNNode] = [:]
-        let wallHeight = model3D.wallHeightMeters
-        // SCNShape material slots: front (the wall's top once tipped flat), back, sides.
-        let wallMaterials = [glow(HoloTheme.cyan(HoloTheme.wallTop)),
-                             glow(HoloTheme.cyan(HoloTheme.wallSide)),
-                             glow(HoloTheme.cyan(HoloTheme.wallSide))]
+        let wallMaterials = [glow(HoloTheme.cyan(HoloTheme.wallSide)), glow(HoloTheme.cyan(HoloTheme.wallTop))]
+        let rimMaterials = [glow(HoloTheme.cyan(HoloTheme.rim)), glow(HoloTheme.cyan(HoloTheme.rim))]
 
         for authored in model3D.floors {
             guard let floor = map.floorsById[authored.floorId] else { continue }
@@ -415,61 +405,42 @@ private enum SceneBuilder {
             let group = SCNNode()
             group.name = floor.id
 
-            // Slab: a dark sheet of glass in the footprint's shape. It dims the floors below it.
-            let slabShape = SCNShape(path: path([authored.outline] + authored.openings, floor: floor), extrusionDepth: 0.3)
-            let slabMaterial = SCNMaterial()
-            slabMaterial.lightingModel = .constant
-            slabMaterial.diffuse.contents = HoloTheme.slab
-            slabMaterial.transparency = HoloTheme.slabOpacity
-            slabMaterial.isDoubleSided = true
-            slabMaterial.writesToDepthBuffer = false
-            slabMaterial.readsFromDepthBuffer = false
-            slabShape.materials = [slabMaterial]
-            let slab = SCNNode(geometry: slabShape)
-            slab.eulerAngles.x = -Float.pi / 2
-            slab.position.y = -0.15
-            slab.renderingOrder = order
-            group.addChildNode(slab)
-
-            // The real floor plan as light: linework in cyan, room types as a faint tint.
-            if let image = planImages[floor.id] {
-                let plane = SCNPlane(width: floor.imageWidth / scale, height: floor.imageHeight / scale)
-                let material = glow(.white)
-                material.diffuse.contents = image
-                material.diffuse.mipFilter = .linear
-                plane.materials = [material]
-                let planNode = SCNNode(geometry: plane)
-                planNode.eulerAngles.x = -Float.pi / 2
-                planNode.position.y = 0.05
-                planNode.renderingOrder = order + 1
-                group.addChildNode(planNode)
+            // One flat plane carries the whole floor: the real plan drawn as light on a
+            // sheet of dark glass cut to the footprint. The texture's alpha does the
+            // cutting and the dimming of the floors beneath; it is also what taps hit.
+            let plane = SCNPlane(width: floor.imageWidth / scale, height: floor.imageHeight / scale)
+            let planMaterial = SCNMaterial()
+            planMaterial.lightingModel = .constant
+            if let image = holoImage(for: floor) {
+                planMaterial.diffuse.contents = image
+                planMaterial.diffuse.mipFilter = .linear
+            } else {
+                planMaterial.diffuse.contents = UIColor(red: 0.02, green: 0.08, blue: 0.14, alpha: 0.6)
             }
+            planMaterial.isDoubleSided = true
+            planMaterial.writesToDepthBuffer = false
+            planMaterial.readsFromDepthBuffer = false
+            plane.materials = [planMaterial]
+            let planNode = SCNNode(geometry: plane)
+            planNode.name = planPrefix + floor.id
+            planNode.eulerAngles.x = -Float.pi / 2
+            planNode.renderingOrder = order
+            group.addChildNode(planNode)
 
-            // Walls: traced contours extruded to the assumed wall height, merged into one node.
-            let walls = SCNNode()
-            for wall in authored.walls where wall.outline.count >= 3 {
-                let shape = SCNShape(path: path([wall.outline] + wall.holes, floor: floor), extrusionDepth: wallHeight)
-                shape.materials = wallMaterials
-                let node = SCNNode(geometry: shape)
-                node.eulerAngles.x = -Float.pi / 2
-                node.position.y = Float(wallHeight / 2)
-                walls.addChildNode(node)
+            // Walls: a translucent band along every traced wall edge, with a bright top line.
+            let wallMesh = HoloGeometry.wallMesh(for: authored, floor: floor, height: model3D.wallHeightMeters)
+            if let walls = geometry(wallMesh, materials: wallMaterials) {
+                let node = SCNNode(geometry: walls)
+                node.renderingOrder = order + 2
+                group.addChildNode(node)
             }
-            let mergedWalls = walls.flattenedClone()
-            mergedWalls.renderingOrder = order + 2
-            group.addChildNode(mergedWalls)
 
             // Rim: a bright band around the footprint so each floor reads as one shape.
-            let rings = ([authored.outline] + authored.openings).map { ring in
-                ring.filter { $0.count >= 2 }.map { p -> SIMD3<Float> in
-                    let w = World3D.point(x: p[0], y: p[1], floor: floor, floorGap: 0)
-                    return SIMD3<Float>(Float(w.x), 0, Float(w.z))
-                }
-            }
-            if let rimGeometry = ribbon(rings: rings, height: 0.9, material: glow(HoloTheme.cyan(HoloTheme.rim))) {
-                let rim = SCNNode(geometry: rimGeometry)
-                rim.renderingOrder = order + 3
-                group.addChildNode(rim)
+            let rimMesh = HoloGeometry.rimMesh(for: authored, floor: floor, height: 0.9)
+            if let rim = geometry(rimMesh, materials: rimMaterials) {
+                let node = SCNNode(geometry: rim)
+                node.renderingOrder = order + 3
+                group.addChildNode(node)
             }
 
             // "L2" tag floating off the west side.
@@ -482,41 +453,14 @@ private enum SceneBuilder {
         return result
     }
 
-    /// Rings of plan pixels → one even-odd path in the shape's local XY plane.
-    /// Local (x, y) = world (x, -z); the node is then tipped flat by -90° about X.
-    static func path(_ rings: [[[Double]]], floor: Floor) -> UIBezierPath {
-        let path = UIBezierPath()
-        path.usesEvenOddFillRule = true
-        for ring in rings where ring.count >= 3 {
-            for (i, p) in ring.enumerated() where p.count >= 2 {
-                let w = World3D.point(x: p[0], y: p[1], floor: floor, floorGap: 0)
-                let point = CGPoint(x: w.x, y: -w.z)
-                if i == 0 { path.move(to: point) } else { path.addLine(to: point) }
-            }
-            path.close()
-        }
-        return path
-    }
-
-    /// A vertical band standing on each closed ring.
-    static func ribbon(rings: [[SIMD3<Float>]], height: Float, material: SCNMaterial) -> SCNGeometry? {
-        var vertices: [SCNVector3] = []
-        var indices: [Int32] = []
-        for ring in rings where ring.count >= 3 {
-            for i in ring.indices {
-                let a = ring[i], b = ring[(i + 1) % ring.count]
-                let base = Int32(vertices.count)
-                vertices.append(SCNVector3(a.x, a.y, a.z))
-                vertices.append(SCNVector3(b.x, b.y, b.z))
-                vertices.append(SCNVector3(b.x, b.y + height, b.z))
-                vertices.append(SCNVector3(a.x, a.y + height, a.z))
-                indices.append(contentsOf: [base, base + 1, base + 2, base, base + 2, base + 3])
-            }
-        }
-        guard !vertices.isEmpty else { return nil }
+    /// A HoloCore mesh as SceneKit geometry: the bands (first material) and their top lines (second).
+    static func geometry(_ mesh: WallMesh, materials: [SCNMaterial]) -> SCNGeometry? {
+        guard !mesh.isEmpty else { return nil }
+        let vertices = mesh.positions.map { SCNVector3($0.x, $0.y, $0.z) }
         let geometry = SCNGeometry(sources: [SCNGeometrySource(vertices: vertices)],
-                                   elements: [SCNGeometryElement(indices: indices, primitiveType: .triangles)])
-        geometry.materials = [material]
+                                   elements: [SCNGeometryElement(indices: mesh.triangles, primitiveType: .triangles),
+                                              SCNGeometryElement(indices: mesh.topLines, primitiveType: .line)])
+        geometry.materials = materials
         return geometry
     }
 
@@ -564,12 +508,44 @@ private enum SceneBuilder {
         let root = SCNNode()
         if config.layout != .single { root.addChildNode(shaftsNode(config: config, map: map)) }
         root.addChildNode(routeNode(config: config, map: map))
+        addSpotMarkers(to: root, config: config, map: map)
         return root
     }
 
     static func world(x: Double, y: Double, floor: Floor, gap: Double, lift: Double = World3D.routeLift) -> SIMD3<Float> {
         let w = World3D.point(x: x, y: y, floor: floor, floorGap: gap, lift: lift)
         return SIMD3<Float>(Float(w.x), Float(w.y), Float(w.z))
+    }
+
+    /// The spot the student just tapped, and the GPS accuracy circle.
+    static func addSpotMarkers(to root: SCNNode, config: BuildingScene.Config, map: BuildingMap) {
+        if let spot = config.tapped, let floor = map.floorsById[spot.floorId], config.shows(floor.id) {
+            let x = spot.place?.markerX ?? Double(spot.point.x), y = spot.place?.markerY ?? Double(spot.point.y)
+            let ring = SCNTorus(ringRadius: 2.0, pipeRadius: 0.3)
+            ring.materials = [glow(HoloTheme.violet(1))]
+            let ringNode = SCNNode(geometry: ring)
+            ringNode.simdPosition = world(x: x, y: y, floor: floor, gap: config.floorGap)
+            ringNode.renderingOrder = HoloTheme.Order.markers
+            root.addChildNode(ringNode)
+
+            let stem = SCNCylinder(radius: 0.3, height: 6)
+            stem.materials = [glow(HoloTheme.violet(0.8))]
+            let stemNode = SCNNode(geometry: stem)
+            stemNode.simdPosition = world(x: x, y: y, floor: floor, gap: config.floorGap) + SIMD3<Float>(0, 3, 0)
+            stemNode.renderingOrder = HoloTheme.Order.markers
+            root.addChildNode(stemNode)
+        }
+        if let fix = config.gpsFix, let floor = map.floorsById[fix.floorId], config.shows(floor.id) {
+            let scale = floor.pixelsPerMeter ?? 12
+            let radius = CGFloat(min(max(Double(fix.radiusPixels) / scale, 2), 60))
+            let disc = SCNCylinder(radius: radius, height: 0.05)
+            disc.radialSegmentCount = 48
+            disc.materials = [glow(HoloTheme.blue(0.22))]
+            let node = SCNNode(geometry: disc)
+            node.simdPosition = world(x: Double(fix.point.x), y: Double(fix.point.y), floor: floor, gap: config.floorGap)
+            node.renderingOrder = HoloTheme.Order.shafts
+            root.addChildNode(node)
+        }
     }
 
     /// Faint vertical lines where each elevator and stairwell joins the floors.

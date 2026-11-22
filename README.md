@@ -12,15 +12,16 @@ Type a room number and you get a walking route drawn on the real floor plan, acr
 
 ## What it does
 
-- **Floor plan map.** Real UW–Madison floor plans with pinch to zoom, drag to pan and a floor picker (L1–L3). The map frames your route automatically.
+The whole map is one 3D model. There is no separate 2D view.
+
+- **3D hologram.** Grainger as a glowing model you can orbit and zoom: the real floor plans drawn in light on each floor, with the walls standing on them. Switch between *Exploded*, *Stacked* and *One floor* (seen from above, for reading room numbers), pick a floor with L1–L3, and recenter with one button.
+- **Tap a room.** Tap any room on the model to get **Go here** or **Start** buttons.
 - **Room search.** Search by number (`3335`), name (`Learning Commons`) or a term like `restroom`. You can also browse every room by floor.
-- **Tap the plan.** Tap any room to get **Go here** or **Start** buttons.
-- **"Start from my location".** GPS suggests a start on the floor you've picked, and the accuracy circle is drawn. GPS can't tell floors apart, so you always choose the floor.
-- **A\* routing.** Routes are costed in *time*, not distance. Multi-floor routes say things like "Take Elevator A (west) up to Level 3."
+- **"Start from my location".** GPS suggests a start on the floor you've picked, and the accuracy circle is drawn on that floor. GPS can't tell floors apart, so you always choose the floor.
+- **A\* routing.** Routes are costed in *time*, not distance. Multi-floor routes say things like "Take Elevator A (west) up to Level 3." The route is drawn in amber with a dot running along it and a beam over the destination.
 - **Step-free mode.** No stairs, elevators only. One toggle gives a different route *and* a different ETA.
 - **"Am I late?"** Set your class time and you get "About 2 min late" or "3 min to spare", rechecked every 15 s.
 - **Turn-by-turn directions.** A floor-by-floor walkthrough with Next/Back. It follows the map, not your real position.
-- **3D hologram.** Grainger as a glowing model you can orbit and zoom: the real floor plans drawn in light, the route in amber with a dot running along it, a beam over your destination. Switch between *Exploded*, *Stacked* and *One floor*, tap a floor to select it, and recenter with one button.
 
 ## Wireframes
 
@@ -55,7 +56,7 @@ To fake being at Grainger in the simulator, use *Features → Location → Custo
 ```
 HoloMap.xcodeproj/        Xcode project (iOS 17+, iPhone and iPad)
 HoloMap/                  The app: SwiftUI screens, SceneKit 3D view, location
-  Plans/                  Floor-plan images (1980×1530 px): floor_pN for 2D, holo_pN for 3D
+  Plans/                  holo_pN.png: the glowing floor textures (1980×1530 px)
   Assets.xcassets/        App icon, accent colour
 HoloCore/                Swift package with no UI code, unit-tested on its own
   Sources/HoloCore/
@@ -64,17 +65,21 @@ HoloCore/                Swift package with no UI code, unit-tested on its own
     GeoTransform.swift    GPS → floor-plan pixel suggestion
     ArrivalEstimate.swift The "am I late?" verdict
     Building3DModel.swift The plan-derived 3D model + plan→world mapping
+    WallMesh.swift        Builds the light wall and rim meshes the app draws
     Resources/            Grainger data: 3 floors, 674 nodes (265 places), 1356 edges, 3D model
   Tests/                  Parity, search, GPS, arrival and 3D-data tests
 tools/
-  bake_holo_plans.py      Rebuilds the holo_pN textures from the floor plans
+  plans/                  The source UW floor plans (not shipped in the app)
+  bake_holo_plans.py      Rebuilds the holo_pN textures from them
 ```
 
 The app target picks up any file you add under `HoloMap/` automatically. The project uses Xcode 16's synchronized folders, so you don't need to drag files into the project.
 
 ## Tuning the 3D look
 
-Every colour and glow strength is in `HoloTheme` at the top of `HoloMap/Building3DView.swift`. If the model looks washed out on a device, lower `bloomIntensity` or set `bloom` to `false` first. The floor textures are baked, not drawn at run time; after changing a floor plan or the bake settings, run `python3 tools/bake_holo_plans.py` (needs `pillow` and `numpy`).
+Every colour and glow strength is in `HoloTheme` at the top of `HoloMap/Building3DView.swift`. If the model looks washed out on a device, lower `bloomIntensity` or set `bloom` to `false` first (turning it off also makes drawing cheaper).
+
+The walls are not extruded solids. `HoloCore` simplifies the traced outlines and turns each wall edge into one upright band (about 9,000 triangles per floor), which is what keeps the model quick to build and draw. The floor textures are baked, not drawn at run time; after changing a floor plan or the bake settings, run `python3 tools/bake_holo_plans.py` (needs `pillow` and `numpy`).
 
 ## Tests
 
@@ -106,6 +111,6 @@ In Xcode, open `HoloCore/Package.swift` and press **⌘U** to run the same tests
 - Node pixel positions were eyeballed off the plan images; they're the most likely visible flaw. The authoring scripts (`tools/build_graph.py`, `tools/build_3d_model.py`) are on the `C3` branch.
 - `pixelsPerMeter = 12` is an estimate. It affects only the A\* heuristic and the 3D scale, never the route or its ETA.
 - The two GPS calibration points are approximate building corners. Unlike the web version, the iOS app fits GPS in a y-down frame, so suggestions aren't mirrored.
-- Only Levels 1–3 are mapped, in 2D and 3D. Grainger has more floors; the 3D view says so rather than guessing at them.
+- Only Levels 1–3 are mapped. Grainger has more floors; the 3D view says so rather than guessing at them.
 - The 3D model is illustrative, not a surveyed BIM. Walls are traced from the plan images, and wall height (2.8 m) and floor spacing (4.2 m, or 26 m when separated) are assumptions.
 - Directions don't track your real indoor position, and route times don't account for crowds, locked doors or elevator outages.

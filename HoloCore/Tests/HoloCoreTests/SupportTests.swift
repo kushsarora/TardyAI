@@ -101,3 +101,52 @@ final class Building3DModelTests: XCTestCase {
         XCTAssertEqual(center.y, 52)
     }
 }
+
+final class WallMeshTests: XCTestCase {
+    func testSimplifyKeepsCornersAndDropsStairSteps() {
+        // A 100×100 square whose top edge is traced in 2-px stair steps of 1 px.
+        var ring: [[Double]] = [[0, 0]]
+        for x in stride(from: 2.0, through: 98, by: 2) { ring.append([x, x.truncatingRemainder(dividingBy: 4) == 0 ? 0 : 1]) }
+        ring += [[100, 0], [100, 100], [0, 100]]
+        let simple = HoloGeometry.simplify(ring: ring, tolerance: 1.5)
+        XCTAssertEqual(simple.count, 4)
+        XCTAssertEqual(Set(simple.map { "\($0[0]),\($0[1])" }), ["0.0,0.0", "100.0,0.0", "100.0,100.0", "0.0,100.0"])
+    }
+
+    func testBandHasTwoTrianglesAndOneTopLinePerEdge() {
+        var mesh = WallMesh()
+        mesh.addBand(ring: [SIMD3(0, 0, 0), SIMD3(1, 0, 0), SIMD3(1, 0, 1)], height: 2)
+        XCTAssertEqual(mesh.positions.count, 6)
+        XCTAssertEqual(mesh.triangles.count, 18)
+        XCTAssertEqual(mesh.topLines.count, 6)
+        XCTAssertTrue(mesh.triangles.allSatisfy { $0 < 6 })
+        XCTAssertTrue(mesh.topLines.allSatisfy { mesh.positions[Int($0)].y == 2 })
+    }
+
+    func testGraingerWallMeshesAreSmallAndValid() throws {
+        let model = try Building3DModel.loadGrainger()
+        let map = try BuildingMap.loadGrainger()
+        for authored in model.floors {
+            let floor = try XCTUnwrap(map.floorsById[authored.floorId])
+            let mesh = HoloGeometry.wallMesh(for: authored, floor: floor, height: model.wallHeightMeters)
+            XCTAssertFalse(mesh.isEmpty)
+            XCTAssertLessThan(mesh.positions.count, 20_000, "level \(authored.level)")
+            XCTAssertTrue(mesh.triangles.allSatisfy { Int($0) < mesh.positions.count })
+            XCTAssertTrue(mesh.positions.allSatisfy { $0.x.isFinite && $0.y.isFinite && $0.z.isFinite })
+            XCTAssertTrue(mesh.positions.allSatisfy { abs($0.x) < 90 && abs($0.z) < 70 })
+            XCTAssertFalse(HoloGeometry.rimMesh(for: authored, floor: floor, height: 1).isEmpty)
+            print("level \(authored.level): \(mesh.positions.count) vertices, \(mesh.triangles.count / 3) triangles")
+        }
+    }
+
+    func testFootprintContainsRoomsButNotTheMargin() throws {
+        let model = try Building3DModel.loadGrainger()
+        let map = try BuildingMap.loadGrainger()
+        for authored in model.floors {
+            XCTAssertFalse(authored.contains(x: 5, y: 5))
+            let rooms = map.nodes.filter { $0.floorId == authored.floorId && $0.kind == .room }
+            let inside = rooms.filter { authored.contains(x: $0.imageX, y: $0.imageY) }
+            XCTAssertGreaterThan(Double(inside.count), Double(rooms.count) * 0.9, "level \(authored.level)")
+        }
+    }
+}
